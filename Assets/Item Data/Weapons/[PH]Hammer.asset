@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62a681bfc59ee74cb27887f5a0072c7, type: 3}
+  m_Name: '[PH]Hammer'
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: 93ec85cbd8354ad4f98aead84dd46c22, type: 3}
+  itemName: Warhammer
+  itemDesc: A decimating hammer. Once the tool of a blacksmith, now it is a tool
+    to crush the bones of forlorn vagrants.
+  unlocked: 0
+  R1StaminaCost: 30
+  R2StaminaCost: 60
+  R1Damage: 85
+  R2Damage: 100
+  animations: {fileID: 22100000, guid: ce0228b9c3bbfe74ea6aeefa7da2d864, type: 2}
+  unlockCost: 3000

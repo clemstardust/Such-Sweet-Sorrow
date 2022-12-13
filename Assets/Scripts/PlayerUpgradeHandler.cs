@@ -1,0 +1,157 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PlayerUpgradeHandler : MonoBehaviour
+{
+    public float damageMultiplier = 1;
+    public float healthMultiplier = 1;
+    public float staminaMultiplier = 1;
+    public float spellDamageMuliplier = 0;
+    public float spellCostDownPercent = 1;
+    public float spellDurationMultiplier = 1;
+    public float healthLowDamageMultiplier = 10000f;
+
+    private float xpToNextLevel;
+
+    public GameObject xpBar;
+
+    public GameObject upgradeMenu;
+
+    public bool doubleUpgrades = false;
+
+    private PlayerStats playerStats;
+    private void Start()
+    {
+        playerStats = GetComponent<PlayerStats>();
+        upgradeMenu.SetActive(false);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        xpToNextLevel = 100 + (Mathf.Pow(playerStats.currentLevel, 2) * 10);
+
+        xpBar.GetComponent<Slider>().maxValue = xpToNextLevel;
+        xpBar.GetComponent<Slider>().value = playerStats.currentXP;
+
+        //print(xpToNextLevel);
+        if (playerStats.currentXP >= xpToNextLevel && upgradeMenu.activeSelf == false)
+        {
+            upgradeMenu.SetActive(true);
+            upgradeMenu.GetComponent<UpgradeMenu>().ReloadMenu();
+        }
+    }
+
+    public void DoubleUpgrades()
+    {
+        doubleUpgrades = true;
+    }
+
+    private void ResolveUpgrade()
+    {
+        Time.timeScale = 1;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        playerStats.currentXP -= xpToNextLevel;
+        playerStats.currentLevel++;
+        upgradeMenu.SetActive(false);
+    }
+
+    public void UpgradeDamage()
+    {
+        
+        print("Damage upgraded!");
+        damageMultiplier += 0.5f;
+        if (doubleUpgrades)
+        {
+            damageMultiplier += 0.5f;
+        }
+
+        ResolveUpgrade();
+    }
+
+    public void UpgradeHealth ()
+    {
+        print("Health upgraded!");
+        healthMultiplier += 0.2f;
+        if (doubleUpgrades)
+        {
+            healthMultiplier += 0.2f;
+        }
+        playerStats.maxHealth = (int)(playerStats.maxHealth * healthMultiplier);
+        FindObjectOfType<HealthBarShrink>().Heal(playerStats.currentHealth, playerStats.maxHealth);
+        ResolveUpgrade();
+    }
+    public void UpgradeStamina()
+    {
+        print("Stamina upgraded!");
+        staminaMultiplier += 0.2f;
+        if (doubleUpgrades)
+        {
+            staminaMultiplier += 0.2f;
+        }
+        playerStats.maxStamina = (int)(playerStats.maxStamina * staminaMultiplier);
+        FindObjectOfType<HealthBarShrink>().Heal(playerStats.currentStamina, playerStats.maxStamina);
+        ResolveUpgrade();
+    }
+
+    public void StaminaToDamage()
+    {        
+        if (doubleUpgrades)
+        {
+            playerStats.staminaToDamageMuliplier += 0.2f;
+        }
+        if (playerStats.staminaToDamage)
+        {
+            playerStats.staminaToDamageMuliplier += 0.2f;
+        }
+        playerStats.staminaToDamage = true;
+        print("Stamina to damage upgraded!");
+        ResolveUpgrade();
+    }
+    public void SpellDamageUp()
+    {
+        if (doubleUpgrades)
+        {
+            spellDamageMuliplier += 1f;
+        }
+        spellDamageMuliplier += 1f;
+        print("Apell damage upgraded!");
+        ResolveUpgrade();
+    }
+    public void SpellCostDown()
+    {
+        if (doubleUpgrades)
+        {
+            spellCostDownPercent -= 0.1f;
+        }
+        spellCostDownPercent -= 0.1f;
+        print("Spell cost down upgraded");
+        ResolveUpgrade();
+    }
+    public void SpellDurationUp()
+    {
+        if (doubleUpgrades)
+        {
+            spellDurationMultiplier += 0.33f;
+        }
+        spellDurationMultiplier += 0.33f;
+        print("Spell duration upgraded!");
+        ResolveUpgrade();
+    }
+    public void HealthLowDamageUpgrade()
+    {
+        if (doubleUpgrades)
+        {
+            healthLowDamageMultiplier += 0.5f;
+        }
+        if (playerStats.helathLowAddDamage)
+        {
+            healthLowDamageMultiplier += 0.5f;
+        }
+        playerStats.helathLowAddDamage = true;
+        print("Spell duration upgraded!");
+        ResolveUpgrade();
+    }
+}

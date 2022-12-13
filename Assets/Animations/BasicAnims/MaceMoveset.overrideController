@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MaceMoveset
+  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 77fd05156d0a6ea4c8d39f3b146f3359, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ed387072c063109488d4e91b1b0e10a4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e7a9a53a66fbe2d498302cf82189cdb5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 77d8c72398e455d4c9bf3d1d22a0229f, type: 2}
+  - m_OriginalClip: {fileID: 0}
+    m_OverrideClip: {fileID: 7400000, guid: 2ea3b5f860f2169469663813779c3a86, type: 2}

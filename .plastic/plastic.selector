@@ -1,0 +1,4 @@
+repository "Such Sweet Sorrow@Stardusted_Games@cloud"
+  path "/"
+    br "/main"
+    co "/main"
