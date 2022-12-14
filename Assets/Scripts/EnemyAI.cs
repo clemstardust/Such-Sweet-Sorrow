@@ -177,7 +177,7 @@ public class EnemyAI : MonoBehaviour
             currentAttack = CurrentAttack.R1;
         }
         //transform.rotation = rotation;
-        //enemyManager.enemyMode = EnemyManager.Mode.chase;
+        enemyManager.enemyMode = EnemyManager.Mode.idle;
     }
 
     public void Idle()
