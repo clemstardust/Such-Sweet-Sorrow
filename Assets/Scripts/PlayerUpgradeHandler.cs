@@ -11,7 +11,14 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public float spellDamageMuliplier = 0;
     public float spellCostDownPercent = 1;
     public float spellDurationMultiplier = 1;
-    public float healthLowDamageMultiplier = 10000f;
+    public float healthLowDamageMultiplier = 2f;
+    public float maxSoulUpLevel = 1;
+    public float extraStaminaToDamageMultiplier = 1.5f;
+    public float thornsDamageMultiplier = 1;
+    public float flatExtraHealthOnHit = 10;
+    public float dodgeDamageMultiplier = 1.5f;
+    public float dodgeToHealFlatAmount = 10;
+    public int numTougherTimes = 0;
 
     private float xpToNextLevel;
 
@@ -62,10 +69,10 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         
         print("Damage upgraded!");
-        damageMultiplier += 0.5f;
+        damageMultiplier += 0.1f;
         if (doubleUpgrades)
         {
-            damageMultiplier += 0.5f;
+            damageMultiplier += 0.1f;
         }
 
         ResolveUpgrade();
@@ -152,6 +159,97 @@ public class PlayerUpgradeHandler : MonoBehaviour
         }
         playerStats.helathLowAddDamage = true;
         print("Spell duration upgraded!");
+        ResolveUpgrade();
+    }
+    public void MaxSoulUp()
+    {
+        if (doubleUpgrades)
+        {
+            maxSoulUpLevel += 50f;
+        }
+        maxSoulUpLevel += 50f;
+        print("max soul upgraded!");
+        ResolveUpgrade();
+    }
+    public void ExtraDamageAtCostOfStamina()
+    {
+        if (doubleUpgrades)
+        {
+            extraStaminaToDamageMultiplier += 0.5f;
+        }
+        if (playerStats.useMoreStaminaToDamage)
+        {
+            extraStaminaToDamageMultiplier += 0.5f;
+        }
+        playerStats.useMoreStaminaToDamage = true;
+        print("Extra damage at cost of stamina upgraded!");
+        ResolveUpgrade();
+    }
+    public void Thorns()
+    {
+        if (doubleUpgrades)
+        {
+            thornsDamageMultiplier += 0.1f;
+        }
+        if (playerStats.useMoreStaminaToDamage)
+        {
+            thornsDamageMultiplier += 0.1f;
+        }
+        playerStats.thorns = true;
+        print("thorns upgraded!");
+        ResolveUpgrade();
+    }
+
+    public void ExtraHealthOnHit()
+    {
+        if (doubleUpgrades)
+        {
+            flatExtraHealthOnHit += 2f;
+        }
+        if (playerStats.extraHealthOnHit)
+        {
+            flatExtraHealthOnHit += 2f;
+        }
+        playerStats.extraHealthOnHit = true;
+        print("extra health on hit upgraded!");
+        ResolveUpgrade();
+    }
+    public void ExtraDamageOnDodge()
+    {
+        if (doubleUpgrades)
+        {
+            dodgeDamageMultiplier += 0.5f;
+        }
+        if (playerStats.damageBuffOnDodge)
+        {
+            dodgeDamageMultiplier += 0.5f;
+        }
+        playerStats.damageBuffOnDodge = true;
+        print("damage on dodge upgraded!");
+        ResolveUpgrade();
+    }
+    public void HealOnDodge()
+    {
+        if (doubleUpgrades)
+        {
+            dodgeToHealFlatAmount += 5f;
+        }
+        if (playerStats.healOnDodge)
+        {
+            dodgeToHealFlatAmount += 5f;
+        }
+        playerStats.healOnDodge = true;
+        print("heal on dodge upgraded!");
+        ResolveUpgrade();
+    }
+    public void TougherTimes()
+    {
+        if (doubleUpgrades)
+        {
+            numTougherTimes++;
+        }
+        numTougherTimes++;
+        print("num tougher times upgraded");
         ResolveUpgrade();
     }
 }

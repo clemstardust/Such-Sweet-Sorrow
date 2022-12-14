@@ -697,8 +697,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.3800629, y: -0.25750065}
-  m_SizeDelta: {x: 100, y: 20}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 17}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &614098158234518017
 MonoBehaviour:
@@ -1542,6 +1542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagedHealthShrinkTimer: 0
+  rectTransform: {fileID: 0}
 --- !u!1 &1499447146531718286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,9 +2312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgrades:
-  - {fileID: 11400000, guid: 0815716d5a39a4e4aa573ed6de86d99a, type: 2}
-  - {fileID: 11400000, guid: dddbd025a513164468357108ce791fbb, type: 2}
-  - {fileID: 11400000, guid: 03dcc56fd21475c4ba34300a38cf52dd, type: 2}
+  - {fileID: 11400000, guid: 538c9fd8209e83441a61549f84427f8a, type: 2}
   upgradeSlots:
   - {fileID: 7856768879663578861}
   - {fileID: 7580286171226425520}
@@ -2501,6 +2500,7 @@ MonoBehaviour:
   upgradeItem: {fileID: 0}
   upgradeName: {fileID: 155986715687857852}
   desc: {fileID: 8873651314959002677}
+  upgradeMenu: {fileID: 4669534750213868718}
 --- !u!1 &3597498532877599153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,6 +3179,7 @@ MonoBehaviour:
   upgradeItem: {fileID: 0}
   upgradeName: {fileID: 410917456022316809}
   desc: {fileID: 3838704853138307757}
+  upgradeMenu: {fileID: 4669534750213868718}
 --- !u!1 &6641409270721442985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3235,6 +3236,7 @@ MonoBehaviour:
   damagedHealthShrinkTimer: 0
   rectTransform: {fileID: 6641409270721442990}
   soulBarTransform: {fileID: 614098158234518019}
+  playerUpgradeHandler: {fileID: 0}
 --- !u!1 &6641409271353434101
 GameObject:
   m_ObjectHideFlags: 0
@@ -3347,8 +3349,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.19002151, y: -0.022200108}
+  m_SizeDelta: {x: 0.38004, y: 0.0403}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6641409271532184371
 CanvasRenderer:
@@ -4734,6 +4736,7 @@ MonoBehaviour:
   upgradeItem: {fileID: 0}
   upgradeName: {fileID: 9021938442257707734}
   desc: {fileID: 483398570845565312}
+  upgradeMenu: {fileID: 4669534750213868718}
 --- !u!1001 &49112355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7220,6 +7223,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   healthMultiplier: 1
+  staminaMultiplier: 1
+  spellDamageMuliplier: 0
+  spellCostDownPercent: 1
+  spellDurationMultiplier: 1
+  healthLowDamageMultiplier: 1.5
+  maxSoulUpLevel: 1
   xpBar: {fileID: 580670852}
   upgradeMenu: {fileID: 2903602088370031470}
   doubleUpgrades: 0
@@ -7289,7 +7298,7 @@ PrefabInstance:
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.859575
+      value: -4.900982
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -34,6 +36,12 @@ public class PlayerStats : MonoBehaviour
 
     public bool helathLowAddDamage = false;
     public bool staminaToDamage = false;
+    public bool useMoreStaminaToDamage = false;
+    public bool thorns = false;
+    public bool extraHealthOnHit = false;
+    public bool damageBuffOnDodge = false;
+    public bool healOnDodge = false;
+    
     public float staminaToDamageMuliplier = 1;
 
     public static bool isDead;
@@ -93,7 +101,7 @@ public class PlayerStats : MonoBehaviour
                 currentHealth -= ((currentHealth / maxHealth) + 1) * 0.015f;
                 uIManager.UpdateStatsUI(currentHealth, maxHealth);
             }
-            maxSoul = ((maxHealth - (int)currentHealth));
+            maxSoul = ((maxHealth - (int)currentHealth) + (int) playerUpgradeHandler.maxSoulUpLevel);
             if (siphon && currentSoul < maxSoul)
             {
                 currentSoul += 2 * Time.deltaTime;
@@ -110,10 +118,36 @@ public class PlayerStats : MonoBehaviour
         TakeHit(other);
     }
 
+    private double CalculateTougherTimes(int numUpgrade)
+    {
+        if (numUpgrade > 0)
+        {
+            double RAND_CHANCE = 0.07f;
+            print(1 - (1 / ((RAND_CHANCE * numUpgrade) + 1)));
+            return 1 - (1 / ((RAND_CHANCE * numUpgrade) + 1));
+        }
+        else
+        {
+            return -1;
+        }
+
+    }
+
     public void TakeHit(Collider other)
     {
+        
         if (other.CompareTag("EnemyAttackHitbox"))
         {
+            double chanceToBlock = CalculateTougherTimes(playerUpgradeHandler.numTougherTimes);
+            Random rand = new Random();
+            double randomNumber = rand.NextDouble();
+            print("Chance to block: " + chanceToBlock + " | random number: " + randomNumber);
+            if (randomNumber <= chanceToBlock)
+            {
+                PlayerActionHandler.isInvul = true;
+                print("Dodged attack automatically");
+
+            }
             enemyManager = other.gameObject.GetComponentInParent<EnemyManager>();
             float damage = 0;
             switch (EnemyAI.currentAttack)
@@ -143,11 +177,32 @@ public class PlayerStats : MonoBehaviour
                 }
                 FindObjectOfType<AudioManager>().PlayerHurtSound();
                 currentHealth -= damage;
+                if (thorns)
+                {
+                    other.GetComponentInParent<EnemyStats>().TakeHit((int) (damage * playerUpgradeHandler.thornsDamageMultiplier));
+                }
+
                 Instantiate(blood[UnityEngine.Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
 
                 FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
                 animator.SetBool("ow", true);
                 animator.SetBool("isInteracting", true);
+            }
+            else
+            {
+                PlayerActionHandler.isInvul = false;
+                if (damageBuffOnDodge)
+                {
+                    print("Buffed damage");
+                    playerActionHandler.damageAfterDodgeIsActive = true;
+                    playerActionHandler.damageAfterDodgeCountdown = 3;
+                }
+                if (healOnDodge)
+                {
+                    print("healed on dodge");
+                    //Heal((int)playerUpgradeHandler.dodgeToHealFlatAmount);
+                    currentSoul += playerUpgradeHandler.dodgeToHealFlatAmount;
+                }
             }
             uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
         }
@@ -217,6 +272,17 @@ public class PlayerStats : MonoBehaviour
             GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>().Play();
             GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "CharacerCreation");
         }
+    }
+
+    public void UpgradeHealth(int num)
+    {
+        maxHealth += num;
+        FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
+    }
+    public void Heal(int num)
+    {
+        currentHealth += num;
+        FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
     }
 
     public void PhilospherRing()

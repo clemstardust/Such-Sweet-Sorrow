@@ -148,10 +148,26 @@ public class PlayerActionHandler : MonoBehaviour
 			Move();
 			staminaRegenDelay = false;
 		}
+		Buffs();
         Attack();
 		Roll();
 		RegenHealth();
 		Cast();
+	}
+
+	public bool damageAfterDodgeIsActive = false;
+	public float damageAfterDodgeCountdown = 0;
+	private void Buffs()
+	{
+		if (damageAfterDodgeIsActive)
+		{
+            damageAfterDodgeCountdown -= Time.deltaTime;
+			if (damageAfterDodgeCountdown <= 0)
+			{
+				damageAfterDodgeCountdown = 0;
+				damageAfterDodgeIsActive = false;
+            }
+		}
 	}
 
 	private void test()
@@ -397,15 +413,18 @@ public class PlayerActionHandler : MonoBehaviour
         {
             animator.SetBool("Combo", true);
             attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
+			attackStaminaCost *= (int) playerUpgradeHandler.extraStaminaToDamageMultiplier;
         }
         else if (Input.GetKeyDown(KeyCode.Mouse0) && playerStats.currentStamina > 0)
         {
             attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
-			animator.SetBool("AttackR1", true);
+            attackStaminaCost *= (int)playerUpgradeHandler.extraStaminaToDamageMultiplier;
+            animator.SetBool("AttackR1", true);
         } 
         else if (Input.GetKeyDown(KeyCode.Mouse1) && playerStats.currentStamina > 0)
 		{
             attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost * 2;
+            attackStaminaCost *= (int)playerUpgradeHandler.extraStaminaToDamageMultiplier;
             animator.SetBool("AttackR2", input.attack2);
         }
     }

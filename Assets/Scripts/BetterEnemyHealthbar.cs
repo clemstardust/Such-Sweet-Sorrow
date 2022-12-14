@@ -47,7 +47,7 @@ public class BetterEnemyHealthbar : MonoBehaviour {
 
     public void Damage(float current, float max)
     {
-        print("On Damaged boss happened");
+        //print("On Damaged boss happened");
         damagedHealthShrinkTimer = DAMAGED_HEALTH_SHRINK_TIMER_MAX;
         SetHealth(GetHealthNormalized(current, max));
     }

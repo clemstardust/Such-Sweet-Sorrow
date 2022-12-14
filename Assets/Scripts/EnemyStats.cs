@@ -70,6 +70,7 @@ public class EnemyStats : MonoBehaviour
             }
             var playerStats = other.GetComponentInParent<PlayerStats>();
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
+            var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
             damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
             
             if (playerStats.staminaToDamage)
@@ -80,11 +81,23 @@ public class EnemyStats : MonoBehaviour
             {
                 damage *= playerUpgradeHandler.healthLowDamageMultiplier;
             }
+            if (playerStats.useMoreStaminaToDamage)
+            {
+                damage *= playerUpgradeHandler.extraStaminaToDamageMultiplier;
+            }
+            if (playerStats.damageBuffOnDodge && playerActionHandler.damageAfterDodgeIsActive)
+            {
+                damage *= playerUpgradeHandler.dodgeDamageMultiplier;
+            }
             print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
             animator.SetBool("Hit", true);
             gameObject.GetComponent<EnemyAI>().rotated = false;
+            if (playerStats.extraHealthOnHit)
+            {
+                playerStats.UpgradeHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+            }
             if (currentHealth <= 0)
             {
                 healthBar.gameObject.SetActive(false);
@@ -92,6 +105,23 @@ public class EnemyStats : MonoBehaviour
             }
 
 
+        }
+    }
+    public void TakeHit(int damage)
+    {
+        GetComponent<AudioSource>().pitch = 0.8f;
+        GetComponent<AudioSource>().Play();
+        Animator animator = gameObject.GetComponent<Animator>();
+        Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+           
+        currentHealth -= damage;
+        betterHealthBar.Damage(currentHealth, maxHealth);
+        animator.SetBool("Hit", true);
+        gameObject.GetComponent<EnemyAI>().rotated = false;
+        if (currentHealth <= 0)
+        {
+            healthBar.gameObject.SetActive(false);
+            GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
         }
     }
     public void LoseStamina(int amount)

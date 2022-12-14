@@ -24,6 +24,7 @@ public class HealthBarShrink : MonoBehaviour {
     public float damagedHealthShrinkTimer;
     public RectTransform rectTransform;
     public RectTransform soulBarTransform;
+    public PlayerUpgradeHandler playerUpgradeHandler;
 
     PlayerStats playerStats;
     private void Awake() {
@@ -36,6 +37,7 @@ public class HealthBarShrink : MonoBehaviour {
         SetHealth(GetHealthNormalized(FindObjectOfType<PlayerStats>().currentHealth, FindObjectOfType<PlayerStats>().maxHealth));
         damagedBarImage.fillAmount = barImage.fillAmount;
         playerStats = FindObjectOfType<PlayerStats>();
+        playerUpgradeHandler = FindObjectOfType<PlayerUpgradeHandler>();
     }
 
     private void Update() {
@@ -47,7 +49,7 @@ public class HealthBarShrink : MonoBehaviour {
             }
         }
         rectTransform.sizeDelta = new Vector2(playerStats.maxHealth / 3, 10);
-        soulBarTransform.sizeDelta = new Vector2(playerStats.maxHealth / 3, 20);
+        soulBarTransform.sizeDelta = new Vector2((playerStats.maxHealth +  playerUpgradeHandler.maxSoulUpLevel) / 3, 16);
 
     }
 
