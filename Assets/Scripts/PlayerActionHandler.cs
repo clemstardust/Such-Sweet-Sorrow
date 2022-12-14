@@ -264,6 +264,7 @@ public class PlayerActionHandler : MonoBehaviour
 		Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 
 		// update animator if using character
+
 		animator.SetBool("Grounded", Grounded);
 		
 	}
