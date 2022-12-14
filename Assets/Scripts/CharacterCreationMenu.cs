@@ -50,6 +50,7 @@ public class CharacterCreationMenu : MonoBehaviour
     private void Start()
     {
         var musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>();
+        StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 3, 1));
         if (musicPlayer.isPlaying != true)
         {
             musicPlayer.Play();

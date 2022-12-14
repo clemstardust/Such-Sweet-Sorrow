@@ -1363,10 +1363,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4376479421820432453}
     m_Modifications:
+    - target: {fileID: 14849460323092925, guid: 03b4ff7d70ef1de438bc3536713ec02c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 14849460323092925, guid: 03b4ff7d70ef1de438bc3536713ec02c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5139057758883138938, guid: 03b4ff7d70ef1de438bc3536713ec02c,
         type: 3}
       propertyPath: m_Name
       value: PHRealEnemy 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139057758883138938, guid: 03b4ff7d70ef1de438bc3536713ec02c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5139057758883138943, guid: 03b4ff7d70ef1de438bc3536713ec02c,
         type: 3}

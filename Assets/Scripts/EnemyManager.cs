@@ -53,6 +53,19 @@ public class EnemyManager : MonoBehaviour
                 enemyMode = Mode.chase;
             }
         }
+        else
+        {
+            var colliders = GetComponents<Collider>();
+            foreach (Collider col in colliders)
+            {
+                col.enabled = false;
+            }
+            var moreColliders = GetComponents<Collider>();
+            foreach (Collider col in moreColliders)
+            {
+                col.enabled = false;
+            }
+        }
         HandleCurrentAction();
     }
 

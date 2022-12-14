@@ -147,13 +147,15 @@ public class PlayerActionHandler : MonoBehaviour
 		//Debug.Log(Application.persistentDataPath);
 		defaultAttackHitboxObject = attackHitbox;
 		altForm.SetActive(false);
-	}
+        StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 20, 0));
+    }
 	private void Update()
 	{
 		test();
         if (PlayerStats.isDead) return;
 		if (!GameManager.spawnedEndRoom) return;
-
+		if (playerUpgradeHandler.upgradeMenu.activeSelf == true) return;
+		
 		animator.applyRootMotion = (animator.GetBool("isInteracting"));
 		//loadSave.SaveGame(playerStats, this);
 		JumpAndGravity();

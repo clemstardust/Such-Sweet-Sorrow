@@ -42,6 +42,7 @@ public class EnemyStats : MonoBehaviour
         }*/
         healthBar.maxValue = maxHealth;
         betterHealthBar.SetHealth(betterHealthBar.GetHealthNormalized(currentHealth,maxHealth));
+        maxStamina = 25;
     }
 
     private void FixedUpdate()
@@ -143,7 +144,7 @@ public class EnemyStats : MonoBehaviour
 
        
         regenTimer += Time.deltaTime;
-        if (regenTimer > 1.5f && currentStamina < maxStamina)
+        if (regenTimer > 2f && currentStamina < maxStamina)
         {
             currentStamina += (staminaRegenRate * (1 + Time.fixedDeltaTime));
             if (currentStamina > maxStamina)
