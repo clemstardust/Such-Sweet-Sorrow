@@ -60,8 +60,13 @@ public class EnemyManager : MonoBehaviour
             {
                 col.enabled = false;
             }
-            var moreColliders = GetComponents<Collider>();
+            var moreColliders = GetComponentsInChildren<Collider>();
             foreach (Collider col in moreColliders)
+            {
+                col.enabled = false;
+            }
+            var evenMoreColliders = GetComponentsInChildren<CapsuleCollider>();
+            foreach (CapsuleCollider col in moreColliders)
             {
                 col.enabled = false;
             }

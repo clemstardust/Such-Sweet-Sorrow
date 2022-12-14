@@ -22,7 +22,7 @@ public class UpgradeSlot : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0.2f;
+        Time.timeScale = 0f;
     }
 
     public void SelectUpgrade()
