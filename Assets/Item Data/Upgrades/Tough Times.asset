@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Tough Times
   m_EditorClassIdentifier: 
   itemName: Tough Times
-  itemDesc: Your failures will be at the cost of the innocent. Chance to dodge damage
-    automatically
+  itemDesc: Your failures will be at the cost of the innocent. Chance to dodge damage.
   unlocked: 0
   function: TougherTimes

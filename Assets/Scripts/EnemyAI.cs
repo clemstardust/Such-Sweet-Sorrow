@@ -156,12 +156,12 @@ public class EnemyAI : MonoBehaviour
         //agent.transform.rotation = rotation;        
         //rotation = transform.rotation;
         int randAttackChance = Mathf.RoundToInt(UnityEngine.Random.Range(0, 4));
-        if (enemyStats.currentStamina > 0 && randAttackChance == 1)
+        if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R2StaminaCost && randAttackChance == 1)
         {
             currentAttack = CurrentAttack.R2;
             animator.SetBool("Attack2", true);
         }
-        else if (enemyStats.currentStamina > 0 && randAttackChance == 2)
+        else if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R1StaminaCost && randAttackChance == 2)
         {
             currentAttack = CurrentAttack.R1;
             animator.SetBool("Attack", true);
@@ -171,12 +171,13 @@ public class EnemyAI : MonoBehaviour
         {
             return;
         }
-        else
+        else if (enemyStats.currentStamina > enemyManager.equippedWeapon.R1StaminaCost)
         {
             animator.SetBool("Attack", true);
             animator.SetInteger("Combo", 0);
             currentAttack = CurrentAttack.R1;
         }
+        enemyManager.enemyMode = EnemyManager.Mode.idle;
         //transform.rotation = rotation;
         //enemyManager.enemyMode = EnemyManager.Mode.chase;
     }

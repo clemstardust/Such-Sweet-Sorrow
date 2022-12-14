@@ -279,8 +279,10 @@ public class PlayerStats : MonoBehaviour
             UnlockedItemManager unlockedItemManager = FindObjectOfType<UnlockedItemManager>();
             unlockedItemManager.totalSouls += totalSouls;
             FindObjectOfType<GameSaveHandler>().SaveGame(unlockedItemManager);
-            GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>().Pause();
-            GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>().Play();
+            StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>(), 3, 0));
+            StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 3, 1));
+            //GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>().Pause();
+            //GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>().Play();
             GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "CharacerCreation");
         }
     }

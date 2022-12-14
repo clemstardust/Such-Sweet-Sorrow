@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Spell duration up
   m_EditorClassIdentifier: 
   itemName: Dark longevity
-  itemDesc: Increases the duration of your spells
+  itemDesc: Increases the duration of your invocations
   unlocked: 0
   function: SpellDurationUp
