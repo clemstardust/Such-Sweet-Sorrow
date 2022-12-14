@@ -1,6 +1,7 @@
 ﻿using Cinemachine;
 using System;
 using System.Collections;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -71,6 +72,20 @@ public class PlayerActionHandler : MonoBehaviour
 	public float attackMultiplier = 1;
 
 	public bool weaponBuffActive = false;
+
+	public GameObject altForm;
+	public GameObject defaultForm;
+	public Avatar altAvatar;
+	public Avatar defaultAvatar;
+	public AnimatorController defaultController;
+	public AnimatorOverrideController altController;
+	public AttackHitboxObject defaultAttackHitboxObject;
+	public AttackHitboxObject altAttackHitboxObject;
+	public Collider altaltAttackCollider;
+	public GameObject hand1;
+	public GameObject hand2;
+	public bool transformed = false;
+
     private bool canCast = false;
 	
     //private const float _threshold = 0.01f;
@@ -129,7 +144,9 @@ public class PlayerActionHandler : MonoBehaviour
 		animator.runtimeAnimatorController = playerEquipment.currentWeapon.animations != null ? playerEquipment.currentWeapon.animations : animator.runtimeAnimatorController;
 
 
-        //Debug.Log(Application.persistentDataPath);
+		//Debug.Log(Application.persistentDataPath);
+		defaultAttackHitboxObject = attackHitbox;
+		altForm.SetActive(false);
 	}
 	private void Update()
 	{
@@ -169,13 +186,41 @@ public class PlayerActionHandler : MonoBehaviour
             }
 		}
 	}
-
+	public void Transition()
+	{
+        if (defaultForm.activeSelf == true)
+        {
+            attackHitbox = altAttackHitboxObject;
+            defaultForm.SetActive(false);
+            animator.avatar = altAvatar;
+            animator.runtimeAnimatorController = altController;
+            altForm.SetActive(true);
+            hand1.SetActive(true);
+            hand2.SetActive(true);
+			playerStats.Heal(playerStats.maxHealth - (int) playerStats.currentHealth);
+            transformed = true;
+        }
+        else
+        {
+            attackHitbox = defaultAttackHitboxObject;
+            defaultForm.SetActive(true);
+            animator.avatar = defaultAvatar;
+            animator.runtimeAnimatorController = defaultController;
+            altForm.SetActive(false);
+            hand1.SetActive(false);
+            hand2.SetActive(false);
+            playerStats.Heal(playerStats.maxHealth - (int)playerStats.currentHealth);
+            transformed = false;
+        }
+    }
 	private void test()
 	{
 		//print("action handler running");
 		if (Input.GetKeyDown(KeyCode.E))
 		{
+		
 			//print("Input working");
+			
             Scene scene = SceneManager.GetActiveScene(); 
 			SceneManager.LoadScene(scene.name);
         }
@@ -198,13 +243,15 @@ public class PlayerActionHandler : MonoBehaviour
 		if (weaponBuffActive && playerStats.currentSoul > 1)
 		{
 			playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
-			gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
+            if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
 			attackMultiplier = 2f + playerUpgradeHandler.spellDamageMuliplier;
 		}
 		else
 		{
 			weaponBuffActive = false;
-            gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+			if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+				gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
             attackMultiplier = 1f;
         }
 
@@ -454,11 +501,13 @@ public class PlayerActionHandler : MonoBehaviour
 	public void EnableCollider()
 	{
 		attackHitbox.dmgCollider.enabled = true;
+		altaltAttackCollider.enabled = true;
     }
 	public void DisableCollider()
 	{
 		attackHitbox.dmgCollider.enabled = false;
-	}
+        altaltAttackCollider.enabled = false;
+    }
 	public void BeginAttack()
     {
         _speed = 0;

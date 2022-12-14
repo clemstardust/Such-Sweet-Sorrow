@@ -73,7 +73,13 @@ public class PlayerStats : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (currentHealth <= 0 && extraLives <= 0)
+        if (playerActionHandler.transformed && currentHealth <= 0)
+        {
+            playerActionHandler.Transition();
+            currentHealth = maxHealth;
+            Heal(0);
+        }
+        else if (currentHealth <= 0 && extraLives <= 0)
         {
             if (!animator.GetBool("Dead"))
             {
@@ -86,12 +92,13 @@ public class PlayerStats : MonoBehaviour
                 //animator.SetBool("isInteracting", true);
                 //this.enabled = false;
             }
-        }
+        } 
         else if (currentHealth <= 0 && extraLives > 0)
         {
             extraLives--;
             currentHealth = maxHealth;
             uIManager.UpdateStatsUI(currentHealth, maxHealth);
+            Heal(0);
         }
         else
         {
@@ -102,6 +109,10 @@ public class PlayerStats : MonoBehaviour
                 uIManager.UpdateStatsUI(currentHealth, maxHealth);
             }
             maxSoul = ((maxHealth - (int)currentHealth) + (int) playerUpgradeHandler.maxSoulUpLevel);
+            if (playerActionHandler.transformed)
+            {
+                maxSoul = 0;
+            }
             if (siphon && currentSoul < maxSoul)
             {
                 currentSoul += 2 * Time.deltaTime;

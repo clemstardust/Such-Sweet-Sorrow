@@ -19,6 +19,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public float dodgeDamageMultiplier = 1.5f;
     public float dodgeToHealFlatAmount = 10;
     public int numTougherTimes = 0;
+    public int numTrans = 0;
 
     private float xpToNextLevel;
 
@@ -29,9 +30,11 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public bool doubleUpgrades = false;
 
     private PlayerStats playerStats;
+    private PlayerActionHandler playerActionHandler;
     private void Start()
     {
         playerStats = GetComponent<PlayerStats>();
+        playerActionHandler = GetComponent<PlayerActionHandler>();
         upgradeMenu.SetActive(false);
     }
     // Update is called once per frame
@@ -250,6 +253,22 @@ public class PlayerUpgradeHandler : MonoBehaviour
         }
         numTougherTimes++;
         print("num tougher times upgraded");
+        ResolveUpgrade();
+    }
+
+    public void TransPride()
+    {
+        if (doubleUpgrades)
+        {
+            numTrans++;
+        }
+        numTrans++;
+        if (numTrans >= 4)
+        {
+            numTrans = 0;
+            playerActionHandler.Transition();
+        }
+        print("num trans upgraded");
         ResolveUpgrade();
     }
 }
