@@ -46,7 +46,7 @@ public class StaminaBarShrink : MonoBehaviour {
                 damagedBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
             }
         }
-        rectTransform.sizeDelta = new Vector2(playerStats.maxStamina * 1.5f, 10);
+        rectTransform.sizeDelta = new Vector2(playerStats.maxStamina, 10);
 
     }
 

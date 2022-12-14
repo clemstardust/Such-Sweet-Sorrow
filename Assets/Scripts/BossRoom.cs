@@ -29,9 +29,7 @@ public class BossRoom : MonoBehaviour
         {
             bossHealthbar.SetActive(true);
             GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>().Play();
-            StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>(), 3, 1));
-            //StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 3, 0));
-            //GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>().Pause();
+            GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>().Pause();
             triggerCollider.enabled = false;
             triggerCollider2.enabled = false;
         }

@@ -110,11 +110,11 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {        
         if (doubleUpgrades)
         {
-            playerStats.staminaToDamageMuliplier += 0.1f;
+            playerStats.staminaToDamageMuliplier += 0.2f;
         }
         if (playerStats.staminaToDamage)
         {
-            playerStats.staminaToDamageMuliplier += 0.1f;
+            playerStats.staminaToDamageMuliplier += 0.2f;
         }
         playerStats.staminaToDamage = true;
         print("Stamina to damage upgraded!");

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62a681bfc59ee74cb27887f5a0072c7, type: 3}
   m_Name: '[PH](ENEMY)Dagger'
   m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: f71f99a7da702ae4c80fd990baff9c33, type: 3}
   itemName: Dagger
   itemDesc: 
   unlocked: 0
   R1StaminaCost: 15
   R2StaminaCost: 15
-  R1Damage: 40
-  R2Damage: 100
+  R1Damage: 20
+  R2Damage: 50
   animations: {fileID: 0}
   unlockCost: 0
