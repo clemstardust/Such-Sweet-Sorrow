@@ -66,49 +66,6 @@ public class EnemyAI : MonoBehaviour
         // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
         layerMask = ~layerMask;
 
-        playerStats = FindObjectOfType<PlayerStats>();
-        Vector3 targetDirection = playerStats.transform.position - transform.position;
-        float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
-
-        // Does the ray intersect any objects excluding the player layer
-        Vector3 dir = playerStats.gameObject.transform.position - transform.position;
-        dir.y = 0;
-        if (Physics.Raycast(raycastOrigin.transform.position, dir, out RaycastHit hit, Mathf.Infinity, layerMask))
-        {
-            Debug.DrawRay(transform.position, dir * hit.distance, Color.yellow);
-            if (hit.transform.gameObject.CompareTag("Player") || hit.transform.gameObject.CompareTag("PlayerDamageCollider"))
-            {
-                Debug.DrawRay(transform.position, dir * hit.distance, Color.red);
-                currentTarget = playerStats;
-            }
-        }
-        /*
-        if (viewableAngle > enemyManager.minDetectionAngle && viewableAngle < enemyManager.maxDetectionAngle
-        || enemyManager.autoDetectDist >= Vector3.Distance(playerStats.transform.position, transform.position))
-        {
-
-            // Does the ray intersect any objects excluding the player layer
-            Vector3 dir = playerStats.gameObject.transform.position - transform.position;
-            dir.y = 0;
-            if (Physics.Raycast(raycastOrigin.transform.position, dir, out RaycastHit hit, Mathf.Infinity))
-            {
-                Debug.DrawRay(transform.position, dir * hit.distance, Color.yellow);
-                if (hit.transform.gameObject.CompareTag("Player") || hit.transform.gameObject.CompareTag("PlayerDamageCollider"))
-                {
-                    Debug.DrawRay(transform.position, dir * hit.distance, Color.red);
-                    currentTarget = playerStats;
-                }
-            }
-
-        }*/
-        /*
-        // Bit shift the index of the layer (8) to get a bit mask
-        int layerMask = 1 << 8;
-
-        // This would cast rays only against colliders in layer 8.
-        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-        layerMask = ~layerMask;
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, enemyManager.detectionRadius, detectionLayer);
 
         foreach (Collider col in colliders)
@@ -138,7 +95,7 @@ public class EnemyAI : MonoBehaviour
                     
                 }
             }
-        }*/
+        }
     }
 
     internal void ReturnToSpawn()
