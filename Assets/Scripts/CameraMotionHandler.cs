@@ -26,7 +26,7 @@ public class CameraMotionHandler : MonoBehaviour
 	private PlayerInput input;
 	private GameObject mainCamera;
 
-	public float sens = 1f;
+	public float sens = 0.5f;
 
 	private void Awake()
 	{

@@ -43,6 +43,8 @@ public class PlayerStats : MonoBehaviour
     public bool healOnDodge = false;
 
     public bool applyDotDebuff = false;
+    public bool extraDamageOnUndamaged = false;
+    public bool extraXP = false;
     
     public float staminaToDamageMuliplier = 1;
 
@@ -265,6 +267,11 @@ public class PlayerStats : MonoBehaviour
         if (enemyTier < 1000)
             currentXP += enemyTier;
         totalSouls += enemyTier;
+        if (extraXP)
+        {
+            if (enemyTier < 1000)
+                currentXP += enemyTier;
+        }
         //print("total souls: " + totalSouls);
         maxSoul = maxHealth - (int) currentHealth;
         if (currentSoul < maxSoul)
@@ -272,6 +279,7 @@ public class PlayerStats : MonoBehaviour
             tempSoul += enemyTier;
             regenerateSoul = true;
         }
+        
         else
         {
             currentSoul = maxSoul;
@@ -324,5 +332,15 @@ public class PlayerStats : MonoBehaviour
     public void ActivateDOTDebuff()
     {
         applyDotDebuff = true;
+    }
+
+    public void ActivateExtraDamageOnUndamaged()
+    {
+        extraDamageOnUndamaged = true;
+    }
+
+    public void ActivateExtraXP()
+    {
+        extraXP = true;
     }
 }

@@ -20,4 +20,7 @@ public class UnlockedItemManager : MonoBehaviour
     public bool unlockedSoulGenerator = false;
     public bool unlockedDoubleUpgrades = false;
     public bool unlockedDOTRelic = false;
+    public bool unlockedExtraDamageOnUndamaged = false;
+    public bool unlockedExtraXP = false;
+    public bool unlockedSoulOnHit = false;
 }

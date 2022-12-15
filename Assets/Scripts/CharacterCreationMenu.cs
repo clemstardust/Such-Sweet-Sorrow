@@ -16,6 +16,8 @@ public class CharacterCreationMenu : MonoBehaviour
     public RelicItem soulGenerator;
     public RelicItem aceharmonicon;
     public RelicItem dotDebuff;
+    public RelicItem extraDamageOnUndamaged;
+    public RelicItem extraXP;
 
     private int selectedRelic = 0;
     public Image relicImage;
@@ -241,6 +243,18 @@ public class CharacterCreationMenu : MonoBehaviour
                 dotDebuff.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased Soulplague");
+                break;
+            case "Bloodseeker":
+                unlockedItemManager.unlockedExtraDamageOnUndamaged = true;
+                extraDamageOnUndamaged.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased bloodseeker");
+                break;
+            case "Mindshreeker":
+                unlockedItemManager.unlockedExtraXP = true;
+                extraXP.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased mindshreeker");
                 break;
         }
         UpdateSelectedRelicDisplay(selectedRelic);

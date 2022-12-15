@@ -20,6 +20,9 @@ public class GameSaveHandler : MonoBehaviour
         writer.Write("unlockedSoulGenerator", unlockedItemManager.unlockedSoulGenerator);
         writer.Write("unlockedDoubleUpgrades", unlockedItemManager.unlockedDoubleUpgrades);
         writer.Write("unlockedDOTRelic", unlockedItemManager.unlockedDOTRelic);
+        writer.Write("unlockedExtraDamageOnUndamaged", unlockedItemManager.unlockedExtraDamageOnUndamaged);
+        writer.Write("unlockedExtraXP", unlockedItemManager.unlockedExtraXP);
+        //writer.Write("unlockedSoulOnHit", unlockedItemManager.unlockedSoulOnHit);
         writer.Commit();
     }
     public void LoadGame()
@@ -38,5 +41,8 @@ public class GameSaveHandler : MonoBehaviour
         unlocks.unlockedSoulGenerator = reader.Read<bool>("unlockedSoulGenerator");
         unlocks.unlockedDoubleUpgrades = reader.Read<bool>("unlockedDoubleUpgrades");
         unlocks.unlockedDOTRelic = reader.Read<bool>("unlockedDOTRelic");
+        unlocks.unlockedExtraDamageOnUndamaged = reader.Read<bool>("unlockedExtraDamageOnUndamaged");
+        unlocks.unlockedExtraXP = reader.Read<bool>("unlockedExtraXP");
+        //unlocks.unlockedSoulOnHit = reader.Read<bool>("unlockedSoulOnHit");
     }    
 }

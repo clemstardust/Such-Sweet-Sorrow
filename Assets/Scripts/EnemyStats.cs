@@ -99,6 +99,10 @@ public class EnemyStats : MonoBehaviour
             {
                 StartCoroutine(DOTDebuff.DOT_Debuff(this, damage, 3));
             }
+            if (playerStats.extraDamageOnUndamaged && maxHealth == currentHealth)
+            {
+                damage *= 2;
+            }
             print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
