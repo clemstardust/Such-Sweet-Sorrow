@@ -19,6 +19,7 @@ public class GameSaveHandler : MonoBehaviour
         writer.Write("unlockedSoulfire", unlockedItemManager.unlockedSoulfire);
         writer.Write("unlockedSoulGenerator", unlockedItemManager.unlockedSoulGenerator);
         writer.Write("unlockedDoubleUpgrades", unlockedItemManager.unlockedDoubleUpgrades);
+        writer.Write("unlockedDOTRelic", unlockedItemManager.unlockedDOTRelic);
         writer.Commit();
     }
     public void LoadGame()
@@ -36,5 +37,6 @@ public class GameSaveHandler : MonoBehaviour
         unlocks.unlockedSoulfire = reader.Read<bool>("unlockedSoulfire");
         unlocks.unlockedSoulGenerator = reader.Read<bool>("unlockedSoulGenerator");
         unlocks.unlockedDoubleUpgrades = reader.Read<bool>("unlockedDoubleUpgrades");
+        unlocks.unlockedDOTRelic = reader.Read<bool>("unlockedDOTRelic");
     }    
 }

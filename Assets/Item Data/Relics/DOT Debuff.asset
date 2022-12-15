@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dfa24d37a3359c45bc9a0282587d51d, type: 3}
-  m_Name: Aceharmonicon
+  m_Name: DOT Debuff
   m_EditorClassIdentifier: 
-  itemName: Aceharmonicon
-  itemDesc: Your soul opens to the cries of the fallen. Double the effect of your
-    upgrades
+  itemName: Soulplague
+  itemDesc: Your weapons inflict a curse upon the soul of your foes
   unlocked: 0
-  RelicFunction: DoubleUpgrades
-  unlockCost: 9000
+  RelicFunction: ActivateDOTDebuff
+  unlockCost: 10000

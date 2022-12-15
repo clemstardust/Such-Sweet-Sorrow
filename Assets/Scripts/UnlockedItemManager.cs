@@ -19,4 +19,5 @@ public class UnlockedItemManager : MonoBehaviour
     public bool unlockedSoulfire = false;
     public bool unlockedSoulGenerator = false;
     public bool unlockedDoubleUpgrades = false;
+    public bool unlockedDOTRelic = false;
 }

@@ -15,6 +15,7 @@ public class CharacterCreationMenu : MonoBehaviour
     public RelicItem extraLife;
     public RelicItem soulGenerator;
     public RelicItem aceharmonicon;
+    public RelicItem dotDebuff;
 
     private int selectedRelic = 0;
     public Image relicImage;
@@ -234,6 +235,12 @@ public class CharacterCreationMenu : MonoBehaviour
                 aceharmonicon.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased Aceharmonicon");
+                break;
+            case "Soulplague":
+                unlockedItemManager.unlockedDOTRelic = true;
+                dotDebuff.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Soulplague");
                 break;
         }
         UpdateSelectedRelicDisplay(selectedRelic);

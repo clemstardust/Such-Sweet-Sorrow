@@ -41,6 +41,8 @@ public class PlayerStats : MonoBehaviour
     public bool extraHealthOnHit = false;
     public bool damageBuffOnDodge = false;
     public bool healOnDodge = false;
+
+    public bool applyDotDebuff = false;
     
     public float staminaToDamageMuliplier = 1;
 
@@ -317,5 +319,10 @@ public class PlayerStats : MonoBehaviour
     public void ActivateSiphon()
     {
         siphon = true;
+    }
+
+    public void ActivateDOTDebuff()
+    {
+        applyDotDebuff = true;
     }
 }
