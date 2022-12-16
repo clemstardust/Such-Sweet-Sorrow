@@ -26,6 +26,9 @@ TagManager:
   - RequiredLevelComponents
   - MusicPlayerBackground
   - MusicPlayerBoss
+  - ImmolationFlames
+  - TransformedPlayer
+  - Torch
   layers:
   - Default
   - TransparentFX

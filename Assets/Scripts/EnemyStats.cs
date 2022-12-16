@@ -63,7 +63,7 @@ public class EnemyStats : MonoBehaviour
             GetComponent<AudioSource>().pitch = 0.8f;
             GetComponent<AudioSource>().Play();
             Animator animator = gameObject.GetComponent<Animator>();
-            float damage = playerEquipment.currentWeapon.R1Damage ;
+            float damage = playerEquipment.currentWeapon.R1Damage;
             Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
             /*
             var newBloodParticle = Instantiate(bloodParticles, transform.position, transform.parent.rotation);
@@ -78,7 +78,7 @@ public class EnemyStats : MonoBehaviour
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
             var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
             damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
-            
+
             if (playerStats.staminaToDamage)
             {
                 damage += (playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier;
@@ -101,11 +101,15 @@ public class EnemyStats : MonoBehaviour
             }
             if (playerStats.extraDamageOnUndamaged && maxHealth == currentHealth)
             {
-                damage *= 2;
+                damage *= 4;
             }
             if (playerStats.attackingReducesHealth)
             {
-                damage *= 2.5f;
+                damage *= 2f;
+            }
+            if (playerStats.glass)
+            {
+                damage *= 2;
             }
             print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
@@ -121,10 +125,42 @@ public class EnemyStats : MonoBehaviour
                 healthBar.gameObject.SetActive(false);
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
             }
-
-
         }
     }
+
+    public float countDown = 1;
+    public void TakeImmolationHit()
+    {
+        countDown -= Time.deltaTime;
+        if (countDown <= 0)
+        {
+           
+            GetComponent<AudioSource>().pitch = 0.8f;
+            GetComponent<AudioSource>().Play();
+            Animator animator = gameObject.GetComponent<Animator>();
+            var playerUpgradeHandler = playerStats.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
+
+            float damage = 25 * playerUpgradeHandler.spellDamageMuliplier;
+            Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+            print("Damage from immolation: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
+            currentHealth -= damage;
+            betterHealthBar.Damage(currentHealth, maxHealth);
+            animator.SetBool("Hit", true);
+            gameObject.GetComponent<EnemyAI>().rotated = false;
+            if (playerStats.extraHealthOnHit)
+            {
+                playerStats.UpgradeHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+            }
+            if (currentHealth <= 0)
+            {
+                healthBar.gameObject.SetActive(false);
+                GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
+            }
+            countDown = 1;
+            
+        }
+    }
+
     public void TakeHit(int damage)
     {
         GetComponent<AudioSource>().pitch = 0.8f;

@@ -8,7 +8,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public float damageMultiplier = 1;
     public float healthMultiplier = 1;
     public float staminaMultiplier = 1;
-    public float spellDamageMuliplier = 0;
+    public float spellDamageMuliplier = 1;
     public float spellCostDownPercent = 1;
     public float spellDurationMultiplier = 1;
     public float healthLowDamageMultiplier = 2f;

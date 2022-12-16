@@ -87,7 +87,14 @@ public class PlayerActionHandler : MonoBehaviour
 	public bool transformed = false;
 
     private bool canCast = false;
-	
+	public enum CurrentSpell
+    {
+		Soulfire,
+		Immolation,
+		SoulForm,
+		WhisperingVoices
+    }
+	public static CurrentSpell currentSpell;
     //private const float _threshold = 0.01f;
 
     //public bool combo = false;
@@ -147,6 +154,9 @@ public class PlayerActionHandler : MonoBehaviour
 		//Debug.Log(Application.persistentDataPath);
 		defaultAttackHitboxObject = attackHitbox;
 		altForm.SetActive(false);
+
+		immolationFlames.SetActive(false);
+
 		StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 20, 0));
 	}
 	private void Update()
@@ -229,33 +239,108 @@ public class PlayerActionHandler : MonoBehaviour
 
     }
 
-	
+
+	public GameObject immolationFlames;
+	public Material defaultPlayerMat;
+	public Material transformedPlayerMat;
+	public bool isGhost;
+	public GameObject torch;
+	public GameObject soulLight;
 	private void Cast()
 	{
-        if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
-		{
-			weaponBuffActive = !weaponBuffActive;
-			animator.SetBool("Cast", true);
-			animator.SetBool("isInteracting", true);
-        }
-		else
-		{
-            animator.SetBool("Cast", false);
-        }
-		if (weaponBuffActive && playerStats.currentSoul > 1)
-		{
-			playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
-            if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
-                gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
-			attackMultiplier = 2f + playerUpgradeHandler.spellDamageMuliplier;
+		switch (currentSpell)
+        {
+			case CurrentSpell.Soulfire:
+				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				{
+					weaponBuffActive = !weaponBuffActive;
+					animator.SetBool("Cast", true);
+					animator.SetBool("isInteracting", true);
+				}
+				else
+				{
+					animator.SetBool("Cast", false);
+				}
+				if (weaponBuffActive && playerStats.currentSoul > 1)
+				{
+					playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
+					attackMultiplier = 2f + playerUpgradeHandler.spellDamageMuliplier;
+				}
+				else
+				{
+					weaponBuffActive = false;
+					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+					attackMultiplier = 1f;
+				}
+				break;
+			case CurrentSpell.Immolation:
+				if (Input.GetKeyDown(KeyCode.Q) && immolationFlames.activeSelf)
+				{
+					immolationFlames.SetActive(false);
+				}
+				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				{
+					//animator.SetBool("Cast", true);
+					//animator.SetBool("isInteracting", true);
+					immolationFlames.SetActive(true);
+				}
+				else
+				{
+					animator.SetBool("Cast", false);
+				}
+				if (immolationFlames.activeSelf && playerStats.currentSoul > 1)
+				{
+					playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+				}
+				else
+				{
+					immolationFlames.SetActive(false);
+				}
+				
+				break;
+			case CurrentSpell.SoulForm:
+				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				{
+					isGhost = !isGhost;
+				}
+				if (isGhost && playerStats.currentSoul > 1)
+				{
+					playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					foreach (MeshRenderer mesh in gameObject.GetComponentsInChildren<MeshRenderer>())
+                    {
+						if (mesh.gameObject.tag == "Weapon")
+							mesh.material = buffedMaterial;
+					}
+					foreach (SkinnedMeshRenderer mesh in gameObject.GetComponentsInChildren<SkinnedMeshRenderer>())
+					{
+						if (mesh.gameObject.tag == "Player")
+							mesh.material = buffedMaterial;
+					}
+					torch.SetActive(false);
+					soulLight.SetActive(true);
+				}
+				else
+				{
+					isGhost = false;
+					foreach (MeshRenderer mesh in gameObject.GetComponentsInChildren<MeshRenderer>())
+					{
+						if (mesh.gameObject.tag == "Weapon")
+							mesh.material = defaultMaterial;
+					}
+					foreach (SkinnedMeshRenderer mesh in gameObject.GetComponentsInChildren<SkinnedMeshRenderer>())
+					{
+						if (mesh.gameObject.tag == "Player")
+							mesh.material = defaultPlayerMat;
+					}
+					torch.SetActive(true);
+					soulLight.SetActive(false);
+				}
+				break;
 		}
-		else
-		{
-			weaponBuffActive = false;
-			if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
-				gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
-            attackMultiplier = 1f;
-        }
+        
 
 	}
 
@@ -460,21 +545,18 @@ public class PlayerActionHandler : MonoBehaviour
 	{ 
         if (Input.GetKeyDown(KeyCode.Mouse0) && animator.GetBool("AttackR1"))
         {
-			if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
             animator.SetBool("Combo", true);
             attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
 			attackStaminaCost *= (int) playerUpgradeHandler.extraStaminaToDamageMultiplier;
         }
         else if (Input.GetKeyDown(KeyCode.Mouse0) && playerStats.currentStamina > 0)
         {
-			if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
 			attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
             attackStaminaCost *= (int)playerUpgradeHandler.extraStaminaToDamageMultiplier;
             animator.SetBool("AttackR1", true);
         } 
         else if (Input.GetKeyDown(KeyCode.Mouse1) && playerStats.currentStamina > 0)
 		{
-			if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
 			attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost * 2;
             attackStaminaCost *= (int)playerUpgradeHandler.extraStaminaToDamageMultiplier;
             animator.SetBool("AttackR2", input.attack2);
@@ -505,6 +587,7 @@ public class PlayerActionHandler : MonoBehaviour
 	}
 	public void EnableCollider()
 	{
+		if (isGhost) return;
 		attackHitbox.dmgCollider.enabled = true;
 		altaltAttackCollider.enabled = true;
     }
@@ -515,7 +598,8 @@ public class PlayerActionHandler : MonoBehaviour
     }
 	public void BeginAttack()
     {
-        _speed = 0;
+		if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
+		_speed = 0;
 		playerStats.RemoveStamina(attackStaminaCost);
         //playerStats.currentStamina -= attackStaminaCost;
         animator.SetBool("isInteracting", true);
@@ -532,7 +616,21 @@ public class PlayerActionHandler : MonoBehaviour
 	public void SoulfireWeapon()
 	{
 		canCast = true;
+		currentSpell = CurrentSpell.Soulfire;
 	}
 
-    
+	public void ActivateImmolation()
+    {
+		canCast = true;
+		currentSpell = CurrentSpell.Immolation;
+	}
+
+	public void ActivateSoulform()
+    {
+		canCast = true;
+		currentSpell = CurrentSpell.SoulForm;
+    }
+
+
+
 }

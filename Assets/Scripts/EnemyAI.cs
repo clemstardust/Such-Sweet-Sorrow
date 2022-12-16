@@ -28,6 +28,8 @@ public class EnemyAI : MonoBehaviour
 
     Vector3 spawn;
     [SerializeField] LayerMask detectionLayer;
+
+    public PlayerActionHandler playerActionHandler;
     private void Awake()
     {
         enemyManager = GetComponent<EnemyManager>();
@@ -35,7 +37,7 @@ public class EnemyAI : MonoBehaviour
         enemyStats = GetComponent<EnemyStats>();
         agent = GetComponent<NavMeshAgent>();
         attackHitbox = GetComponentInChildren<AttackHitboxObject>();
-
+        playerActionHandler = FindObjectOfType<PlayerActionHandler>();
         spawn = transform.position;
         rotation = transform.rotation;
 
@@ -45,7 +47,15 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         if (currentTarget != null)
+        {
             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+            if (distanceToTarget <= 3 && playerActionHandler.immolationFlames.activeSelf)
+                enemyStats.TakeImmolationHit();
+        }
+        if (playerActionHandler.isGhost)
+        {
+            currentTarget = null;
+        }
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
         // This would cast rays only against colliders in layer 8.
@@ -54,12 +64,13 @@ public class EnemyAI : MonoBehaviour
         layerMask = ~layerMask;
 #pragma warning restore IDE0059 // Unnecessary assignment of a value
 
+        
     }
 
     private PlayerStats playerStats;
     public void HandleDetection()
     {
-        
+       
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
 
@@ -220,9 +231,9 @@ public class EnemyAI : MonoBehaviour
         if (!animator.GetBool("Dead"))
         {
             enemyStats.TakeHit(other);
-        }
-            
+        }  
     }
+
     public void Dead()
     {
         animator.SetBool("Dead", true);

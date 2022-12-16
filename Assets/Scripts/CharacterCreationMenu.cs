@@ -65,14 +65,10 @@ public class CharacterCreationMenu : MonoBehaviour
         unlockedItemManager = FindObjectOfType<UnlockedItemManager>();
         gameSaveHandler = FindObjectOfType<GameSaveHandler>();
 
-        try
-        {
-            gameSaveHandler.LoadGame();
-        }
-        catch
-        {
-            gameSaveHandler.SaveGame(unlockedItemManager);
-        }
+
+        gameSaveHandler.LoadGame();
+
+
 
         extraSoul.unlocked = unlockedItemManager.unlockedExtraSoulsRing;
         soulShield.unlocked = unlockedItemManager.unlockedSoulshield;

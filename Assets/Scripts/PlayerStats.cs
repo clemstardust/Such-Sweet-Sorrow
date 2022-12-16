@@ -46,6 +46,7 @@ public class PlayerStats : MonoBehaviour
     public bool extraDamageOnUndamaged = false;
     public bool extraXP = false;
     public bool attackingReducesHealth = false;
+    public bool glass = false;
 
 
     public float staminaToDamageMuliplier = 1;
@@ -388,5 +389,13 @@ public class PlayerStats : MonoBehaviour
     public void ActivateAttackingReducesHealth()
     {
         attackingReducesHealth = true;
+    }
+
+    public void ActivateGlass()
+    {
+        glass = true;
+        maxHealth /= 2;
+        currentHealth = maxHealth;
+        Heal((int)(maxHealth - currentHealth));
     }
 }
