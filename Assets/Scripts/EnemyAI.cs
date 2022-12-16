@@ -130,7 +130,25 @@ public class EnemyAI : MonoBehaviour
             }
         //}*/
         FaceTarget();
-
+        agent.SetDestination(currentTarget.transform.position);
+        print(agent.velocity.magnitude);
+        animator.SetFloat("Speed", 2, 1f, Time.deltaTime);
+        agent.speed = 0;
+        /*
+        print("Remaining dist: " + Vector3.Distance(transform.position, currentTarget.transform.position) + " Stopping distance: " + (agent.stoppingDistance + 0.1));
+        if (Vector3.Distance(transform.position, currentTarget.transform.position) > agent.stoppingDistance)
+        {
+            //animator.SetFloat("Speed", 2, 0.1f, Time.deltaTime);
+            animator.SetFloat("Speed", 2);
+            print("Set walkiing");
+        }
+        else
+        {
+            //animator.SetFloat("Speed", 0, 0.1f, Time.deltaTime);
+            animator.SetFloat("Speed", 0);
+            print("Set idle");
+        }*/
+        /*
         if (Vector3.Distance(currentTarget.transform.position, transform.position) <= enemyStats.attackRange)
         {
             agent.SetDestination(transform.position);
@@ -144,7 +162,7 @@ public class EnemyAI : MonoBehaviour
             animator.SetFloat("Speed", 2);
             //agent.Resume();
             agent.isStopped = false;
-        }
+        }*/
     }
 
     //I stole this from https://answers.unity.com/questions/1410325/question-about-navmesh-agent-and-rotation.html
@@ -163,17 +181,21 @@ public class EnemyAI : MonoBehaviour
     public void Attack()
     {
         FaceTarget();
+        animator.SetFloat("Speed", 0, 1f, Time.deltaTime);
+        agent.speed = 0;
         //rotation = Quaternion.LookRotation(currentTarget.gameObject.transform.position, Vector3.up);
         //agent.transform.rotation = rotation;        
         //rotation = transform.rotation;
         int randAttackChance = Mathf.RoundToInt(UnityEngine.Random.Range(0, 4));
         if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R2StaminaCost && randAttackChance == 1)
         {
+            agent.isStopped = true;
             currentAttack = CurrentAttack.R2;
             animator.SetBool("Attack2", true);
         }
         else if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R1StaminaCost && randAttackChance == 2)
         {
+            agent.isStopped = true;
             currentAttack = CurrentAttack.R1;
             animator.SetBool("Attack", true);
             animator.SetInteger("Combo", 2);
@@ -184,6 +206,7 @@ public class EnemyAI : MonoBehaviour
         }
         else if (enemyStats.currentStamina > enemyManager.equippedWeapon.R1StaminaCost)
         {
+            agent.isStopped = true;
             animator.SetBool("Attack", true);
             animator.SetInteger("Combo", 0);
             currentAttack = CurrentAttack.R1;
@@ -195,7 +218,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Idle()
     {
-        animator.SetFloat("Speed", 0);
+        animator.SetFloat("Speed", 0, 1f, Time.deltaTime);
     }
 
     public void DisableCombo()
@@ -220,10 +243,11 @@ public class EnemyAI : MonoBehaviour
         }
         enemyStats.LoseStamina(staminaCost);
     }
-    private void DisableCollider()
+    public void DisableCollider()
     {
         attackHitbox.dmgCollider.enabled = false;
         rotated = false;
+        agent.isStopped = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -248,6 +272,7 @@ public class EnemyAI : MonoBehaviour
         {
             col.enabled = false;
         }
+        DisableCollider();
         playerStats.EnemyKilled(enemyStats.enemySoulLevel);
     }
 }

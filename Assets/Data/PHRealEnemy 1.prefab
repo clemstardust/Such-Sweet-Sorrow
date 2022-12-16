@@ -386,6 +386,7 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 8
+  playerActionHandler: {fileID: 0}
 --- !u!114 &5139057758883138936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +404,7 @@ MonoBehaviour:
   maxStamina: 50
   currentStamina: 0
   staminaRegenRate: 0.5
-  attackRange: 4
+  attackRange: 3
   enemySoulLevel: 100
   hitParticles: {fileID: 8806690720212315413, guid: aa16f33a71892544da9163db7fdf56bd,
     type: 3}
@@ -421,6 +422,7 @@ MonoBehaviour:
     type: 3}
   bloodParticles1: {fileID: 1834194341294532, guid: d5f26854a8904624c8073139cd2eb346,
     type: 3}
+  countDown: 1
 --- !u!114 &5139057758883138939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +451,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 1
+  m_Speed: 0
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 2.5

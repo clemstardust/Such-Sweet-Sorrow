@@ -31,6 +31,7 @@ public class EnemyStats : MonoBehaviour
 
     private PlayerStats playerStats;
     private PlayerUpgradeHandler playerUpgradeHandler;
+    private EnemyAI enemyAI;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class EnemyStats : MonoBehaviour
         healthBar.maxValue = maxHealth;
         betterHealthBar.SetHealth(betterHealthBar.GetHealthNormalized(currentHealth,maxHealth));
         maxStamina = 25;
+        enemyAI = GetComponent<EnemyAI>();
     }
 
     private void FixedUpdate()
@@ -134,6 +136,7 @@ public class EnemyStats : MonoBehaviour
                 healthBar.gameObject.SetActive(false);
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
             }
+            enemyAI.DisableCollider();
         }
     }
 
@@ -166,7 +169,7 @@ public class EnemyStats : MonoBehaviour
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
             }
             countDown = 1;
-            
+            enemyAI.DisableCollider();
         }
     }
 
@@ -190,6 +193,7 @@ public class EnemyStats : MonoBehaviour
             healthBar.gameObject.SetActive(false);
             GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
         }
+        enemyAI.DisableCollider();
     }
 
     public void TakeDOTHit(int damage)
@@ -213,6 +217,7 @@ public class EnemyStats : MonoBehaviour
 
         GetComponent<AudioSource>().pitch = 0.8f;
         GetComponent<AudioSource>().Play();
+        enemyAI.DisableCollider();
     }
 
     public void LoseStamina(int amount)
