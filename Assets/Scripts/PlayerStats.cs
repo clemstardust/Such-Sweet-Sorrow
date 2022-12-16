@@ -47,7 +47,7 @@ public class PlayerStats : MonoBehaviour
     public bool extraXP = false;
     public bool attackingReducesHealth = false;
     public bool glass = false;
-
+    public bool soulOnHit = false;
 
     public float staminaToDamageMuliplier = 1;
 
@@ -397,5 +397,15 @@ public class PlayerStats : MonoBehaviour
         maxHealth /= 2;
         currentHealth = maxHealth;
         Heal((int)(maxHealth - currentHealth));
+    }
+
+    public void ActivateSoulOnHit()
+    {
+        soulOnHit = true;
+    }
+
+    public void ActivateStartAtLevel3()
+    {
+        currentXP += 350;
     }
 }

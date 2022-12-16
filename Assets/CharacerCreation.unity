@@ -1386,7 +1386,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   extraSoul: {fileID: 11400000, guid: 7d4c09ec8b246e24498cd0977a4273ee, type: 2}
   soulShield: {fileID: 11400000, guid: 99fc071ae5043284e83782a50d5d7963, type: 2}
   weaponBuff: {fileID: 11400000, guid: 671202da1871d9d4fb4d91c62025e79a, type: 2}

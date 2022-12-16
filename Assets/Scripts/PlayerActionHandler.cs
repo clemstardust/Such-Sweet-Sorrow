@@ -92,7 +92,8 @@ public class PlayerActionHandler : MonoBehaviour
 		Soulfire,
 		Immolation,
 		SoulForm,
-		WhisperingVoices
+		WhisperingVoices,
+		ChannelSoulToDamage
     }
 	public static CurrentSpell currentSpell;
     //private const float _threshold = 0.01f;
@@ -246,6 +247,8 @@ public class PlayerActionHandler : MonoBehaviour
 	public bool isGhost;
 	public GameObject torch;
 	public GameObject soulLight;
+
+	public float extraDamageFromSoul = 0;
 	private void Cast()
 	{
 		switch (currentSpell)
@@ -337,6 +340,30 @@ public class PlayerActionHandler : MonoBehaviour
 					}
 					torch.SetActive(true);
 					soulLight.SetActive(false);
+				}
+				break;
+			case CurrentSpell.ChannelSoulToDamage:
+				if (Input.GetKey(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				{
+					weaponBuffActive = !weaponBuffActive;
+					extraDamageFromSoul += 200 * Time.deltaTime;
+					playerStats.currentSoul -= 100 * Time.deltaTime;
+					animator.SetBool("Heal", true);
+				}
+                else if (!Input.GetKey(KeyCode.Q))
+                {
+					animator.SetBool("Heal", false);
+                }
+         
+				if (extraDamageFromSoul > 0)
+                {
+					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
+				}
+				else
+				{
+					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
 				}
 				break;
 		}
@@ -631,6 +658,11 @@ public class PlayerActionHandler : MonoBehaviour
 		currentSpell = CurrentSpell.SoulForm;
     }
 
+	public void ActivateExtraDamageForSoul()
+    {
+		canCast = true;
+		currentSpell = CurrentSpell.ChannelSoulToDamage;
+    }
 
 
 }

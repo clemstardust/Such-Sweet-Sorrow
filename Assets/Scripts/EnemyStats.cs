@@ -77,7 +77,12 @@ public class EnemyStats : MonoBehaviour
             var playerStats = other.GetComponentInParent<PlayerStats>();
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
             var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
+            damage += playerActionHandler.extraDamageFromSoul;
+            if (playerActionHandler.extraDamageFromSoul > 0)
+                playerActionHandler.extraDamageFromSoul = 0;
             damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
+
+            
 
             if (playerStats.staminaToDamage)
             {
@@ -119,6 +124,10 @@ public class EnemyStats : MonoBehaviour
             if (playerStats.extraHealthOnHit)
             {
                 playerStats.UpgradeHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+            }
+            if (playerStats.soulOnHit)
+            {
+                playerStats.currentSoul += 15;
             }
             if (currentHealth <= 0)
             {

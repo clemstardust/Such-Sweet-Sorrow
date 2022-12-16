@@ -26,7 +26,6 @@ public class CharacterCreationMenu : MonoBehaviour
     public RelicItem soulOnHit;
     public RelicItem soulToDamage;
     public RelicItem startAtLevel3;
-    public RelicItem whisperingVoices;
 
     private int selectedRelic = 0;
     public Image relicImage;
@@ -87,7 +86,6 @@ public class CharacterCreationMenu : MonoBehaviour
         soulOnHit.unlocked = unlockedItemManager.unlockedSoulOnHit;
         soulToDamage.unlocked = unlockedItemManager.unlockedSoulToDamage;
         startAtLevel3.unlocked = unlockedItemManager.unlockedStartAtLevel3;
-        whisperingVoices.unlocked = unlockedItemManager.unlockedWhisperingVoices;
 
         UnlockedRelics[0] = extraSoul;
         UnlockedRelics[1] = soulShield;
@@ -106,7 +104,6 @@ public class CharacterCreationMenu : MonoBehaviour
         UnlockedRelics[13] = soulOnHit;
         UnlockedRelics[14] = soulToDamage;
         UnlockedRelics[15] = startAtLevel3;
-        UnlockedRelics[16] = whisperingVoices;
 
         sword.unlocked = unlockedItemManager.unlockedSword;
         mace.unlocked = unlockedItemManager.unlockedMace;
@@ -345,12 +342,6 @@ public class CharacterCreationMenu : MonoBehaviour
                 startAtLevel3.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased Infernal Pact");
-                break;
-            case "Whispering Voices":
-                unlockedItemManager.unlockedWhisperingVoices = true;
-                whisperingVoices.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
-                print("Purchased Whispering Voices");
                 break;
         }
         UpdateSelectedRelicDisplay(selectedRelic);
