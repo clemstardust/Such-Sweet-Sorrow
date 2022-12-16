@@ -45,7 +45,9 @@ public class PlayerStats : MonoBehaviour
     public bool applyDotDebuff = false;
     public bool extraDamageOnUndamaged = false;
     public bool extraXP = false;
-    
+    public bool attackingReducesHealth = false;
+
+
     public float staminaToDamageMuliplier = 1;
 
     public static bool isDead;
@@ -148,6 +150,44 @@ public class PlayerStats : MonoBehaviour
 
     }
 
+    public void TakeHit(int num)
+    {
+        double chanceToBlock = CalculateTougherTimes(playerUpgradeHandler.numTougherTimes);
+        Random rand = new Random();
+        double randomNumber = rand.NextDouble();
+        if (randomNumber <= chanceToBlock)
+        {
+            PlayerActionHandler.isInvul = true;
+            print("Dodged attack automatically");
+
+        }
+        float damage = num;
+        if (!PlayerActionHandler.isInvul)
+        {
+            PlayerActionHandler.isInvul = true;
+            if (soulShield)
+            {
+                if (currentSoul >= damage)
+                {
+                    currentSoul -= damage;
+                    damage = 0;
+                }
+                else
+                {
+                    damage -= currentSoul;
+                    currentSoul = 0;
+                }
+            }
+            currentHealth -= damage;
+            FindObjectOfType<AudioManager>().PlayerHurtSound();
+            Instantiate(blood[UnityEngine.Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+            FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
+        }
+        uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
+    }
+
+
+
     public void TakeHit(Collider other)
     {
         
@@ -156,7 +196,7 @@ public class PlayerStats : MonoBehaviour
             double chanceToBlock = CalculateTougherTimes(playerUpgradeHandler.numTougherTimes);
             Random rand = new Random();
             double randomNumber = rand.NextDouble();
-            print("Chance to block: " + chanceToBlock + " | random number: " + randomNumber);
+            //print("Chance to block: " + chanceToBlock + " | random number: " + randomNumber);
             if (randomNumber <= chanceToBlock)
             {
                 PlayerActionHandler.isInvul = true;
@@ -307,6 +347,7 @@ public class PlayerStats : MonoBehaviour
         currentHealth += num;
         FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
     }
+    
 
     public void PhilospherRing()
     {
@@ -342,5 +383,10 @@ public class PlayerStats : MonoBehaviour
     public void ActivateExtraXP()
     {
         extraXP = true;
+    }
+
+    public void ActivateAttackingReducesHealth()
+    {
+        attackingReducesHealth = true;
     }
 }

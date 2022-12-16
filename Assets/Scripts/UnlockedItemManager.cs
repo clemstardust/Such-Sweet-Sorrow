@@ -23,4 +23,12 @@ public class UnlockedItemManager : MonoBehaviour
     public bool unlockedExtraDamageOnUndamaged = false;
     public bool unlockedExtraXP = false;
     public bool unlockedSoulOnHit = false;
+
+    public bool unlockedAttackingReducesHealth = false;
+    public bool unlockedGlass = false;
+    public bool unlockedImmolation = false;
+    public bool unlockedSoulForm = false;
+    public bool unlockedSoulToDamage = false;
+    public bool unlockedStartAtLevel3 = false;
+    public bool unlockedWhisperingVoices = false;
 }

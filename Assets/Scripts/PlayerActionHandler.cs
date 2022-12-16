@@ -460,19 +460,22 @@ public class PlayerActionHandler : MonoBehaviour
 	{ 
         if (Input.GetKeyDown(KeyCode.Mouse0) && animator.GetBool("AttackR1"))
         {
+			if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
             animator.SetBool("Combo", true);
             attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
 			attackStaminaCost *= (int) playerUpgradeHandler.extraStaminaToDamageMultiplier;
         }
         else if (Input.GetKeyDown(KeyCode.Mouse0) && playerStats.currentStamina > 0)
         {
-            attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
+			if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
+			attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost;
             attackStaminaCost *= (int)playerUpgradeHandler.extraStaminaToDamageMultiplier;
             animator.SetBool("AttackR1", true);
         } 
         else if (Input.GetKeyDown(KeyCode.Mouse1) && playerStats.currentStamina > 0)
 		{
-            attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost * 2;
+			if (playerStats.attackingReducesHealth) playerStats.TakeHit(20);
+			attackStaminaCost = playerEquipment.currentWeapon.R1StaminaCost * 2;
             attackStaminaCost *= (int)playerUpgradeHandler.extraStaminaToDamageMultiplier;
             animator.SetBool("AttackR2", input.attack2);
         }

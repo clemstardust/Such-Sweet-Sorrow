@@ -46,7 +46,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
         xpBar.GetComponent<Slider>().value = playerStats.currentXP;
 
         //print(xpToNextLevel);
-        if (playerStats.currentXP >= xpToNextLevel && upgradeMenu.activeSelf == false)
+        if (playerStats.currentXP >= xpToNextLevel && upgradeMenu.activeSelf == false && playerStats.currentHealth > 0)
         {
             upgradeMenu.SetActive(true);
             upgradeMenu.GetComponent<UpgradeMenu>().ReloadMenu();

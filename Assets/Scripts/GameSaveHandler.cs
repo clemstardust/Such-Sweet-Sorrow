@@ -22,7 +22,16 @@ public class GameSaveHandler : MonoBehaviour
         writer.Write("unlockedDOTRelic", unlockedItemManager.unlockedDOTRelic);
         writer.Write("unlockedExtraDamageOnUndamaged", unlockedItemManager.unlockedExtraDamageOnUndamaged);
         writer.Write("unlockedExtraXP", unlockedItemManager.unlockedExtraXP);
-        //writer.Write("unlockedSoulOnHit", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedSoulOnHit", unlockedItemManager.unlockedSoulOnHit);
+
+        writer.Write("unlockedAttackingReducesHealth", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedGlass", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedImmolation", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedSoulForm", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedSoulOnHit", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedSoulToDamage", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedStartAtLevel3", unlockedItemManager.unlockedSoulOnHit);
+        writer.Write("unlockedWhisperingVoices", unlockedItemManager.unlockedSoulOnHit);
         writer.Commit();
     }
     public void LoadGame()
@@ -43,6 +52,15 @@ public class GameSaveHandler : MonoBehaviour
         unlocks.unlockedDOTRelic = reader.Read<bool>("unlockedDOTRelic");
         unlocks.unlockedExtraDamageOnUndamaged = reader.Read<bool>("unlockedExtraDamageOnUndamaged");
         unlocks.unlockedExtraXP = reader.Read<bool>("unlockedExtraXP");
-        //unlocks.unlockedSoulOnHit = reader.Read<bool>("unlockedSoulOnHit");
+        unlocks.unlockedSoulOnHit = reader.Read<bool>("unlockedSoulOnHit");
+
+        unlocks.unlockedAttackingReducesHealth = reader.Read<bool>("unlockedAttackingReducesHealth");
+        unlocks.unlockedGlass = reader.Read<bool>("unlockedGlass");
+        unlocks.unlockedImmolation = reader.Read<bool>("unlockedImmolation");
+        unlocks.unlockedSoulForm = reader.Read<bool>("unlockedSoulForm");
+        unlocks.unlockedSoulOnHit = reader.Read<bool>("unlockedSoulOnHit");
+        unlocks.unlockedSoulToDamage = reader.Read<bool>("unlockedSoulToDamage");
+        unlocks.unlockedStartAtLevel3 = reader.Read<bool>("unlockedStartAtLevel3");
+        unlocks.unlockedWhisperingVoices = reader.Read<bool>("unlockedWhisperingVoices");
     }    
 }

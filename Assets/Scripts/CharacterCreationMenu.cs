@@ -17,7 +17,16 @@ public class CharacterCreationMenu : MonoBehaviour
     public RelicItem aceharmonicon;
     public RelicItem dotDebuff;
     public RelicItem extraDamageOnUndamaged;
+
     public RelicItem extraXP;
+    public RelicItem attackingReducesHealth;
+    public RelicItem glass;
+    public RelicItem immolation;
+    public RelicItem soulForm;
+    public RelicItem soulOnHit;
+    public RelicItem soulToDamage;
+    public RelicItem startAtLevel3;
+    public RelicItem whisperingVoices;
 
     private int selectedRelic = 0;
     public Image relicImage;
@@ -52,6 +61,62 @@ public class CharacterCreationMenu : MonoBehaviour
 
     private void Start()
     {
+        playerWeapons = FindObjectOfType<WeaponEquipHandler>().UpdateWeaponItems();
+        unlockedItemManager = FindObjectOfType<UnlockedItemManager>();
+        gameSaveHandler = FindObjectOfType<GameSaveHandler>();
+
+        try
+        {
+            gameSaveHandler.LoadGame();
+        }
+        catch
+        {
+            gameSaveHandler.SaveGame(unlockedItemManager);
+        }
+
+        extraSoul.unlocked = unlockedItemManager.unlockedExtraSoulsRing;
+        soulShield.unlocked = unlockedItemManager.unlockedSoulshield;
+        weaponBuff.unlocked = unlockedItemManager.unlockedSoulfire;
+        extraLife.unlocked = unlockedItemManager.unlockedExtraLivesRing;
+        soulGenerator.unlocked = unlockedItemManager.unlockedSoulGenerator;
+        aceharmonicon.unlocked = unlockedItemManager.unlockedDoubleUpgrades;
+        dotDebuff.unlocked = unlockedItemManager.unlockedDOTRelic;
+        extraDamageOnUndamaged.unlocked = unlockedItemManager.unlockedExtraDamageOnUndamaged;
+        extraXP.unlocked = unlockedItemManager.unlockedExtraXP;
+
+        attackingReducesHealth.unlocked = unlockedItemManager.unlockedAttackingReducesHealth;
+        glass.unlocked = unlockedItemManager.unlockedGlass;
+        immolation.unlocked = unlockedItemManager.unlockedImmolation;
+        soulForm.unlocked = unlockedItemManager.unlockedSoulForm;
+        soulOnHit.unlocked = unlockedItemManager.unlockedSoulOnHit;
+        soulToDamage.unlocked = unlockedItemManager.unlockedSoulToDamage;
+        startAtLevel3.unlocked = unlockedItemManager.unlockedStartAtLevel3;
+        whisperingVoices.unlocked = unlockedItemManager.unlockedWhisperingVoices;
+
+        UnlockedRelics[0] = extraSoul;
+        UnlockedRelics[1] = soulShield;
+        UnlockedRelics[2] = weaponBuff;
+        UnlockedRelics[3] = extraLife;
+        UnlockedRelics[4] = soulGenerator;
+        UnlockedRelics[5] = aceharmonicon;
+        UnlockedRelics[6] = dotDebuff;
+        UnlockedRelics[7] = extraDamageOnUndamaged;
+        UnlockedRelics[8] = extraXP;
+
+        UnlockedRelics[9] = attackingReducesHealth;
+        UnlockedRelics[10] = glass;
+        UnlockedRelics[11] = immolation;
+        UnlockedRelics[12] = soulForm;
+        UnlockedRelics[13] = soulOnHit;
+        UnlockedRelics[14] = soulToDamage;
+        UnlockedRelics[15] = startAtLevel3;
+        UnlockedRelics[16] = whisperingVoices;
+
+        sword.unlocked = unlockedItemManager.unlockedSword;
+        mace.unlocked = unlockedItemManager.unlockedMace;
+        bigSword.unlocked = unlockedItemManager.unlockedBigSword;
+        bigMace.unlocked = unlockedItemManager.unlockedBigMace;
+
         var musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>();
         StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 3, 1));
         if (musicPlayer.isPlaying != true)
@@ -64,25 +129,11 @@ public class CharacterCreationMenu : MonoBehaviour
 
         Debug.Log(Application.persistentDataPath);
 
-        playerWeapons = FindObjectOfType<WeaponEquipHandler>().UpdateWeaponItems();
-        unlockedItemManager = FindObjectOfType<UnlockedItemManager>();
-        gameSaveHandler = FindObjectOfType<GameSaveHandler>();
+        
         UpdateSelectedWeaponDisplay(selectedWeapon);
         UpdateSelectedRelicDisplay(selectedRelic);
 
-        gameSaveHandler.LoadGame();
-
-        extraSoul.unlocked = unlockedItemManager.unlockedExtraSoulsRing;
-        soulShield.unlocked = unlockedItemManager.unlockedSoulshield;
-        weaponBuff.unlocked = unlockedItemManager.unlockedSoulfire;
-        extraLife.unlocked = unlockedItemManager.unlockedExtraLivesRing;
-        soulGenerator.unlocked = unlockedItemManager.unlockedSoulGenerator;
-        aceharmonicon.unlocked = unlockedItemManager.unlockedDoubleUpgrades;
-
-        sword.unlocked = unlockedItemManager.unlockedSword;
-        mace.unlocked = unlockedItemManager.unlockedMace;
-        bigSword.unlocked = unlockedItemManager.unlockedBigSword;
-        bigMace.unlocked = unlockedItemManager.unlockedBigMace;
+        
 
     }
 
@@ -232,7 +283,7 @@ public class CharacterCreationMenu : MonoBehaviour
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased soul siphon");
                 break;
-            case "Aceharmonicon":
+            case "Necroharmonicon":
                 unlockedItemManager.unlockedDoubleUpgrades = true;
                 aceharmonicon.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
@@ -255,6 +306,55 @@ public class CharacterCreationMenu : MonoBehaviour
                 extraXP.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased mindshreeker");
+                break;
+
+            case "Witchbane":
+                unlockedItemManager.unlockedAttackingReducesHealth = true;
+                attackingReducesHealth.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Witchbane");
+                break;
+            case "Glass Shard":
+                unlockedItemManager.unlockedGlass = true;
+                glass.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Glass Shard");
+                break;
+            case "Immolation":
+                unlockedItemManager.unlockedImmolation = true;
+                immolation.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased immolation");
+                break;
+            case "Soulform":
+                unlockedItemManager.unlockedSoulForm = true;
+                soulForm.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Soulform");
+                break;
+            case "Soulcutter":
+                unlockedItemManager.unlockedSoulOnHit = true;
+                soulOnHit.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Soulcutter");
+                break;
+            case "Essence Flux":
+                unlockedItemManager.unlockedSoulToDamage = true;
+                soulToDamage.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Essence Flux");
+                break;
+            case "Infernal Pact":
+                unlockedItemManager.unlockedStartAtLevel3 = true;
+                startAtLevel3.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Infernal Pact");
+                break;
+            case "Whispering Voices":
+                unlockedItemManager.unlockedWhisperingVoices = true;
+                whisperingVoices.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Whispering Voices");
                 break;
         }
         UpdateSelectedRelicDisplay(selectedRelic);

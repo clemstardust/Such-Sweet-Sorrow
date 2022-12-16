@@ -1370,15 +1370,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnlockedRelics:
-  - {fileID: 11400000, guid: 7d4c09ec8b246e24498cd0977a4273ee, type: 2}
-  - {fileID: 11400000, guid: 99fc071ae5043284e83782a50d5d7963, type: 2}
-  - {fileID: 11400000, guid: 671202da1871d9d4fb4d91c62025e79a, type: 2}
-  - {fileID: 11400000, guid: b07978e70173e7349958fdbd904f5345, type: 2}
-  - {fileID: 11400000, guid: fd279161537fb4e49ad4fd3b003de50b, type: 2}
-  - {fileID: 11400000, guid: 4bb6364422ca271458ac0ac3a7361db8, type: 2}
-  - {fileID: 11400000, guid: 9ea68d7d597b8ea4aa3664fff0236209, type: 2}
-  - {fileID: 11400000, guid: 49eafe9835bb5564a98dab9387a6c994, type: 2}
-  - {fileID: 11400000, guid: d3c984bd23e10fd4b9498a82853d87cc, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   extraSoul: {fileID: 11400000, guid: 7d4c09ec8b246e24498cd0977a4273ee, type: 2}
   soulShield: {fileID: 11400000, guid: 99fc071ae5043284e83782a50d5d7963, type: 2}
   weaponBuff: {fileID: 11400000, guid: 671202da1871d9d4fb4d91c62025e79a, type: 2}
@@ -1389,6 +1397,15 @@ MonoBehaviour:
   extraDamageOnUndamaged: {fileID: 11400000, guid: 49eafe9835bb5564a98dab9387a6c994,
     type: 2}
   extraXP: {fileID: 11400000, guid: d3c984bd23e10fd4b9498a82853d87cc, type: 2}
+  attackingReducesHealth: {fileID: 11400000, guid: 71204b7de1d5d964482cedb9f314215d,
+    type: 2}
+  glass: {fileID: 11400000, guid: 4b2ed77883c0ac04a9fcbfe629dbf10e, type: 2}
+  immolation: {fileID: 11400000, guid: 9875e7afc4f85e2479c4bb3676347d7d, type: 2}
+  soulForm: {fileID: 11400000, guid: 0e8697a8d4961d647a78060d15bce46a, type: 2}
+  soulOnHit: {fileID: 11400000, guid: d63ac43c6b860154ca660eb47c76c960, type: 2}
+  soulToDamage: {fileID: 11400000, guid: 125f9eea4ae119f42b006aee2d3e8995, type: 2}
+  startAtLevel3: {fileID: 11400000, guid: 5539c8bb190f3a74cab5c4386bd7b9f0, type: 2}
+  whisperingVoices: {fileID: 11400000, guid: 06e6b66afc41e674980b91229ee4b909, type: 2}
   relicImage: {fileID: 1970003893}
   relicName: {fileID: 191821300}
   relicDesc: {fileID: 2008704410}
@@ -5070,6 +5087,14 @@ MonoBehaviour:
   unlockedDOTRelic: 0
   unlockedExtraDamageOnUndamaged: 0
   unlockedExtraXP: 0
+  unlockedSoulOnHit: 0
+  unlockedAttackingReducesHealth: 0
+  unlockedGlass: 0
+  unlockedImmolation: 0
+  unlockedSoulForm: 0
+  unlockedSoulToDamage: 0
+  unlockedStartAtLevel3: 0
+  unlockedWhisperingVoices: 0
 --- !u!114 &2007322086
 MonoBehaviour:
   m_ObjectHideFlags: 0
