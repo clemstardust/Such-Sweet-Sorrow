@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 using Random = System.Random;
 
@@ -96,6 +95,7 @@ public class PlayerStats : MonoBehaviour
                 GameObject.FindGameObjectWithTag("RequiredLevelComponents").GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "CharacerCreation");
                 //isDead = true;
                 animator.SetBool("Dead", true);
+
                 //animator.SetBool("isInteracting", true);
                 //this.enabled = false;
             }
@@ -338,7 +338,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void UpgradeHealth(int num)
+    public void UpgradePlayerHealth(int num)
     {
         maxHealth += num;
         FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);

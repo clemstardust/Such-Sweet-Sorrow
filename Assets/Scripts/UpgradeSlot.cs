@@ -28,9 +28,10 @@ public class UpgradeSlot : MonoBehaviour
     public void SelectUpgrade()
     {
         //print("Upgrade selected!");
-        //print(GameObject.FindGameObjectWithTag("Player").name);
-        //print(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerUpgradeHandler>().enabled);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerUpgradeHandler>().SendMessage(upgradeItem.function);
+        //print("Found player: " + GameObject.FindGameObjectWithTag("Player").name);
+        // print("Found upgrade handler: " + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerUpgradeHandler>().enabled);
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerUpgradeHandler>().SendMessage(upgradeItem.function);
+        FindObjectOfType<PlayerUpgradeHandler>().SendMessage(upgradeItem.function);
         //FindObjectOfType<PlayerUpgradeHandler>().SendMessage(upgradeItem.function);
         //print("Upgrade selected!");
         upgradeMenu.gameObject.SetActive(false);

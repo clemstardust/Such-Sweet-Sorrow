@@ -131,9 +131,13 @@ public class EnemyAI : MonoBehaviour
         //}*/
         FaceTarget();
         agent.SetDestination(currentTarget.transform.position);
-        print(agent.velocity.magnitude);
         animator.SetFloat("Speed", 2, 1f, Time.deltaTime);
         agent.speed = 0;
+
+        if (!animator.GetBool("Attack") || !animator.GetBool("Attack2"))
+        {
+            DisableCollider();
+        }
         /*
         print("Remaining dist: " + Vector3.Distance(transform.position, currentTarget.transform.position) + " Stopping distance: " + (agent.stoppingDistance + 0.1));
         if (Vector3.Distance(transform.position, currentTarget.transform.position) > agent.stoppingDistance)

@@ -10,7 +10,6 @@
 //
 //------------------------------------------------------------------------------
 
-using CI.QuickSave;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,9 +46,6 @@ public class MenuButton : MonoBehaviour
             case ButtonFunctions.Exit:
                 buttonAction = Exit;
                 break;
-            case ButtonFunctions.Continue:
-                buttonAction = Continue;
-                break;
             case ButtonFunctions.MainMenu:
                 buttonAction = MainMenu;
                 break;
@@ -70,14 +66,6 @@ public class MenuButton : MonoBehaviour
     private void Exit()
     {
         Application.Quit();
-    }
-
-    private void Continue()
-    {
-        QuickSaveReader reader = QuickSaveReader.Create("Save00");
-        if (reader.Read<bool>("PlayerDeathState")) return;
-        GameManager.loadFromSave = true;
-        SceneManager.LoadScene(2); //load the main scene
     }
     private void MainMenu()
     {

@@ -125,7 +125,7 @@ public class EnemyStats : MonoBehaviour
             gameObject.GetComponent<EnemyAI>().rotated = false;
             if (playerStats.extraHealthOnHit)
             {
-                playerStats.UpgradeHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+                playerStats.UpgradePlayerHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
             }
             if (playerStats.soulOnHit)
             {
@@ -161,7 +161,7 @@ public class EnemyStats : MonoBehaviour
             gameObject.GetComponent<EnemyAI>().rotated = false;
             if (playerStats.extraHealthOnHit)
             {
-                playerStats.UpgradeHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+                playerStats.UpgradePlayerHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
             }
             if (currentHealth <= 0)
             {
@@ -186,7 +186,7 @@ public class EnemyStats : MonoBehaviour
         gameObject.GetComponent<EnemyAI>().rotated = false;
         if (playerStats.extraHealthOnHit)
         {
-            playerStats.UpgradeHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+            playerStats.UpgradePlayerHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
         }
         if (currentHealth <= 0)
         {

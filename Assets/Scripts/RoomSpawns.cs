@@ -29,18 +29,12 @@ public class RoomSpawns : MonoBehaviour
     private GameObject[] spawnJoints;
     private int maxLevelSize;
 
-    LoadSave loadSave;
     [Header("Loaded Level Joints")]
     [SerializeField] protected List<OpenJoint> loadedJoints = new List<OpenJoint>();
     protected IEnumerable<Collider> LoadedColliders => loadedJoints.SelectMany(s => s.Bounds.Colliders);
 
     void Awake()
     {
-        loadSave = FindObjectOfType<LoadSave>();
-        if (GameManager.loadFromSave)
-        {
-            loadSave.LoadGame();
-        }
         StartGeneration();
     }
 

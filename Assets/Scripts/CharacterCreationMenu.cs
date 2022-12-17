@@ -64,10 +64,7 @@ public class CharacterCreationMenu : MonoBehaviour
         unlockedItemManager = FindObjectOfType<UnlockedItemManager>();
         gameSaveHandler = FindObjectOfType<GameSaveHandler>();
 
-
         gameSaveHandler.LoadGame();
-
-
 
         extraSoul.unlocked = unlockedItemManager.unlockedExtraSoulsRing;
         soulShield.unlocked = unlockedItemManager.unlockedSoulshield;
@@ -232,7 +229,6 @@ public class CharacterCreationMenu : MonoBehaviour
         GameManager.selectedStartingWeaponData = playerWeapons[selectedWeapon].GetComponent<AttackHitboxObject>().weaponItem;
 
         gameSaveHandler.SaveGame(unlockedItemManager);
-
         loadingPanel.SetActive(true);
         SceneManager.LoadScene(2);
     }

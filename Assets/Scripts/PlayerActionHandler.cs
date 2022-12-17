@@ -1,7 +1,6 @@
 ﻿using Cinemachine;
 using System;
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -77,7 +76,7 @@ public class PlayerActionHandler : MonoBehaviour
 	public GameObject defaultForm;
 	public Avatar altAvatar;
 	public Avatar defaultAvatar;
-	public AnimatorController defaultController;
+	public RuntimeAnimatorController defaultController;
 	public AnimatorOverrideController altController;
 	public AttackHitboxObject defaultAttackHitboxObject;
 	public AttackHitboxObject altAttackHitboxObject;
@@ -102,10 +101,8 @@ public class PlayerActionHandler : MonoBehaviour
 
     private Vector3 targetDirection;
 
-	private LoadSave loadSave;
 	private void Awake()
 	{
-		loadSave = FindObjectOfType<LoadSave>();
 		// get a reference to our main camera
 		if (mainCamera == null)
 		{
