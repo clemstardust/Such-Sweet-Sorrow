@@ -483,17 +483,8 @@ public class Math3d:MonoBehaviour
 		Camera currentCamera;
 		Vector3 mousePosition;
 
-		#if UNITY_EDITOR
-		if (Camera.current != null) { currentCamera = Camera.current; }
-		else { currentCamera = Camera.main; }
-
-		// Convert format because y is flipped.
-		mousePosition = new Vector3(Event.current.mousePosition.x, currentCamera.pixelHeight - Event.current.mousePosition.y, 0f);
-
-		#else
 		currentCamera = Camera.main;
 		mousePosition = Input.mousePosition;
-		#endif
 
 		Vector3 screenPos1 = currentCamera.WorldToScreenPoint(linePoint1);
 		Vector3 screenPos2 = currentCamera.WorldToScreenPoint(linePoint2);
@@ -516,17 +507,8 @@ public class Math3d:MonoBehaviour
 		Camera currentCamera;
 		Vector3 mousePosition;
 
-		#if UNITY_EDITOR
-		if (Camera.current != null) { currentCamera = Camera.current; }
-		else { currentCamera = Camera.main; }
-
-		// Convert format because y is flipped.
-		mousePosition = new Vector3(Event.current.mousePosition.x, currentCamera.pixelHeight - Event.current.mousePosition.y, 0f);
-
-		#else
 		currentCamera = Camera.main;
 		mousePosition = Input.mousePosition;
-		#endif
 
 		Vector3 screenPos = currentCamera.WorldToScreenPoint(point);
 
