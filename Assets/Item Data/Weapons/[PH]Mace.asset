@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62a681bfc59ee74cb27887f5a0072c7, type: 3}
   m_Name: '[PH]Mace'
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 93ec85cbd8354ad4f98aead84dd46c22, type: 3}
   itemName: Mace
   itemDesc: Often favored by dicipiles and clerics. Often said to be the tool of
     gods, now you must use it to slay them.
@@ -22,3 +21,6 @@ MonoBehaviour:
   R1Damage: 50
   R2Damage: 75
   animations: {fileID: 22100000, guid: ce0228b9c3bbfe74ea6aeefa7da2d864, type: 2}
+  unlockCost: 0
+  R1PoiseDamage: 50
+  R2PoiseDamage: 75

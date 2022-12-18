@@ -263,7 +263,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
             numTrans++;
         }
         numTrans++;
-        if (numTrans >= 4)
+        if (numTrans >= 2)
         {
             numTrans = 0;
             playerActionHandler.Transition();

@@ -6,29 +6,33 @@ using UnityEngine.UI;
 
 public class EnemyStats : MonoBehaviour
 {
-
+    [Header("Health")]
     public float maxHealth = 100;
     public float currentHealth;
-    
+    public Slider healthBar;
+    public BetterEnemyHealthbar betterHealthBar;
+    [Header("Stamina")]
     public float maxStamina = 50;
     public float currentStamina;
     public float staminaRegenRate = 0.5f;
-
+    [Header("Attacks")]
     public float attackRange = 1;
+    [Header("Poise")]
+    public int maxPoise = 100;
+    public float currentPoise;
+    public float poiseRegenDelay = 3;
+    public float poiseRegenRate = 25;
+    private float poiseRegenTimer;
+    [Header("Soul and XP Gain")]
     public int enemySoulLevel = 1;
+    [Header("Hit effects")]
     public GameObject hitParticles;
-
-    private float regenTimer = 0;
-
-    PlayerEquipment playerEquipment;
-
-    public Slider healthBar;
-    public BetterEnemyHealthbar betterHealthBar;
-
     public GameObject[] blood;
     public GameObject bloodParticles;
     public GameObject bloodParticles1;
 
+    private float regenTimer = 0;
+    private PlayerEquipment playerEquipment;
     private PlayerStats playerStats;
     private PlayerUpgradeHandler playerUpgradeHandler;
     private EnemyAI enemyAI;
@@ -38,24 +42,29 @@ public class EnemyStats : MonoBehaviour
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         playerEquipment = FindObjectOfType<PlayerEquipment>();
-        /*
-        if (enemySoulLevel > 1000)
-        {
-            healthBar = FindObjectOfType<BossRoom>().bossHealthbar.GetComponent<Slider>();
-            bossBar = FindObjectOfType<BossBar>();
-        }*/
+
         playerStats = FindObjectOfType<PlayerStats>();
         playerUpgradeHandler = FindObjectOfType<PlayerUpgradeHandler>();
         healthBar.maxValue = maxHealth;
         betterHealthBar.SetHealth(betterHealthBar.GetHealthNormalized(currentHealth,maxHealth));
         maxStamina = 25;
         enemyAI = GetComponent<EnemyAI>();
+        currentPoise = maxPoise;
     }
 
     private void FixedUpdate()
     {
         RegnerateStamina();
         healthBar.value = currentHealth;
+        poiseRegenTimer += Time.deltaTime;
+        if (poiseRegenTimer >= poiseRegenDelay)
+        {
+            currentPoise += poiseRegenRate * Time.deltaTime;
+        }
+        if (currentPoise > maxPoise)
+        {
+            currentPoise = maxPoise;
+        }
     }
 
     public void TakeHit(Collider other)
@@ -67,11 +76,6 @@ public class EnemyStats : MonoBehaviour
             Animator animator = gameObject.GetComponent<Animator>();
             float damage = playerEquipment.currentWeapon.R1Damage;
             Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
-            /*
-            var newBloodParticle = Instantiate(bloodParticles, transform.position, transform.parent.rotation);
-            newBloodParticle.transform.parent = transform.parent;
-            var newBloodParticle1 = Instantiate(bloodParticles1, transform.position, transform.parent.rotation);
-            newBloodParticle1.transform.parent = transform.parent;*/
             if (other.gameObject.GetComponentInParent<Animator>().GetBool("AttackR2"))
             {
                 damage = playerEquipment.currentWeapon.R2Damage;
@@ -83,9 +87,6 @@ public class EnemyStats : MonoBehaviour
             if (playerActionHandler.extraDamageFromSoul > 0)
                 playerActionHandler.extraDamageFromSoul = 0;
             damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
-
-            
-
             if (playerStats.staminaToDamage)
             {
                 damage += (playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier;
@@ -118,10 +119,9 @@ public class EnemyStats : MonoBehaviour
             {
                 damage *= 2;
             }
-            print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
+            //print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
-            animator.SetBool("Hit", true);
             gameObject.GetComponent<EnemyAI>().rotated = false;
             if (playerStats.extraHealthOnHit)
             {
@@ -135,6 +135,20 @@ public class EnemyStats : MonoBehaviour
             {
                 healthBar.gameObject.SetActive(false);
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
+            }
+            //Poise
+            float poiseDamage = playerEquipment.currentWeapon.R1Damage;
+            if (other.gameObject.GetComponentInParent<Animator>().GetBool("AttackR2"))
+            {
+                poiseDamage = playerEquipment.currentWeapon.R2Damage;
+            }
+            currentPoise -= poiseDamage;
+            poiseRegenTimer = 0;
+            if (currentPoise <= 0)
+            {
+                animator.SetBool("Hit", true);
+                currentPoise = maxPoise;
+                poiseRegenTimer = 0;
             }
             enemyAI.DisableCollider();
         }

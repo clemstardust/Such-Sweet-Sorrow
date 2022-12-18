@@ -11,4 +11,6 @@ public class WeaponItem : Item
     public int R2Damage;
     public AnimatorOverrideController animations;
     public int unlockCost;
+    public int R1PoiseDamage;
+    public int R2PoiseDamage;
 }

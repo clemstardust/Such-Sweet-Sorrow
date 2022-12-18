@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62a681bfc59ee74cb27887f5a0072c7, type: 3}
   m_Name: '[PH]Greatsword'
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: d5c97237cab124f43a5e34827b4fb408, type: 3}
   itemName: Greatsword
   itemDesc: A massive greatsword, weildred by the strongest of warriors.
   unlocked: 0
@@ -22,3 +21,5 @@ MonoBehaviour:
   R2Damage: 75
   animations: {fileID: 0}
   unlockCost: 3000
+  R1PoiseDamage: 50
+  R2PoiseDamage: 75

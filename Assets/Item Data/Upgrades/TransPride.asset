@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TransPride
   m_EditorClassIdentifier: 
   itemName: Pact with the Old Ones
-  itemDesc: Collect this pact 4 times to grow stronger than ever imaginable.
+  itemDesc: Collect this pact 2 times to grow stronger than ever imaginable.
   unlocked: 0
   function: TransPride

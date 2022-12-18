@@ -517,15 +517,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   currentHealth: 0
+  healthBar: {fileID: 6105531878786639199}
+  betterHealthBar: {fileID: 3976498181708660166}
   maxStamina: 50
   currentStamina: 0
   staminaRegenRate: 0.5
   attackRange: 3
+  maxPoise: 25
+  currentPoise: 0
+  poiseRegenDelay: 1
+  poiseRegenRate: 50
   enemySoulLevel: 50
   hitParticles: {fileID: 8806690720212315413, guid: aa16f33a71892544da9163db7fdf56bd,
     type: 3}
-  healthBar: {fileID: 6105531878786639199}
-  betterHealthBar: {fileID: 3976498181708660166}
   blood:
   - {fileID: 100000, guid: 358b75ea5451cf143ab19029a189097d, type: 3}
   - {fileID: 100000, guid: cfc7596704bbd7f489156fcd4c05c7e9, type: 3}

@@ -155,6 +155,9 @@ public class PlayerActionHandler : MonoBehaviour
 
 		immolationFlames.SetActive(false);
 
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+
 		StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 20, 0));
 	}
 	private void Update()
