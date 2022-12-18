@@ -180,6 +180,7 @@ public class PlayerActionHandler : MonoBehaviour
 		Roll();
 		RegenHealth();
 		Cast();
+		if (Input.GetKeyDown(KeyCode.H)) Transition();
 	}
 
 	public bool damageAfterDodgeIsActive = false;
@@ -281,7 +282,7 @@ public class PlayerActionHandler : MonoBehaviour
 				{
 					immolationFlames.SetActive(false);
 				}
-				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				else if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
 				{
 					//animator.SetBool("Cast", true);
 					//animator.SetBool("isInteracting", true);
