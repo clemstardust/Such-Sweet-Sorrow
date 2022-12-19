@@ -56,15 +56,6 @@ public class EnemyStats : MonoBehaviour
     {
         RegnerateStamina();
         healthBar.value = currentHealth;
-        poiseRegenTimer += Time.deltaTime;
-        if (poiseRegenTimer >= poiseRegenDelay)
-        {
-            currentPoise += poiseRegenRate * Time.deltaTime;
-        }
-        if (currentPoise > maxPoise)
-        {
-            currentPoise = maxPoise;
-        }
     }
 
     public void TakeHit(Collider other)
@@ -83,7 +74,7 @@ public class EnemyStats : MonoBehaviour
             var playerStats = other.GetComponentInParent<PlayerStats>();
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
             var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
-            damage += playerActionHandler.extraDamageFromSoul;
+            damage += (playerActionHandler.extraDamageFromSoul) * playerUpgradeHandler.spellDamageMuliplier;
             if (playerActionHandler.extraDamageFromSoul > 0)
                 playerActionHandler.extraDamageFromSoul = 0;
             damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
@@ -119,7 +110,7 @@ public class EnemyStats : MonoBehaviour
             {
                 damage *= 2;
             }
-            //print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
+            print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
             gameObject.GetComponent<EnemyAI>().rotated = false;
@@ -143,7 +134,6 @@ public class EnemyStats : MonoBehaviour
                 poiseDamage = playerEquipment.currentWeapon.R2Damage;
             }
             currentPoise -= poiseDamage;
-            poiseRegenTimer = 0;
             if (currentPoise <= 0)
             {
                 animator.SetBool("Hit", true);

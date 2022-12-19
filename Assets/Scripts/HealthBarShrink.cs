@@ -54,7 +54,6 @@ public class HealthBarShrink : MonoBehaviour {
                 damagedBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
             }
         }
-        print(Screen.width);
         float width = 0;
         if (playerStats.maxHealth > 2000)
         {

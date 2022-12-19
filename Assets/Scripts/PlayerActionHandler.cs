@@ -369,7 +369,7 @@ public class PlayerActionHandler : MonoBehaviour
 				if (Input.GetKey(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
 				{
 					weaponBuffActive = !weaponBuffActive;
-					extraDamageFromSoul += 200 + playerUpgradeHandler.spellDamageMuliplier * Time.deltaTime * playerUpgradeHandler.spellDamageMuliplier;
+					extraDamageFromSoul += 200 * Time.deltaTime;
 					playerStats.currentSoul -= 100 * Time.deltaTime;
 					animator.SetBool("Heal", true);
 				}
