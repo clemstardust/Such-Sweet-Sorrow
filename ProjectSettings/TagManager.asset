@@ -29,6 +29,7 @@ TagManager:
   - ImmolationFlames
   - TransformedPlayer
   - Torch
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

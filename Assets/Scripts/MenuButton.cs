@@ -21,7 +21,8 @@ public enum ButtonFunctions
     NewGame,
     Exit,
     Continue,
-    MainMenu
+    MainMenu,
+    Resume
 }
 
 public class MenuButton : MonoBehaviour
@@ -49,6 +50,9 @@ public class MenuButton : MonoBehaviour
             case ButtonFunctions.MainMenu:
                 buttonAction = MainMenu;
                 break;
+            case ButtonFunctions.Resume:
+                buttonAction = Resume;
+                break;
         }
     }
 
@@ -74,5 +78,12 @@ public class MenuButton : MonoBehaviour
     public void PlaySound(AudioClip ac)
     {
         GetComponent<AudioSource>().PlayOneShot(ac);
+    }
+    private void Resume()
+    {
+        Time.timeScale = 1;
+        GameObject.FindGameObjectWithTag("PauseMenu").SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

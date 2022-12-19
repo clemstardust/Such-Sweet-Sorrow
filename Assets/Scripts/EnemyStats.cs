@@ -148,9 +148,8 @@ public class EnemyStats : MonoBehaviour
             {
                 animator.SetBool("Hit", true);
                 currentPoise = maxPoise;
-                poiseRegenTimer = 0;
-            }
-            enemyAI.DisableCollider();
+                enemyAI.DisableCollider();
+            }            
         }
     }
 

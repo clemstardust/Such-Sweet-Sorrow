@@ -129,7 +129,7 @@ public class CharacterCreationMenu : MonoBehaviour
 
     private void Update()
     {
-        soulsDisplayText.text = "Souls: " + unlockedItemManager.totalSouls;
+        soulsDisplayText.text = "Shards: " + unlockedItemManager.totalSouls;
     }
 
     public void NextWeaponItem()

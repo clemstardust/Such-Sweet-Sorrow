@@ -9,8 +9,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public float healthMultiplier = 1;
     public float staminaMultiplier = 1;
     public float spellDamageMuliplier = 1;
-    public float spellCostDownPercent = 1;
-    public float spellDurationMultiplier = 1;
+    
     public float healthLowDamageMultiplier = 2f;
     public float maxSoulUpLevel = 1;
     public float extraStaminaToDamageMultiplier = 1.5f;
@@ -20,6 +19,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public float dodgeToHealFlatAmount = 10;
     public int numTougherTimes = 0;
     public int numTrans = 0;
+
+    public float spellCostDownPercent = 1;
+    public float spellDurationMultiplier = 1;
 
     private float xpToNextLevel;
 
@@ -61,7 +63,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
     private void ResolveUpgrade()
     {
         Time.timeScale = 1;
-        Cursor.visible = true;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         playerStats.currentXP -= xpToNextLevel;
         playerStats.currentLevel++;
@@ -84,10 +86,10 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public void UpgradeHealth ()
     {
         print("Health upgraded!");
-        healthMultiplier += 0.2f;
+        healthMultiplier += 0.5f;
         if (doubleUpgrades)
         {
-            healthMultiplier += 0.2f;
+            healthMultiplier += 0.5f;
         }
         playerStats.maxHealth = (int)(playerStats.maxHealth * healthMultiplier);
         FindObjectOfType<HealthBarShrink>().Heal(playerStats.currentHealth, playerStats.maxHealth);
@@ -96,13 +98,13 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public void UpgradeStamina()
     {
         print("Stamina upgraded!");
-        staminaMultiplier += 0.2f;
+        staminaMultiplier += 0.5f;
         if (doubleUpgrades)
         {
-            staminaMultiplier += 0.2f;
+            staminaMultiplier += 0.5f;
         }
         playerStats.maxStamina = (int)(playerStats.maxStamina * staminaMultiplier);
-        FindObjectOfType<HealthBarShrink>().Heal(playerStats.currentStamina, playerStats.maxStamina);
+        FindObjectOfType<StaminaBarShrink>().Regenerate(playerStats.currentStamina, playerStats.maxStamina);
         ResolveUpgrade();
     }
 

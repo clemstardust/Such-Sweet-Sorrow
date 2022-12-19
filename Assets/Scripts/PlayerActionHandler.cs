@@ -85,7 +85,7 @@ public class PlayerActionHandler : MonoBehaviour
 	public GameObject hand2;
 	public bool transformed = false;
 
-    private bool canCast = false;
+    public bool canCast = false;
 	public enum CurrentSpell
     {
 		Soulfire,
@@ -109,6 +109,7 @@ public class PlayerActionHandler : MonoBehaviour
 			mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		}
 	}
+	GameObject pauseMenu;
 	private void Start()
 	{
         Cursor.lockState = CursorLockMode.Locked;
@@ -157,7 +158,8 @@ public class PlayerActionHandler : MonoBehaviour
 
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
-
+		pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
+		pauseMenu.SetActive(false);
 		StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 20, 0));
 	}
 	private void Update()
@@ -183,12 +185,32 @@ public class PlayerActionHandler : MonoBehaviour
 		Roll();
 		RegenHealth();
 		Cast();
+		Pause();
 		if (Input.GetKeyDown(KeyCode.H)) Transition();
 	}
 
 	public bool damageAfterDodgeIsActive = false;
 	public float damageAfterDodgeCountdown = 0;
-	private void Buffs()
+
+    private void Pause()
+    {
+		if (Input.GetKeyDown(KeyCode.Escape))
+        {
+			pauseMenu.SetActive(!pauseMenu.activeSelf);
+			if (pauseMenu.activeSelf) { 
+				Time.timeScale = 0;
+				Cursor.visible = true;
+				Cursor.lockState = CursorLockMode.None;
+			}
+			else { 
+				Time.timeScale = 1; 
+				Cursor.visible = false;
+				Cursor.lockState = CursorLockMode.Locked;
+			}
+		}
+    }
+
+    private void Buffs()
 	{
 		if (damageAfterDodgeIsActive)
 		{
@@ -347,7 +369,7 @@ public class PlayerActionHandler : MonoBehaviour
 				if (Input.GetKey(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
 				{
 					weaponBuffActive = !weaponBuffActive;
-					extraDamageFromSoul += 200 * Time.deltaTime;
+					extraDamageFromSoul += 200 + playerUpgradeHandler.spellDamageMuliplier * Time.deltaTime * playerUpgradeHandler.spellDamageMuliplier;
 					playerStats.currentSoul -= 100 * Time.deltaTime;
 					animator.SetBool("Heal", true);
 				}

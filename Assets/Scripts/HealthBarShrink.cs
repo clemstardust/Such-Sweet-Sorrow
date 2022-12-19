@@ -39,6 +39,12 @@ public class HealthBarShrink : MonoBehaviour {
         playerStats = FindObjectOfType<PlayerStats>();
         playerUpgradeHandler = FindObjectOfType<PlayerUpgradeHandler>();
     }
+    //Copied shamelessly from stackOverflow
+    //https://stackoverflow.com/questions/18657508/c-sharp-find-nth-root
+    static float NthRoot(float A, float N)
+    {
+        return Mathf.Pow(A, 1.0f / N);
+    }
 
     private void Update() {
         damagedHealthShrinkTimer -= Time.deltaTime;
@@ -48,8 +54,15 @@ public class HealthBarShrink : MonoBehaviour {
                 damagedBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
             }
         }
-        rectTransform.sizeDelta = new Vector2(playerStats.maxHealth / 3, 10);
-        soulBarTransform.sizeDelta = new Vector2((playerStats.maxHealth +  playerUpgradeHandler.maxSoulUpLevel) / 3, 16);
+        print(Screen.width);
+        float width = 0;
+        if (playerStats.maxHealth > 2000)
+        {
+            width = (2000 + Mathf.Log10(playerStats.maxHealth - 2000) * 8) / 3;
+        }
+        else { width = playerStats.maxHealth / 3; }
+        rectTransform.sizeDelta = new Vector2(width, 10);
+        soulBarTransform.sizeDelta = new Vector2(width + (playerUpgradeHandler.maxSoulUpLevel / 3), 16);
 
     }
 
