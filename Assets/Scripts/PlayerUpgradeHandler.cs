@@ -223,11 +223,11 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            dodgeDamageMultiplier += 0.5f;
+            dodgeDamageMultiplier += 1f;
         }
         if (playerStats.damageBuffOnDodge)
         {
-            dodgeDamageMultiplier += 0.5f;
+            dodgeDamageMultiplier += 1f;
         }
         playerStats.damageBuffOnDodge = true;
         print("damage on dodge upgraded!");

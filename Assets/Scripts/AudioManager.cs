@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     public void AttackSound()
     {
         /*if (!audioSource.isPlaying) */
-            audioSource.PlayOneShot(attackSoundEffects[Random.Range(0,attackSoundEffects.Length - 1)]);
+            audioSource.PlayOneShot(attackSoundEffects[Random.Range(0,attackSoundEffects.Length)]);
     }
     public void RollSound()
     {
@@ -31,17 +31,17 @@ public class AudioManager : MonoBehaviour
 
     public void PlayerHurtSound()
     {
-        if (!audioSource.isPlaying) audioSource.PlayOneShot(playerHurtSoundEffects[Random.Range(0, playerHurtSoundEffects.Length - 1)]);
+        if (!audioSource.isPlaying) audioSource.PlayOneShot(playerHurtSoundEffects[Random.Range(0, playerHurtSoundEffects.Length)]);
     }
 
     public void DeathSound()
     {
-        if (!audioSource.isPlaying) audioSource.PlayOneShot(deathSoundEffects[Random.Range(0, deathSoundEffects.Length - 1)]);
+        if (!audioSource.isPlaying) audioSource.PlayOneShot(deathSoundEffects[Random.Range(0, deathSoundEffects.Length)]);
     }
 
 
     public void MoveSound()
     {
-            audioSource.PlayOneShot(walkSoundEffects[Random.Range(0, walkSoundEffects.Length - 1)]);
+            audioSource.PlayOneShot(walkSoundEffects[Random.Range(0, walkSoundEffects.Length)]);
     }
 }

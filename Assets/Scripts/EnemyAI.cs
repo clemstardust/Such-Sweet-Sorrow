@@ -44,6 +44,10 @@ public class EnemyAI : MonoBehaviour
         agent.stoppingDistance = enemyStats.attackRange;
     }
 
+    private void Start()
+    {
+        randAttackChance = UnityEngine.Random.Range(1, 4);
+    }
     private void Update()
     {
         if (currentTarget != null)
@@ -136,7 +140,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!animator.GetBool("Attack") || !animator.GetBool("Attack2"))
         {
-            DisableCollider();
+            LiterallyJustDiasbleTheDamnCOllider();
         }
         /*
         print("Remaining dist: " + Vector3.Distance(transform.position, currentTarget.transform.position) + " Stopping distance: " + (agent.stoppingDistance + 0.1));
@@ -182,38 +186,40 @@ public class EnemyAI : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
     }
 
+    public int randAttackChance;
+    public bool attackSet;
     public void Attack()
     {
+        if (animator.GetBool("Attack2") || animator.GetBool("Attack")) return;
         FaceTarget();
         animator.SetFloat("Speed", 0, 1f, Time.deltaTime);
         agent.speed = 0;
         //rotation = Quaternion.LookRotation(currentTarget.gameObject.transform.position, Vector3.up);
         //agent.transform.rotation = rotation;        
         //rotation = transform.rotation;
-        int randAttackChance = Mathf.RoundToInt(UnityEngine.Random.Range(0, 4));
-        if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R2StaminaCost && randAttackChance == 1)
+        
+        if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R1StaminaCost && randAttackChance == 1)
         {
             agent.isStopped = true;
             currentAttack = CurrentAttack.R2;
             animator.SetBool("Attack2", true);
+            attackSet = true;
         }
-        else if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R1StaminaCost && randAttackChance == 2)
+        if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R1StaminaCost && randAttackChance == 2)
         {
             agent.isStopped = true;
             currentAttack = CurrentAttack.R1;
             animator.SetBool("Attack", true);
             animator.SetInteger("Combo", 2);
+            attackSet = true;
         }
-        else if (enemyStats.currentStamina <= 0)
-        {
-            return;
-        }
-        else if (enemyStats.currentStamina > enemyManager.equippedWeapon.R1StaminaCost)
+        if (enemyStats.currentStamina >= enemyManager.equippedWeapon.R1StaminaCost && randAttackChance == 3)
         {
             agent.isStopped = true;
             animator.SetBool("Attack", true);
             animator.SetInteger("Combo", 0);
             currentAttack = CurrentAttack.R1;
+            attackSet = true;
         }
         enemyManager.enemyMode = EnemyManager.Mode.idle;
         //transform.rotation = rotation;
@@ -227,7 +233,8 @@ public class EnemyAI : MonoBehaviour
 
     public void DisableCombo()
     {
-        animator.SetBool("Attack", true);
+        animator.SetBool("Attack", false);
+        animator.SetBool("Attack2", false);
         DisableCollider();
         rotated = false;
     }
@@ -252,6 +259,15 @@ public class EnemyAI : MonoBehaviour
         attackHitbox.dmgCollider.enabled = false;
         rotated = false;
         agent.isStopped = false;
+        animator.SetBool("Attack", false);
+        animator.SetBool("Attack2", false);
+        attackSet = false;
+        randAttackChance = UnityEngine.Random.Range(1, 4);
+    }
+
+    public void LiterallyJustDiasbleTheDamnCOllider()
+    {
+        attackHitbox.dmgCollider.enabled = false;
     }
 
     void OnTriggerEnter(Collider other)

@@ -181,7 +181,7 @@ public class PlayerStats : MonoBehaviour
             }
             currentHealth -= damage;
             FindObjectOfType<AudioManager>().PlayerHurtSound();
-            Instantiate(blood[UnityEngine.Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+            Instantiate(blood[UnityEngine.Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
             FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
         }
         uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
@@ -238,7 +238,7 @@ public class PlayerStats : MonoBehaviour
                     other.GetComponentInParent<EnemyStats>().TakeHit((int) (damage * playerUpgradeHandler.thornsDamageMultiplier));
                 }
 
-                Instantiate(blood[UnityEngine.Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+                Instantiate(blood[UnityEngine.Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
 
                 FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
                 animator.SetBool("ow", true);

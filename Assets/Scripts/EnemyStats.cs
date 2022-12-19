@@ -66,7 +66,7 @@ public class EnemyStats : MonoBehaviour
             GetComponent<AudioSource>().Play();
             Animator animator = gameObject.GetComponent<Animator>();
             float damage = playerEquipment.currentWeapon.R1Damage;
-            Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+            Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
             if (other.gameObject.GetComponentInParent<Animator>().GetBool("AttackR2"))
             {
                 damage = playerEquipment.currentWeapon.R2Damage;
@@ -138,7 +138,7 @@ public class EnemyStats : MonoBehaviour
             {
                 animator.SetBool("Hit", true);
                 currentPoise = maxPoise;
-                enemyAI.DisableCollider();
+                enemyAI.LiterallyJustDiasbleTheDamnCOllider();
             }            
         }
     }
@@ -156,7 +156,7 @@ public class EnemyStats : MonoBehaviour
             var playerUpgradeHandler = playerStats.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
 
             float damage = 25 * playerUpgradeHandler.spellDamageMuliplier;
-            Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+            Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
             print("Damage from immolation: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
@@ -172,7 +172,7 @@ public class EnemyStats : MonoBehaviour
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
             }
             countDown = 1;
-            enemyAI.DisableCollider();
+            enemyAI.LiterallyJustDiasbleTheDamnCOllider();
         }
     }
 
@@ -181,7 +181,7 @@ public class EnemyStats : MonoBehaviour
         GetComponent<AudioSource>().pitch = 0.8f;
         GetComponent<AudioSource>().Play();
         Animator animator = gameObject.GetComponent<Animator>();
-        Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+        Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
            
         currentHealth -= damage;
         betterHealthBar.Damage(currentHealth, maxHealth);
@@ -196,14 +196,14 @@ public class EnemyStats : MonoBehaviour
             healthBar.gameObject.SetActive(false);
             GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
         }
-        enemyAI.DisableCollider();
+        enemyAI.LiterallyJustDiasbleTheDamnCOllider();
     }
 
     public void TakeDOTHit(int damage)
     {
         
         Animator animator = gameObject.GetComponent<Animator>();
-        Instantiate(blood[(int)Random.Range(0, blood.Length - 1)], transform.position, Quaternion.identity);
+        Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
 
         currentHealth -= damage;
         betterHealthBar.Damage(currentHealth, maxHealth);
@@ -220,7 +220,7 @@ public class EnemyStats : MonoBehaviour
 
         GetComponent<AudioSource>().pitch = 0.8f;
         GetComponent<AudioSource>().Play();
-        enemyAI.DisableCollider();
+        enemyAI.LiterallyJustDiasbleTheDamnCOllider();
     }
 
     public void LoseStamina(int amount)
