@@ -190,8 +190,8 @@ public class EnemyAI : MonoBehaviour
     public bool attackSet;
     public void Attack()
     {
-        if (animator.GetBool("Attack2") || animator.GetBool("Attack")) return;
         FaceTarget();
+        if (animator.GetBool("Attack2") || animator.GetBool("Attack")) return;
         animator.SetFloat("Speed", 0, 1f, Time.deltaTime);
         agent.speed = 0;
         //rotation = Quaternion.LookRotation(currentTarget.gameObject.transform.position, Vector3.up);

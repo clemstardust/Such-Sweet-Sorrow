@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
 
     public static int selectedStartingWeapon;
     public static int selectedStartingRelic;
+    public static int selectedStartingSpell;
 
     public static WeaponItem selectedStartingWeaponData;
     public static RelicItem selectedStartingRelicData;
+    public static RelicItem selectedStartingSpellData;
 
 }

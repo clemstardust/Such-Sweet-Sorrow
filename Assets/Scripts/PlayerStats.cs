@@ -325,6 +325,9 @@ public class PlayerStats : MonoBehaviour
         {
             currentSoul = maxSoul;
         }
+        currentHealth += enemyTier;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
         if (enemyTier >= 2000)
         {
             UnlockedItemManager unlockedItemManager = FindObjectOfType<UnlockedItemManager>();

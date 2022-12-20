@@ -122,10 +122,13 @@ public class PlayerActionHandler : MonoBehaviour
 		playerEquipment = GetComponent<PlayerEquipment>();
 		audioManager = GetComponentInChildren<AudioManager>();
 		playerUpgradeHandler = GetComponent<PlayerUpgradeHandler>();
+
 		playerEquipment.currentWeapon = GameManager.selectedStartingWeaponData;
 		playerEquipment.currentRelic = GameManager.selectedStartingRelicData;
+		playerEquipment.currentSpell = GameManager.selectedStartingSpellData;
 
 		SendMessage(playerEquipment.currentRelic.RelicFunction);
+		SendMessage(playerEquipment.currentSpell.RelicFunction);
 
 		GameObject[] playerWeapons = FindObjectOfType<WeaponEquipHandler>().UpdateWeaponItems();
 		foreach (GameObject weapon in playerWeapons)
@@ -140,20 +143,11 @@ public class PlayerActionHandler : MonoBehaviour
 		_fallTimeoutDelta = FallTimeout;
 
 		animator.applyRootMotion = true;
-		/*
-		if (GameManager.loadFromSave)
-		{
-			transform.position = loadSave.LoadPlayerPos();
-		}
-		*/
-
+	
 		animator.runtimeAnimatorController = playerEquipment.currentWeapon.animations != null ? playerEquipment.currentWeapon.animations : animator.runtimeAnimatorController;
 
-
-		//Debug.Log(Application.persistentDataPath);
 		defaultAttackHitboxObject = attackHitbox;
 		altForm.SetActive(false);
-
 		immolationFlames.SetActive(false);
 
 		Cursor.visible = false;
@@ -277,7 +271,7 @@ public class PlayerActionHandler : MonoBehaviour
 		switch (currentSpell)
         {
 			case CurrentSpell.Soulfire:
-				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentHealth > 1 && canCast)
 				{
 					weaponBuffActive = !weaponBuffActive;
 					animator.SetBool("Cast", true);
@@ -287,9 +281,10 @@ public class PlayerActionHandler : MonoBehaviour
 				{
 					animator.SetBool("Cast", false);
 				}
-				if (weaponBuffActive && playerStats.currentSoul > 1)
+				if (weaponBuffActive && playerStats.currentHealth > 1)
 				{
-					playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					playerStats.currentHealth -= (5 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					FindObjectOfType<HealthBarShrink>().Damage(playerStats.currentHealth, playerStats.maxHealth);
 					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
 						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
 					attackMultiplier = 2f + playerUpgradeHandler.spellDamageMuliplier;
@@ -307,7 +302,7 @@ public class PlayerActionHandler : MonoBehaviour
 				{
 					immolationFlames.SetActive(false);
 				}
-				else if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				else if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentHealth > 1 && canCast)
 				{
 					//animator.SetBool("Cast", true);
 					//animator.SetBool("isInteracting", true);
@@ -317,9 +312,10 @@ public class PlayerActionHandler : MonoBehaviour
 				{
 					animator.SetBool("Cast", false);
 				}
-				if (immolationFlames.activeSelf && playerStats.currentSoul > 1)
+				if (immolationFlames.activeSelf && playerStats.currentHealth > 1)
 				{
-					playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					playerStats.currentHealth -= (5 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					FindObjectOfType<HealthBarShrink>().Damage(playerStats.currentHealth, playerStats.maxHealth);
 				}
 				else
 				{
@@ -328,13 +324,14 @@ public class PlayerActionHandler : MonoBehaviour
 				
 				break;
 			case CurrentSpell.SoulForm:
-				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentHealth > 1 && canCast)
 				{
 					isGhost = !isGhost;
 				}
-				if (isGhost && playerStats.currentSoul > 1)
+				if (isGhost && playerStats.currentHealth > 1)
 				{
-					playerStats.currentSoul -= (3 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					playerStats.currentHealth -= (5 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
+					FindObjectOfType<HealthBarShrink>().Damage(playerStats.currentHealth, playerStats.maxHealth);
 					foreach (MeshRenderer mesh in gameObject.GetComponentsInChildren<MeshRenderer>())
                     {
 						if (mesh.gameObject.tag == "Weapon")
@@ -366,11 +363,12 @@ public class PlayerActionHandler : MonoBehaviour
 				}
 				break;
 			case CurrentSpell.ChannelSoulToDamage:
-				if (Input.GetKey(KeyCode.Q) && playerStats.currentSoul > 1 && canCast)
+				if (Input.GetKey(KeyCode.Q) && playerStats.currentHealth > 1 && canCast)
 				{
 					weaponBuffActive = !weaponBuffActive;
 					extraDamageFromSoul += 200 * Time.deltaTime;
-					playerStats.currentSoul -= 100 * Time.deltaTime;
+					playerStats.currentHealth -= 100 * Time.deltaTime;
+					FindObjectOfType<HealthBarShrink>().Damage(playerStats.currentHealth, playerStats.maxHealth);
 					animator.SetBool("Heal", true);
 				}
                 else if (!Input.GetKey(KeyCode.Q))

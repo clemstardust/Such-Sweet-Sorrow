@@ -6,4 +6,5 @@ public class PlayerEquipment : MonoBehaviour
 {
     public WeaponItem currentWeapon;
     public RelicItem currentRelic;
+    public RelicItem currentSpell;
 }

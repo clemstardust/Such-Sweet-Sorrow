@@ -9,28 +9,35 @@ public class CharacterCreationMenu : MonoBehaviour
 {
     [Header("Relics")]
     public RelicItem[] UnlockedRelics;
-    public RelicItem extraSoul;
-    public RelicItem soulShield;
-    public RelicItem weaponBuff;
+    public RelicItem extraSoul;   
     public RelicItem extraLife;
     public RelicItem soulGenerator;
     public RelicItem aceharmonicon;
     public RelicItem dotDebuff;
     public RelicItem extraDamageOnUndamaged;
-
     public RelicItem extraXP;
     public RelicItem attackingReducesHealth;
     public RelicItem glass;
-    public RelicItem immolation;
-    public RelicItem soulForm;
     public RelicItem soulOnHit;
-    public RelicItem soulToDamage;
     public RelicItem startAtLevel3;
 
     private int selectedRelic = 0;
     public Image relicImage;
     public TextMeshProUGUI relicName;
     public TextMeshProUGUI relicDesc;
+
+    [Header("Invocations")]
+    public RelicItem[] unlockedSpells;
+    public RelicItem weaponBuff;
+    public RelicItem immolation;
+    public RelicItem soulForm;
+    public RelicItem soulToDamage;
+
+    private int selectedSpell = 0;
+    public Image spellImage;
+    public TextMeshProUGUI spellName;
+    public TextMeshProUGUI spellDesc;
+    
     [Header("Weapons")]
     //public WeaponItem[] UnlockedWeapons;
     public GameObject[] playerWeapons;
@@ -52,6 +59,7 @@ public class CharacterCreationMenu : MonoBehaviour
 
     public Button relicPurchaseButton;
     public Button weaponPurchaseButton;
+    public Button spellPurchaseButton;
     public Button finishCreation;
     public TextMeshProUGUI soulsDisplayText;
 
@@ -67,7 +75,6 @@ public class CharacterCreationMenu : MonoBehaviour
         gameSaveHandler.LoadGame();
 
         extraSoul.unlocked = unlockedItemManager.unlockedExtraSoulsRing;
-        soulShield.unlocked = unlockedItemManager.unlockedSoulshield;
         weaponBuff.unlocked = unlockedItemManager.unlockedSoulfire;
         extraLife.unlocked = unlockedItemManager.unlockedExtraLivesRing;
         soulGenerator.unlocked = unlockedItemManager.unlockedSoulGenerator;
@@ -85,22 +92,21 @@ public class CharacterCreationMenu : MonoBehaviour
         startAtLevel3.unlocked = unlockedItemManager.unlockedStartAtLevel3;
 
         UnlockedRelics[0] = extraSoul;
-        UnlockedRelics[1] = soulShield;
-        UnlockedRelics[2] = weaponBuff;
-        UnlockedRelics[3] = extraLife;
-        UnlockedRelics[4] = soulGenerator;
-        UnlockedRelics[5] = aceharmonicon;
-        UnlockedRelics[6] = dotDebuff;
-        UnlockedRelics[7] = extraDamageOnUndamaged;
-        UnlockedRelics[8] = extraXP;
+        UnlockedRelics[1] = extraLife;
+        UnlockedRelics[2] = soulGenerator;
+        UnlockedRelics[3] = aceharmonicon;
+        UnlockedRelics[4] = dotDebuff;
+        UnlockedRelics[5] = extraDamageOnUndamaged;
+        UnlockedRelics[6] = extraXP;
+        UnlockedRelics[7] = attackingReducesHealth;
+        UnlockedRelics[8] = glass;
+        UnlockedRelics[9] = soulOnHit;
+        UnlockedRelics[10] = startAtLevel3;
 
-        UnlockedRelics[9] = attackingReducesHealth;
-        UnlockedRelics[10] = glass;
-        UnlockedRelics[11] = immolation;
-        UnlockedRelics[12] = soulForm;
-        UnlockedRelics[13] = soulOnHit;
-        UnlockedRelics[14] = soulToDamage;
-        UnlockedRelics[15] = startAtLevel3;
+        unlockedSpells[0] = weaponBuff;
+        unlockedSpells[1] = immolation;
+        unlockedSpells[2] = soulForm;
+        unlockedSpells[3] = soulToDamage;
 
         sword.unlocked = unlockedItemManager.unlockedSword;
         mace.unlocked = unlockedItemManager.unlockedMace;
@@ -122,9 +128,7 @@ public class CharacterCreationMenu : MonoBehaviour
         
         UpdateSelectedWeaponDisplay(selectedWeapon);
         UpdateSelectedRelicDisplay(selectedRelic);
-
-        
-
+        UpdateSelectedSpellDisplay(selectedSpell);
     }
 
     private void Update()
@@ -141,7 +145,16 @@ public class CharacterCreationMenu : MonoBehaviour
             selectedWeapon = 0;
         }
         UpdateSelectedWeaponDisplay(selectedWeapon);
-
+    }
+    public void PrevWeaponItem()
+    {
+        UpdateWeaponPreview(selectedWeapon, false);
+        selectedWeapon--;
+        if (selectedWeapon < 0)
+        {
+            selectedWeapon = playerWeapons.Length - 1;
+        }
+        UpdateSelectedWeaponDisplay(selectedWeapon);
     }
     public void NextRelicItem()
     {
@@ -161,15 +174,40 @@ public class CharacterCreationMenu : MonoBehaviour
         }
         UpdateSelectedRelicDisplay(selectedRelic);
     }
-    public void PrevWeaponItem()
+    public void NextSpellItem()
     {
-        UpdateWeaponPreview(selectedWeapon, false);
-        selectedWeapon--;
-        if (selectedWeapon < 0)
+        selectedSpell++;
+        if (selectedSpell >= unlockedSpells.Length)
         {
-            selectedWeapon = playerWeapons.Length - 1;
+            selectedSpell = 0;
         }
-        UpdateSelectedWeaponDisplay(selectedWeapon);
+        UpdateSelectedSpellDisplay(selectedSpell);
+    }
+    public void PrevSpellItem()
+    {
+        selectedSpell--;
+        if (selectedSpell < 0)
+        {
+            selectedSpell = unlockedSpells.Length - 1;
+        }
+        UpdateSelectedSpellDisplay(selectedSpell);
+    }
+
+    private void UpdateSelectedSpellDisplay(int selectedSpell)
+    {
+        spellName.text = unlockedSpells[selectedSpell].itemName;
+        spellDesc.text = unlockedSpells[selectedSpell].itemDesc;
+        if (unlockedSpells[selectedSpell].unlocked != true)
+        {
+            spellPurchaseButton.gameObject.SetActive(true);
+            finishCreation.interactable = false;
+            spellPurchaseButton.GetComponentInChildren<TextMeshProUGUI>().text = "Purchase " + unlockedSpells[selectedSpell].unlockCost;
+        }
+        else
+        {
+            spellPurchaseButton.gameObject.SetActive(false);
+            finishCreation.interactable = true;
+        }
     }
 
     private void UpdateSelectedRelicDisplay(int selectedRelic)
@@ -218,19 +256,59 @@ public class CharacterCreationMenu : MonoBehaviour
 
     public void DoneButton()
     {
-        FinishCreation(selectedWeapon, selectedRelic);
+        FinishCreation(selectedWeapon, selectedRelic, selectedSpell);
     }
-    private void FinishCreation(int selectedWeapon, int selectedRelic)
+    private void FinishCreation(int selectedWeapon, int selectedRelic, int selectedSpell)
     {
         GameManager.selectedStartingRelic = selectedRelic;
         GameManager.selectedStartingWeapon = selectedWeapon;
+        GameManager.selectedStartingSpell = selectedSpell;
 
         GameManager.selectedStartingRelicData = UnlockedRelics[selectedRelic];
         GameManager.selectedStartingWeaponData = playerWeapons[selectedWeapon].GetComponent<AttackHitboxObject>().weaponItem;
+        GameManager.selectedStartingSpellData = unlockedSpells[selectedSpell];
 
         gameSaveHandler.SaveGame(unlockedItemManager);
         loadingPanel.SetActive(true);
         SceneManager.LoadScene(2);
+    }
+
+    public void PurchaseSpell()
+    {
+        if (unlockedItemManager.totalSouls < unlockedSpells[selectedSpell].unlockCost)
+        {
+            return;
+        }
+        unlockedItemManager.totalSouls -= unlockedSpells[selectedSpell].unlockCost;
+        switch (unlockedSpells[selectedSpell].itemName)
+        {
+            case "Soulfire Weapon":
+                unlockedItemManager.unlockedSoulfire = true;
+                weaponBuff.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("purchased soulfire spell");
+                break;
+            case "Immolation":
+                unlockedItemManager.unlockedImmolation = true;
+                immolation.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased immolation");
+                break;
+            case "Soulform":
+                unlockedItemManager.unlockedSoulForm = true;
+                soulForm.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Soulform");
+                break;
+            case "Essence Flux":
+                unlockedItemManager.unlockedSoulToDamage = true;
+                soulToDamage.unlocked = true;
+                UnlockedRelics[selectedRelic].unlocked = true;
+                print("Purchased Essence Flux");
+                break;
+        }
+        UpdateSelectedSpellDisplay(selectedSpell);
+        gameSaveHandler.SaveGame(unlockedItemManager);
     }
 
     public void PurchaseRelic()
@@ -253,18 +331,6 @@ public class CharacterCreationMenu : MonoBehaviour
                 extraSoul.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("purchased gluttony ring");
-                break;
-            case "Soulshield":
-                unlockedItemManager.unlockedSoulshield = true;
-                soulShield.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
-                print("purchased soulshield");
-                break;
-            case "Soulfire Weapon":
-                unlockedItemManager.unlockedSoulfire = true;
-                soulShield.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
-                print("purchased soulfire spell");
                 break;
             case "Siphon":
                 unlockedItemManager.unlockedSoulGenerator = true;
@@ -296,7 +362,6 @@ public class CharacterCreationMenu : MonoBehaviour
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased mindshreeker");
                 break;
-
             case "Witchbane":
                 unlockedItemManager.unlockedAttackingReducesHealth = true;
                 attackingReducesHealth.unlocked = true;
@@ -309,29 +374,11 @@ public class CharacterCreationMenu : MonoBehaviour
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased Glass Shard");
                 break;
-            case "Immolation":
-                unlockedItemManager.unlockedImmolation = true;
-                immolation.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
-                print("Purchased immolation");
-                break;
-            case "Soulform":
-                unlockedItemManager.unlockedSoulForm = true;
-                soulForm.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
-                print("Purchased Soulform");
-                break;
             case "Soulcutter":
                 unlockedItemManager.unlockedSoulOnHit = true;
                 soulOnHit.unlocked = true;
                 UnlockedRelics[selectedRelic].unlocked = true;
                 print("Purchased Soulcutter");
-                break;
-            case "Essence Flux":
-                unlockedItemManager.unlockedSoulToDamage = true;
-                soulToDamage.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
-                print("Purchased Essence Flux");
                 break;
             case "Infernal Pact":
                 unlockedItemManager.unlockedStartAtLevel3 = true;
