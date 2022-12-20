@@ -325,7 +325,7 @@ public class PlayerStats : MonoBehaviour
         {
             currentSoul = maxSoul;
         }
-        currentHealth += enemyTier;
+        currentHealth += enemyTier * soulMuliplier;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
         if (enemyTier >= 2000)
@@ -362,7 +362,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ExtraSoulRelic()
     {
-        soulMuliplier += 0.2f;
+        soulMuliplier += 0.5f;
     }
 
     public void SoulShield()

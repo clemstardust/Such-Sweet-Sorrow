@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwordBuffSpell
   m_EditorClassIdentifier: 
   itemName: Soulfire Weapon
-  itemDesc: Enchants your weapon with your soul for a time.
+  itemDesc: Invocation. Enchants your weapon with your soul for a time.
   unlocked: 1
   RelicFunction: SoulfireWeapon
   unlockCost: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: '[PH]Hammer'
   m_EditorClassIdentifier: 
   itemName: Warhammer
-  itemDesc: A decimating hammer. Once the tool of a blacksmith, now it is a tool
-    to crush the bones of forlorn vagrants.
+  itemDesc: Once the tool of a blacksmith, now it is a tool to crush the bones of
+    forlorn vagrants.
   unlocked: 0
   R1StaminaCost: 30
   R2StaminaCost: 60

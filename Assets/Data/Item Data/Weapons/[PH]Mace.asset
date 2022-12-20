@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: '[PH]Mace'
   m_EditorClassIdentifier: 
   itemName: Mace
-  itemDesc: Often favored by dicipiles and clerics. Often said to be the tool of
-    gods, now you must use it to slay them.
+  itemDesc: Often said to be the tool of gods, now you must use it to slay them.
   unlocked: 1
   R1StaminaCost: 30
   R2StaminaCost: 60
