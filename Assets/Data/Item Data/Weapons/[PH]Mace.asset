@@ -22,5 +22,5 @@ MonoBehaviour:
   R2Damage: 75
   animations: {fileID: 22100000, guid: ce0228b9c3bbfe74ea6aeefa7da2d864, type: 2}
   unlockCost: 0
-  R1PoiseDamage: 50
+  R1PoiseDamage: 100
   R2PoiseDamage: 75

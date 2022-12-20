@@ -5756,7 +5756,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1fd84aeb4b452846842dd061312c583, type: 2}
   - {fileID: 11400000, guid: dddbd025a513164468357108ce791fbb, type: 2}
   - {fileID: 11400000, guid: 8e1e75b4c2015194f9d720893722904c, type: 2}
-  - {fileID: 11400000, guid: 538c9fd8209e83441a61549f84427f8a, type: 2}
+  - {fileID: 11400000, guid: dddbd025a513164468357108ce791fbb, type: 2}
   - {fileID: 11400000, guid: ef6127437299fcb45973bd1863441807, type: 2}
   - {fileID: 11400000, guid: 2fa6984c3789106438c5545ea235a4e2, type: 2}
   - {fileID: 11400000, guid: 394081163c9bd214082ea8e37437be25, type: 2}
@@ -17703,7 +17703,7 @@ PrefabInstance:
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.6624155
+      value: -3.889159
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}

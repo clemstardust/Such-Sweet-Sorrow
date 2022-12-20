@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: '[PH]Greatsword'
   m_EditorClassIdentifier: 
   itemName: Greatsword
-  itemDesc: A massive greatsword, weildred by the strongest of warriors.
+  itemDesc: A massive greatsword, wielded by the strongest of warriors.
   unlocked: 0
   R1StaminaCost: 15
   R2StaminaCost: 30

@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dfa24d37a3359c45bc9a0282587d51d, type: 3}
   m_Name: SwordBuffSpell
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 9e7d26bd46466ff4492c111d7968aee3, type: 3}
   itemName: Soulfire Weapon
-  itemDesc: Enchants your wepon with your soul for a time.
-  unlocked: 0
+  itemDesc: Enchants your weapon with your soul for a time.
+  unlocked: 1
   RelicFunction: SoulfireWeapon
-  unlockCost: 4000
+  unlockCost: 0

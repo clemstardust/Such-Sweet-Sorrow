@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SoulToDamageAttack
   m_EditorClassIdentifier: 
   itemName: Essence Flux
-  itemDesc: Invocation. CHannel your soul into your weapon to do that much more damage
-  unlocked: 0
+  itemDesc: Invocation. Channel your soul into your weapon to do that much more damage
+  unlocked: 1
   RelicFunction: ActivateExtraDamageForSoul
   unlockCost: 3000

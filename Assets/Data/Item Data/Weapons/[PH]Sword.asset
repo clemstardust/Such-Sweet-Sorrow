@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: '[PH]Sword'
   m_EditorClassIdentifier: 
   itemName: Sword
-  itemDesc: The sowrd weildred by the knights of a long-forgotten fallen order. Very
+  itemDesc: The sword wielded by the knights of a long-forgotten fallen order. Very
     versitile.
   unlocked: 1
   R1StaminaCost: 15
