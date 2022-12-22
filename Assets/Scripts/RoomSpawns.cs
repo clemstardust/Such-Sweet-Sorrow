@@ -49,8 +49,9 @@ public class RoomSpawns : MonoBehaviour
         spawnJoints = GameObject.FindGameObjectsWithTag("Joint");
         foreach (var i in spawnJoints)
         {
+            levelSize = maxLevelSize;
             i.GetComponent<OpenJoint>().Build(this);
-
+            
         }
         foreach (var c in LoadedColliders)
             c.enabled = false;
@@ -59,7 +60,7 @@ public class RoomSpawns : MonoBehaviour
         surface.BuildNavMesh();
 
         //RenderSettings.skybox = Skyboxes[GameManager.globalDarkness];
-        
+        /*
         if (GameObject.FindGameObjectWithTag("BossRoom") == null)
         {
             GameManager.spawnedEndRoom = false;
@@ -73,7 +74,8 @@ public class RoomSpawns : MonoBehaviour
         else
         {
             GameManager.spawnedEndRoom = true;
-        }
+        }*/
+        GameManager.spawnedEndRoom = true;
         print("Spawned end room: " + GameManager.spawnedEndRoom);
         //GameObject.FindGameObjectWithTag("LoadingOverlay").SetActive(false);
     }

@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/CharacerCreation.unity
     guid: eb602f1f0eb684d44b86aa75be1cfdb2
   - enabled: 1
+    path: Assets/SwampLevel.unity
+    guid: ca828e6b91adcf54b8a3b58c9d188d3f
+  - enabled: 1
     path: Assets/GameLevel.unity
     guid: a711826e39deb38488f8da6844055d48
   m_configObjects:
