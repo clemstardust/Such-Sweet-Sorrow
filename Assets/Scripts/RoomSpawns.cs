@@ -60,7 +60,7 @@ public class RoomSpawns : MonoBehaviour
         surface.BuildNavMesh();
 
         //RenderSettings.skybox = Skyboxes[GameManager.globalDarkness];
-        /*
+        
         if (GameObject.FindGameObjectWithTag("BossRoom") == null)
         {
             GameManager.spawnedEndRoom = false;
@@ -74,8 +74,8 @@ public class RoomSpawns : MonoBehaviour
         else
         {
             GameManager.spawnedEndRoom = true;
-        }*/
-        GameManager.spawnedEndRoom = true;
+        }
+        //GameManager.spawnedEndRoom = true;
         print("Spawned end room: " + GameManager.spawnedEndRoom);
         //GameObject.FindGameObjectWithTag("LoadingOverlay").SetActive(false);
     }
@@ -89,7 +89,7 @@ public class RoomSpawns : MonoBehaviour
                 break;
             case TileProperties.LeadsTo.mainroom:
                 roomToSpawn = mainRooms[Mathf.RoundToInt(Random.Range(0, mainRooms.Length))];
-                if (levelSize <= maxLevelSize * 0.2f && GameObject.FindGameObjectWithTag("BossRoom") == null)
+                if (levelSize <= maxLevelSize * 0.5f && GameObject.FindGameObjectWithTag("BossRoom") == null)
                 {
                     roomToSpawn = bossArena;
                 }
@@ -158,6 +158,10 @@ public class RoomSpawns : MonoBehaviour
 
     public bool ShouldSpawnSpecialRoom()
     {
+        if (specialRoomCount <= 0)
+        {
+            return false;
+        }
         if (Random.Range(0, levelSize) == 0)
         {
             return true;

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chosenType: 1
-  leadsTo: 4
+  leadsTo: 1
   theme: 0
 --- !u!65 &252253269081168906
 BoxCollider:

@@ -354,8 +354,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
+      propertyPath: deadEnd
+      value: 
+      objectReference: {fileID: 49275251518787751, guid: 6edc2cdf59558374bb2e590cf68f23a8,
+        type: 3}
+    - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
+        type: 3}
+      propertyPath: bossArena
+      value: 
+      objectReference: {fileID: 2878001182478873349, guid: a29dde6fc70372a44a7676d74d9a2409,
+        type: 3}
+    - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
+        type: 3}
       propertyPath: levelSize
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
+        type: 3}
+      propertyPath: specialRoomCount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
@@ -370,12 +387,12 @@ PrefabInstance:
     - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
       propertyPath: hallways.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
       propertyPath: mainRooms.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
@@ -411,7 +428,13 @@ PrefabInstance:
         type: 3}
       propertyPath: hallways.Array.data[5]
       value: 
-      objectReference: {fileID: 2878001182478873349, guid: a29dde6fc70372a44a7676d74d9a2409,
+      objectReference: {fileID: 2878001182478873349, guid: d16b1cc0b35cba14c8bb34724068ef74,
+        type: 3}
+    - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
+        type: 3}
+      propertyPath: hallways.Array.data[6]
+      value: 
+      objectReference: {fileID: 2878001182478873349, guid: 24d6ae05d3dbd784784f0d794e3d6ce7,
         type: 3}
     - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
@@ -447,7 +470,13 @@ PrefabInstance:
         type: 3}
       propertyPath: mainRooms.Array.data[5]
       value: 
-      objectReference: {fileID: 2878001182478873349, guid: a29dde6fc70372a44a7676d74d9a2409,
+      objectReference: {fileID: 2878001182478873349, guid: 24d6ae05d3dbd784784f0d794e3d6ce7,
+        type: 3}
+    - target: {fileID: 5355392685043232707, guid: fbd17fa508a6bb940a130e058b284842,
+        type: 3}
+      propertyPath: mainRooms.Array.data[6]
+      value: 
+      objectReference: {fileID: 2878001182478873349, guid: d16b1cc0b35cba14c8bb34724068ef74,
         type: 3}
     - target: {fileID: 5723323190111391379, guid: fbd17fa508a6bb940a130e058b284842,
         type: 3}
