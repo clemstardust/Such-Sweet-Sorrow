@@ -94,6 +94,16 @@ public class PlayerStats : MonoBehaviour
                 FindObjectOfType<GameSaveHandler>().SaveGame(unlockedItemManager);
                 GameObject.FindGameObjectWithTag("RequiredLevelComponents").GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "CharacerCreation");
                 //isDead = true;
+                var gameObjects = FindObjectsOfType<GameObject>();
+                /*
+                foreach (GameObject ob in gameObjects)
+                    if (ob.tag != "MainCamera" && ob.tag != "PlayerUI" && ob.tag != "BossVictoryScreen" && ob.tag != "PauseMenu" && ob.tag != "RequiredLevelComponents" && ob.tag != "MusicPlayerBackground")
+                        Destroy(ob);*/
+                var ddolObjects = FindObjectsOfType<TurnOffDDOL>();
+                foreach (TurnOffDDOL obj in ddolObjects)
+                {
+                    obj.TurnOffDontDestroyOnLoad();
+                }
                 animator.SetBool("Dead", true);
 
                 //animator.SetBool("isInteracting", true);
@@ -337,7 +347,7 @@ public class PlayerStats : MonoBehaviour
             StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 3, 1));
             //GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>().Pause();
             //GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>().Play();
-            GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "CharacerCreation");
+            GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "SwampLevel");
         }
     }
 

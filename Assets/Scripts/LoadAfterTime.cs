@@ -9,12 +9,14 @@ public class LoadAfterTime : MonoBehaviour
 
     private bool startCountdown;
     private bool startSecondCountdown;
+    private bool isLoading;
 
     public GameObject deathScreen;
 
     private void Start()
     {
         deathScreen.SetActive(false);
+        isLoading = false;
     }
 
     void Update()
@@ -33,10 +35,38 @@ public class LoadAfterTime : MonoBehaviour
             timeElapsed += Time.deltaTime;
         }
             
-        if (timeElapsed > delayBeforeLoading)
+        if (timeElapsed > delayBeforeLoading && !isLoading)
         {
             SceneManager.LoadScene(sceneNameToLoad);
+            isLoading = true;
+            startCountdown = false;
+            timeElapsed = 0;
+            //deathScreen.GetComponent<CanvasGroup>().alpha = 0;
+            startSecondCountdown = false;
         }
+    }
+
+    void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // called second
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        startCountdown = false;
+        timeElapsed = 0;
+        deathScreen.GetComponent<CanvasGroup>().alpha = 0;
+        startSecondCountdown = false;
+        print("ran on scene loaded from LoadAfterTime");
+    }
+
+    public void ResetLoading()
+    {
+        startCountdown = false;
+        timeElapsed = 0;
+        deathScreen.GetComponent<CanvasGroup>().alpha = 0;
+        startSecondCountdown = false;
     }
 
     public void LoadSceneAfterDelay(float delay, string sceneToLoad)

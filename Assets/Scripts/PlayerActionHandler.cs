@@ -108,11 +108,20 @@ public class PlayerActionHandler : MonoBehaviour
 		{
 			mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		}
+		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
+
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		gameObject.transform.position = GameObject.FindGameObjectWithTag("PlayerStartPos").transform.position;
+		GameObject.FindGameObjectWithTag("BossVictoryScreen").GetComponent<CanvasGroup>().alpha = 0;
+		print("ran on scene loaded from action handler");
+	}
+
 	GameObject pauseMenu;
 	private void Start()
 	{
-        Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.Locked;
 
         animator = gameObject.GetComponent<Animator>();
 		controller = GetComponent<CharacterController>();
@@ -248,11 +257,11 @@ public class PlayerActionHandler : MonoBehaviour
 		//print("action handler running");
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-		
+			playerUpgradeHandler.damageMultiplier += 100;
 			//print("Input working");
-			
+			/*
             Scene scene = SceneManager.GetActiveScene(); 
-			SceneManager.LoadScene(scene.name);
+			SceneManager.LoadScene(scene.name);*/
         }
 
     }

@@ -30,6 +30,9 @@ TagManager:
   - TransformedPlayer
   - Torch
   - PauseMenu
+  - BossVictoryScreen
+  - PlayerUI
+  - PlayerStartPos
   layers:
   - Default
   - TransparentFX

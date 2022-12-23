@@ -18,6 +18,8 @@ public class EnemyAI : MonoBehaviour
     public bool rotated;
     private Quaternion rotation;
 
+    [SerializeField] public SkinnedMeshRenderer skin;
+
     public enum CurrentAttack
     {
         R1,
@@ -47,9 +49,12 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         randAttackChance = UnityEngine.Random.Range(1, 4);
+        var temp = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer t in temp) t.enabled = true;
     }
     private void Update()
     {
+        //skin.enabled = true;
         if (currentTarget != null)
         {
             distanceToTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
@@ -67,7 +72,7 @@ public class EnemyAI : MonoBehaviour
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
         layerMask = ~layerMask;
 #pragma warning restore IDE0059 // Unnecessary assignment of a value
-
+        
         
     }
 
@@ -285,7 +290,7 @@ public class EnemyAI : MonoBehaviour
         GetComponent<EnemyManager>().enabled = false;
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
-        GetComponentInChildren<AttackHitboxObject>().gameObject.SetActive(false);
+        GetComponentInChildren<AttackHitboxObject>().gameObject.SetActive(false);   
         //GetComponent<Rigidbody>().isKinematic = true;
         Collider[] colliders = gameObject.GetComponents<Collider>();
         foreach (CapsuleCollider col in colliders)
