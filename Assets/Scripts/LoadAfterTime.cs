@@ -56,7 +56,6 @@ public class LoadAfterTime : MonoBehaviour
     {
         startCountdown = false;
         timeElapsed = 0;
-        deathScreen.GetComponent<CanvasGroup>().alpha = 0;
         startSecondCountdown = false;
         print("ran on scene loaded from LoadAfterTime");
     }

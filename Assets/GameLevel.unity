@@ -6800,7 +6800,7 @@ PrefabInstance:
     - target: {fileID: 6354521835463971330, guid: 791c1ce14ed407c4ca336bbbb58d8532,
         type: 3}
       propertyPath: levelSize
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6354521835463971330, guid: 791c1ce14ed407c4ca336bbbb58d8532,
         type: 3}

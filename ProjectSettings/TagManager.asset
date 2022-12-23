@@ -33,6 +33,7 @@ TagManager:
   - BossVictoryScreen
   - PlayerUI
   - PlayerStartPos
+  - Killbox
   layers:
   - Default
   - TransparentFX

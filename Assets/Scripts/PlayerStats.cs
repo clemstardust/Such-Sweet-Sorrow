@@ -123,6 +123,7 @@ public class PlayerStats : MonoBehaviour
             if (degenerateHealth && extraLives > 0)
             {
                 currentHealth -= ((currentHealth / maxHealth) + 1) * 0.015f;
+                FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
                 uIManager.UpdateStatsUI(currentHealth, maxHealth);
             }
             maxSoul = ((maxHealth - (int)currentHealth) + (int) playerUpgradeHandler.maxSoulUpLevel);
@@ -130,9 +131,10 @@ public class PlayerStats : MonoBehaviour
             {
                 maxSoul = 0;
             }
-            if (siphon && currentSoul < maxSoul)
+            if (siphon && currentHealth < maxHealth)
             {
-                currentSoul += 2 * Time.deltaTime;
+                currentHealth += 2 * Time.deltaTime;
+                FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
             }
             RegnerateStamina();
             uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
@@ -270,6 +272,12 @@ public class PlayerStats : MonoBehaviour
                     currentSoul += playerUpgradeHandler.dodgeToHealFlatAmount;
                 }
             }
+            uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
+        }
+        else if (other.CompareTag("Killbox"))
+        {
+            currentHealth = -1;
+            FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
             uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
         }
     }

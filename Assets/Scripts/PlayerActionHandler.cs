@@ -113,9 +113,17 @@ public class PlayerActionHandler : MonoBehaviour
 
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
-		gameObject.transform.position = GameObject.FindGameObjectWithTag("PlayerStartPos").transform.position;
-		GameObject.FindGameObjectWithTag("BossVictoryScreen").GetComponent<CanvasGroup>().alpha = 0;
+		Invoke("PlaceCharacter", 1);
+		//gameObject.transform.position = FindObjectOfType<SetCharacterPosition>().transform.position;
+		//GameObject.FindGameObjectWithTag("BossVictoryScreen").GetComponent<CanvasGroup>().alpha = 0;
 		print("ran on scene loaded from action handler");
+	}
+
+	void PlaceCharacter()
+    {
+		var charPos = FindObjectOfType<SetCharacterPosition>();
+		if (charPos != null)
+			gameObject.transform.position = charPos.transform.position;
 	}
 
 	GameObject pauseMenu;
@@ -257,12 +265,13 @@ public class PlayerActionHandler : MonoBehaviour
 		//print("action handler running");
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			playerUpgradeHandler.damageMultiplier += 100;
+			GetComponent<LoadAfterTime>().LoadSceneAfterDelay(5, "SwampLevel");
+			//playerUpgradeHandler.damageMultiplier += 100;
 			//print("Input working");
 			/*
             Scene scene = SceneManager.GetActiveScene(); 
 			SceneManager.LoadScene(scene.name);*/
-        }
+		}
 
     }
 
