@@ -1,25 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LockOnTarget : MonoBehaviour
 {
-    [SerializeField] GameObject lockIndicator;
-    //[SerializeField] public bool locked;
-
+    public bool isDead = false;
+    public Outline indicator;
     private void Start()
     {
-        lockIndicator = transform.GetChild(0).gameObject;
-        OnUnlock();
-    }
-
-    public void OnLock()
-    {
-        lockIndicator.SetActive(true);
-    }
-    public void OnUnlock()
-    {
-        lockIndicator.SetActive(false);
+        indicator = GetComponentInParent<EnemyAI>().gameObject.GetComponentInChildren<Outline>();
+        indicator.enabled = false;
     }
 
 }

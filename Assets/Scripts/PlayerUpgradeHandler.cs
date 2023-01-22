@@ -288,9 +288,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            stunChance += 0.1f;
+            stunChance += 0.2f;
         }
-        stunChance += 0.1f;
+        stunChance += 0.2f;
         ResolveUpgrade();
     }
 
@@ -298,9 +298,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            hemmorageChance += 0.1f;
+            hemmorageChance += 0.2f;
         }
-        hemmorageChance += 0.1f;
+        hemmorageChance += 0.2f;
         ResolveUpgrade();
     }
 
@@ -308,9 +308,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            rotChance += 0.1f;
+            rotChance += 0.2f;
         }
-        rotChance += 0.1f;
+        rotChance += 0.2f;
         ResolveUpgrade();
     }
 
@@ -318,9 +318,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            bleedChance += 0.1f;
+            bleedChance += 0.2f;
         }
-        bleedChance += 0.1f;
+        bleedChance += 0.2f;
         ResolveUpgrade();
     }
 
@@ -328,9 +328,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            iceChance += 0.1f;
+            iceChance += 0.2f;
         }
-        iceChance += 0.1f;
+        iceChance += 0.2f;
         ResolveUpgrade();
     }
 
@@ -338,9 +338,9 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            poisonChance += 0.1f;
+            poisonChance += 0.2f;
         }
-        poisonChance += 0.1f;
+        poisonChance += 0.2f;
         ResolveUpgrade();
     }
 

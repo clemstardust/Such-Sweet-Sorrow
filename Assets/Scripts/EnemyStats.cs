@@ -37,6 +37,7 @@ public class EnemyStats : MonoBehaviour
     private PlayerUpgradeHandler playerUpgradeHandler;
     private EnemyAI enemyAI;
     private EnemyDebuffHandler debuffHandler;
+    private EnemyManager manager;
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class EnemyStats : MonoBehaviour
         currentStamina = maxStamina;
         playerEquipment = FindObjectOfType<PlayerEquipment>();
         debuffHandler = GetComponent<EnemyDebuffHandler>();
+        manager = GetComponent<EnemyManager>();
         playerStats = FindObjectOfType<PlayerStats>();
         playerUpgradeHandler = FindObjectOfType<PlayerUpgradeHandler>();
         healthBar.maxValue = maxHealth;
@@ -57,6 +59,14 @@ public class EnemyStats : MonoBehaviour
     {
         RegnerateStamina();
         healthBar.value = currentHealth;
+        if (currentHealth == maxHealth)
+        {
+            betterHealthBar.gameObject.transform.parent.gameObject.SetActive(true);
+        }
+        else if (manager.enemyMode != EnemyManager.Mode.dead)
+        {
+            betterHealthBar.gameObject.transform.parent.gameObject.SetActive(true);
+        }
     }
 
     public void TakeHit(Collider other)

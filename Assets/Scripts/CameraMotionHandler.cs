@@ -28,6 +28,11 @@ public class CameraMotionHandler : MonoBehaviour
 
 	public float sens = 0.5f;
 
+	public bool lockedOn = false;
+	private EnemyAI closest = null;
+
+	int layerMask = 1 << 8;
+
 	private void Awake()
 	{
 		// get a reference to our main camera
@@ -39,6 +44,28 @@ public class CameraMotionHandler : MonoBehaviour
 	private void Start()
 	{
 		input = GetComponent<PlayerInput>();
+		closest = FindNearestEnemy();
+	}
+
+	public EnemyAI FindNearestEnemy()
+    {
+		EnemyAI tMin = null;
+		var enemies = FindObjectsOfType<EnemyAI>();
+		float minDist = Mathf.Infinity;
+		Vector3 currentPos = transform.position;
+		foreach (EnemyAI t in enemies)
+		{
+			float dist = Vector3.Distance(t.gameObject.transform.position, currentPos);
+			Vector3 dir = t.gameObject.transform.position - transform.position;
+			dir.y = 0;
+			if (dist < minDist && Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity, layerMask))
+			{
+				Debug.DrawRay(transform.position, dir * hit.distance, Color.green);
+				tMin = t;
+				minDist = dist;
+			}
+		}
+		return tMin;
 	}
 
 	// Update is called once per frame
@@ -60,7 +87,28 @@ public class CameraMotionHandler : MonoBehaviour
 
 		Quaternion rot = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
 		// Cinemachine will follow this target
-		CinemachineCameraTarget.transform.rotation = rot;
+		
+		if (Input.GetKeyDown(KeyCode.R))
+        {
+			lockedOn = !lockedOn;
+			if (closest)
+				closest.lockIndicator.indicator.enabled = false;
+			closest = FindNearestEnemy();
+			if (closest)
+				closest.lockIndicator.indicator.enabled = true;
+		}
+		if (lockedOn && closest)
+        {
+			closest.lockIndicator.indicator.enabled = true;
+			CinemachineCameraTarget.transform.LookAt(closest.transform);
+		}
+		else
+        {
+			if (closest)
+				closest.lockIndicator.indicator.enabled = false;
+			CinemachineCameraTarget.transform.rotation = rot;
+		}
+
 	}
 
 	private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float distanceToTarget;
 
     public GameObject raycastOrigin;
+    public LockOnTarget lockIndicator;
     private EnemyStats enemyStats;
     public Animator animator;
     private NavMeshAgent agent;
@@ -51,6 +52,7 @@ public class EnemyAI : MonoBehaviour
         randAttackChance = UnityEngine.Random.Range(1, 4);
         var temp = GetComponentsInChildren<SkinnedMeshRenderer>();
         foreach (SkinnedMeshRenderer t in temp) t.enabled = true;
+        lockIndicator = GetComponentInChildren<LockOnTarget>();
     }
     private void Update()
     {
@@ -285,6 +287,8 @@ public class EnemyAI : MonoBehaviour
 
     public void Dead()
     {
+        lockIndicator.isDead = true;
+        FindObjectOfType<CameraMotionHandler>().lockedOn = false;
         animator.SetBool("Dead", true);
         GetComponent<EnemyAI>().enabled = false;
         GetComponent<EnemyManager>().enabled = false;

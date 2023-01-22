@@ -195,7 +195,7 @@ public class PlayerActionHandler : MonoBehaviour
 		Buffs();
 		Cast();
 		Roll();
-		RegenHealth();
+		//RegenHealth();
 		Pause();
 		if (immolationFlames.activeSelf) return;
 		Attack();
@@ -204,6 +204,7 @@ public class PlayerActionHandler : MonoBehaviour
 
 	public bool damageAfterDodgeIsActive = false;
 	public float damageAfterDodgeCountdown = 0;
+	public bool lockedOn = false;
 
     private void Pause()
     {

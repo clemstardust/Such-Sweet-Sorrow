@@ -10,6 +10,8 @@ public class BossRoom : MonoBehaviour
     public EnemyStats boss;
     public Collider triggerCollider;
     public Collider triggerCollider2;
+
+    private bool enteredRoom;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +23,14 @@ public class BossRoom : MonoBehaviour
     private void Update()
     {
         bossHealthbar.GetComponent<Slider>().value = boss.currentHealth;
+        if (!enteredRoom) { bossHealthbar.SetActive(false); }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            enteredRoom = true;
             bossHealthbar.SetActive(true);
             GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>().Play();
             StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBoss").GetComponent<AudioSource>(), 3, 1));

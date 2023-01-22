@@ -34,6 +34,8 @@ TagManager:
   - PlayerUI
   - PlayerStartPos
   - Killbox
+  - StatusParticle
+  - LockOnTarget
   layers:
   - Default
   - TransparentFX
