@@ -84,6 +84,7 @@ public class PlayerActionHandler : MonoBehaviour
 	public GameObject hand1;
 	public GameObject hand2;
 	public bool transformed = false;
+	public GameObject playerBody;
 
     public bool canCast = false;
 	public enum CurrentSpell
@@ -192,11 +193,12 @@ public class PlayerActionHandler : MonoBehaviour
 			staminaRegenDelay = false;
 		}
 		Buffs();
-        Attack();
+		Cast();
 		Roll();
 		RegenHealth();
-		Cast();
 		Pause();
+		if (immolationFlames.activeSelf) return;
+		Attack();
 		if (Input.GetKeyDown(KeyCode.H)) Transition();
 	}
 
@@ -319,12 +321,14 @@ public class PlayerActionHandler : MonoBehaviour
 				if (Input.GetKeyDown(KeyCode.Q) && immolationFlames.activeSelf)
 				{
 					immolationFlames.SetActive(false);
+					playerBody.SetActive(true);
 				}
 				else if (Input.GetKeyDown(KeyCode.Q) && playerStats.currentHealth > 1 && canCast)
 				{
 					//animator.SetBool("Cast", true);
 					//animator.SetBool("isInteracting", true);
 					immolationFlames.SetActive(true);
+					playerBody.SetActive(false);
 				}
 				else
 				{
@@ -338,6 +342,7 @@ public class PlayerActionHandler : MonoBehaviour
 				else
 				{
 					immolationFlames.SetActive(false);
+					playerBody.SetActive(true);
 				}
 				
 				break;

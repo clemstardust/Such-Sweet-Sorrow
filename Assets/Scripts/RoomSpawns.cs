@@ -75,6 +75,8 @@ public class RoomSpawns : MonoBehaviour
         {
             GameManager.spawnedEndRoom = true;
         }
+        foreach (var c in LoadedColliders)
+            c.enabled = false;
         print("Spawned end room: " + GameManager.spawnedEndRoom);
         //GameObject.FindGameObjectWithTag("LoadingOverlay").SetActive(false);
     }

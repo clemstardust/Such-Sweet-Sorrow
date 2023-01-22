@@ -20,17 +20,27 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public int numTougherTimes = 0;
     public int numTrans = 0;
 
+    //status effect chance
+    public float poisonChance = 0;
+    public float iceChance = 0;
+    public float bleedChance = 0;
+    public float rotChance = 0;
+    public float hemmorageChance = 0;
+    public float stunChance = 0;
+
+    //unused
     public float spellCostDownPercent = 1;
     public float spellDurationMultiplier = 1;
 
+    //xp
     private float xpToNextLevel;
 
     public GameObject xpBar;
-
+    //ui
     public GameObject upgradeMenu;
-
+    //for relic
     public bool doubleUpgrades = false;
-
+    //references
     private PlayerStats playerStats;
     private PlayerActionHandler playerActionHandler;
     private void Start()
@@ -77,7 +87,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
         damageMultiplier += 0.1f;
         if (doubleUpgrades)
         {
-            damageMultiplier += 0.1f;
+            damageMultiplier += 0.3f;
         }
 
         ResolveUpgrade();
@@ -156,11 +166,11 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            healthLowDamageMultiplier += 0.5f;
+            healthLowDamageMultiplier += 1f;
         }
         if (playerStats.helathLowAddDamage)
         {
-            healthLowDamageMultiplier += 0.5f;
+            healthLowDamageMultiplier += 1f;
         }
         playerStats.helathLowAddDamage = true;
         print("Spell duration upgraded!");
@@ -237,11 +247,11 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            dodgeToHealFlatAmount += 5f;
+            dodgeToHealFlatAmount += 15f;
         }
         if (playerStats.healOnDodge)
         {
-            dodgeToHealFlatAmount += 5f;
+            dodgeToHealFlatAmount += 15f;
         }
         playerStats.healOnDodge = true;
         print("heal on dodge upgraded!");
@@ -273,4 +283,65 @@ public class PlayerUpgradeHandler : MonoBehaviour
         print("num trans upgraded");
         ResolveUpgrade();
     }
+
+    public void StunChanceUp()
+    {
+        if (doubleUpgrades)
+        {
+            stunChance += 0.1f;
+        }
+        stunChance += 0.1f;
+        ResolveUpgrade();
+    }
+
+    public void HemmorageChanceUp()
+    {
+        if (doubleUpgrades)
+        {
+            hemmorageChance += 0.1f;
+        }
+        hemmorageChance += 0.1f;
+        ResolveUpgrade();
+    }
+
+    public void RotChanceUp()
+    {
+        if (doubleUpgrades)
+        {
+            rotChance += 0.1f;
+        }
+        rotChance += 0.1f;
+        ResolveUpgrade();
+    }
+
+    public void BleedChanceUp()
+    {
+        if (doubleUpgrades)
+        {
+            bleedChance += 0.1f;
+        }
+        bleedChance += 0.1f;
+        ResolveUpgrade();
+    }
+
+    public void IceChanceUp()
+    {
+        if (doubleUpgrades)
+        {
+            iceChance += 0.1f;
+        }
+        iceChance += 0.1f;
+        ResolveUpgrade();
+    }
+
+    public void PoisionChanceUp()
+    {
+        if (doubleUpgrades)
+        {
+            poisonChance += 0.1f;
+        }
+        poisonChance += 0.1f;
+        ResolveUpgrade();
+    }
+
 }

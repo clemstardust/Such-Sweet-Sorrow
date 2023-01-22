@@ -285,25 +285,25 @@ public class CharacterCreationMenu : MonoBehaviour
             case "Soulfire Weapon":
                 unlockedItemManager.unlockedSoulfire = true;
                 weaponBuff.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
+                unlockedSpells[selectedSpell].unlocked = true;
                 print("purchased soulfire spell");
                 break;
-            case "Immolation":
+            case "Touch of Darkness":
                 unlockedItemManager.unlockedImmolation = true;
                 immolation.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
+                unlockedSpells[selectedSpell].unlocked = true;
                 print("Purchased immolation");
                 break;
             case "Soulform":
                 unlockedItemManager.unlockedSoulForm = true;
                 soulForm.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
+                unlockedSpells[selectedSpell].unlocked = true;
                 print("Purchased Soulform");
                 break;
             case "Essence Flux":
                 unlockedItemManager.unlockedSoulToDamage = true;
                 soulToDamage.unlocked = true;
-                UnlockedRelics[selectedRelic].unlocked = true;
+                unlockedSpells[selectedSpell].unlocked = true;
                 print("Purchased Essence Flux");
                 break;
         }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dfa24d37a3359c45bc9a0282587d51d, type: 3}
   m_Name: Immolation
   m_EditorClassIdentifier: 
-  itemName: Immolation
+  itemName: Touch of Darkness
   itemDesc: Invocation. Burns away your soul to damage enemies aorund you.
-  unlocked: 0
+  unlocked: 1
   RelicFunction: ActivateImmolation
   unlockCost: 3000

@@ -36,13 +36,14 @@ public class EnemyStats : MonoBehaviour
     private PlayerStats playerStats;
     private PlayerUpgradeHandler playerUpgradeHandler;
     private EnemyAI enemyAI;
+    private EnemyDebuffHandler debuffHandler;
 
     private void Start()
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         playerEquipment = FindObjectOfType<PlayerEquipment>();
-
+        debuffHandler = GetComponent<EnemyDebuffHandler>();
         playerStats = FindObjectOfType<PlayerStats>();
         playerUpgradeHandler = FindObjectOfType<PlayerUpgradeHandler>();
         healthBar.maxValue = maxHealth;
@@ -65,8 +66,8 @@ public class EnemyStats : MonoBehaviour
             GetComponent<AudioSource>().pitch = 0.8f;
             GetComponent<AudioSource>().Play();
             Animator animator = gameObject.GetComponent<Animator>();
+            Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
             float damage = playerEquipment.currentWeapon.R1Damage;
-            Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
             if (other.gameObject.GetComponentInParent<Animator>().GetBool("AttackR2"))
             {
                 damage = playerEquipment.currentWeapon.R2Damage;
@@ -74,14 +75,14 @@ public class EnemyStats : MonoBehaviour
             var playerStats = other.GetComponentInParent<PlayerStats>();
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
             var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
-            damage += (playerActionHandler.extraDamageFromSoul) * playerUpgradeHandler.spellDamageMuliplier;
+            damage += (playerActionHandler.extraDamageFromSoul * playerUpgradeHandler.spellDamageMuliplier);
             if (playerActionHandler.extraDamageFromSoul > 0)
                 playerActionHandler.extraDamageFromSoul = 0;
-            damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
             if (playerStats.staminaToDamage)
             {
                 damage += (playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier;
             }
+            damage = ((damage * (playerUpgradeHandler.damageMultiplier) * (other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier)));
             if (playerStats.helathLowAddDamage && (playerStats.currentHealth / playerStats.maxHealth) <= 0.25f)
             {
                 damage *= playerUpgradeHandler.healthLowDamageMultiplier;
@@ -96,7 +97,7 @@ public class EnemyStats : MonoBehaviour
             }
             if (playerStats.applyDotDebuff)
             {
-                StartCoroutine(DOTDebuff.DOT_Debuff(this, damage, 3));
+                StartCoroutine(DOTDebuff.DOT_Debuff(this, damage, 3, debuffHandler));
             }
             if (playerStats.extraDamageOnUndamaged && maxHealth == currentHealth)
             {
@@ -110,6 +111,12 @@ public class EnemyStats : MonoBehaviour
             {
                 damage *= 2;
             }
+            damage *= (maxHealth * 0.001f) * debuffHandler.bleedStacks + 1;
+            if (Random.Range(0,100) == debuffHandler.rotStacks * 10)
+            {
+                damage *= 2;
+            }
+            CalculateStatusesApplied((int)damage);
             print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
@@ -125,7 +132,13 @@ public class EnemyStats : MonoBehaviour
             if (currentHealth <= 0)
             {
                 healthBar.gameObject.SetActive(false);
+                GetComponentInChildren<StatusBar>().gameObject.SetActive(false);
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
+                var particles = GameObject.FindGameObjectsWithTag("StatusParticle");
+                foreach (GameObject obj in particles)
+                {
+                    Destroy(obj);
+                }
             }
             //Poise
             float poiseDamage = playerEquipment.currentWeapon.R1Damage;
@@ -133,7 +146,7 @@ public class EnemyStats : MonoBehaviour
             {
                 poiseDamage = playerEquipment.currentWeapon.R2Damage;
             }
-            currentPoise -= poiseDamage;
+            currentPoise -= poiseDamage * (1.25f * debuffHandler.stunStacks);
             if (currentPoise <= 0)
             {
                 animator.SetBool("Hit", true);
@@ -141,6 +154,55 @@ public class EnemyStats : MonoBehaviour
                 enemyAI.LiterallyJustDiasbleTheDamnCOllider();
             }            
         }
+    }
+
+    public void CalculateStatusesApplied(int damage)
+    {
+        PlayerUpgradeHandler upgrades = FindObjectOfType<PlayerUpgradeHandler>();
+        StatusBar statusBar = GetComponentInChildren<StatusBar>();
+        if (statusBar == null)
+            statusBar = GameObject.Find("StatusBarBoss").GetComponent<StatusBar>();
+        int newPoisonStacks = (int)(upgrades.poisonChance + Random.Range(0, 0.99f));
+        int newIceStacks = (int)(upgrades.iceChance + Random.Range(0, 0.99f));
+        int newBleedStacks = (int)(upgrades.bleedChance + Random.Range(0, 0.99f));
+        int newRotStacks = (int)(upgrades.rotChance + Random.Range(0, 0.99f));
+        int newHemStacks = (int)(upgrades.hemmorageChance + Random.Range(0, 0.99f));
+        int newStunStacks = (int)(upgrades.stunChance + Random.Range(0, 0.99f));
+        if (newPoisonStacks > 0 && debuffHandler.poisonStacks == 0) { 
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Poison);
+            Instantiate(statusBar.statusEffectParticles[0], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+        }
+        if (newIceStacks > 0 && debuffHandler.iceStacks == 0) { 
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Ice);
+            Instantiate(statusBar.statusEffectParticles[1], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+        }
+        if (newBleedStacks > 0 && debuffHandler.bleedStacks == 0) { 
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Bleed);
+            Instantiate(statusBar.statusEffectParticles[2], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+        }
+        if (newRotStacks > 0 && debuffHandler.rotStacks == 0) { 
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Rot); 
+            Instantiate(statusBar.statusEffectParticles[3], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+        }
+        if (newHemStacks > 0 && debuffHandler.hemmorageStacks == 0) { 
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Hemmorage);
+            Instantiate(statusBar.statusEffectParticles[4], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+        }
+        if (newStunStacks > 0 && debuffHandler.stunStacks == 0) {
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Stun);
+            Instantiate(statusBar.statusEffectParticles[5], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+        }
+
+        for (int i = 0; i < newHemStacks; i++)
+        {
+            StartCoroutine(HemmorageDebuff.Hemmorage_Debuff(this, damage, debuffHandler, 3));
+        }
+        debuffHandler.poisonStacks += newPoisonStacks;
+        debuffHandler.iceStacks += newIceStacks;
+        debuffHandler.bleedStacks += newBleedStacks;
+        debuffHandler.rotStacks += newRotStacks;
+        debuffHandler.hemmorageStacks += newHemStacks;
+        debuffHandler.stunStacks += newStunStacks;
     }
 
     public float countDown = 1;
@@ -197,6 +259,17 @@ public class EnemyStats : MonoBehaviour
             GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
         }
         enemyAI.LiterallyJustDiasbleTheDamnCOllider();
+    }
+
+    public void LiterallyJustTakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        betterHealthBar.Damage(currentHealth, maxHealth);
+        if (currentHealth <= 0)
+        {
+            healthBar.gameObject.SetActive(false);
+            GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
+        }
     }
 
     public void TakeDOTHit(int damage)

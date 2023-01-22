@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 5139057758883138941}
   - component: {fileID: 8153481291321983478}
   - component: {fileID: 1057422521902348510}
+  - component: {fileID: -382613895804077165}
   m_Layer: 8
   m_Name: PHBOSS
   m_TagString: EnemyDamageHitbox
@@ -110,6 +111,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   distanceToTarget: 0
   raycastOrigin: {fileID: 8043269063255585542}
+  animator: {fileID: 0}
   rotated: 0
   skin: {fileID: 0}
   detectionLayer:
@@ -321,6 +323,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f113287710e237f43a5f6fc016ec5fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-382613895804077165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5139057758883138938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f87ec69c4b633c43a884eeeb3dda945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonStacks: 0
+  iceStacks: 0
+  bleedStacks: 0
+  rotStacks: 0
+  hemmorageStacks: 0
+  stunStacks: 0
+  darkStacks: 0
 --- !u!1 &5381078921181928548
 GameObject:
   m_ObjectHideFlags: 0

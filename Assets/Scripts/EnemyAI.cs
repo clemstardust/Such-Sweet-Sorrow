@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject raycastOrigin;
     private EnemyStats enemyStats;
-    private Animator animator;
+    public Animator animator;
     private NavMeshAgent agent;
     private AttackHitboxObject attackHitbox;
     public bool rotated;
@@ -263,7 +263,7 @@ public class EnemyAI : MonoBehaviour
     {
         attackHitbox.dmgCollider.enabled = false;
         rotated = false;
-        agent.isStopped = false;
+        //agent.isStopped = false;
         animator.SetBool("Attack", false);
         animator.SetBool("Attack2", false);
         attackSet = false;
