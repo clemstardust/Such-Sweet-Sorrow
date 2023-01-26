@@ -29,7 +29,7 @@ public class CameraMotionHandler : MonoBehaviour
 	public float sens = 0.5f;
 
 	public bool lockedOn = false;
-	private EnemyAI closest = null;
+	private CameraTarget closest = null;
 
 	int layerMask = 1 << 8;
 
@@ -47,20 +47,22 @@ public class CameraMotionHandler : MonoBehaviour
 		closest = FindNearestEnemy();
 	}
 
-	public EnemyAI FindNearestEnemy()
+	public CameraTarget FindNearestEnemy()
     {
-		EnemyAI tMin = null;
-		var enemies = FindObjectsOfType<EnemyAI>();
+		CameraTarget tMin = null;
+		var enemies = FindObjectsOfType<CameraTarget>();
 		float minDist = Mathf.Infinity;
 		Vector3 currentPos = transform.position;
-		foreach (EnemyAI t in enemies)
+		Vector3 dir;
+		foreach (CameraTarget t in enemies)
 		{
 			float dist = Vector3.Distance(t.gameObject.transform.position, currentPos);
-			Vector3 dir = t.gameObject.transform.position - transform.position;
-			dir.y = 0;
-			if (dist < minDist && Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity, layerMask))
+			dir = t.gameObject.transform.position - transform.position;
+			Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity);
+			Debug.DrawRay(transform.position, dir * hit.distance, Color.green);
+
+			if (dist < minDist && hit.collider.gameObject.tag != "Untagged")
 			{
-				Debug.DrawRay(transform.position, dir * hit.distance, Color.green);
 				tMin = t;
 				minDist = dist;
 			}
@@ -72,6 +74,12 @@ public class CameraMotionHandler : MonoBehaviour
 	void FixedUpdate()
     {
 		CameraRotation();
+		if (!closest) return;
+		Vector3 dir;
+		dir = closest.gameObject.transform.position - transform.position;
+		Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity);
+		Debug.DrawRay(transform.position, dir * hit.distance, Color.green);
+		if (hit.collider.gameObject.tag != "EnemyDamageHitbox") ;
 	}
 
 	private void CameraRotation()
@@ -91,21 +99,22 @@ public class CameraMotionHandler : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.R))
         {
 			lockedOn = !lockedOn;
+			CinemachineCameraTarget.transform.rotation = this.transform.rotation;
 			if (closest)
-				closest.lockIndicator.indicator.enabled = false;
+				closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = false;
 			closest = FindNearestEnemy();
 			if (closest)
-				closest.lockIndicator.indicator.enabled = true;
+				closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = true;
 		}
 		if (lockedOn && closest)
         {
-			closest.lockIndicator.indicator.enabled = true;
+			closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = true;
 			CinemachineCameraTarget.transform.LookAt(closest.transform);
 		}
 		else
         {
 			if (closest)
-				closest.lockIndicator.indicator.enabled = false;
+				closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = false;
 			CinemachineCameraTarget.transform.rotation = rot;
 		}
 

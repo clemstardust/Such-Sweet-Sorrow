@@ -8592,7 +8592,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 25b32a7f575bf04499ec3c0b3c0ed887, type: 2}
   - {fileID: 11400000, guid: 233a2d7195d0555428fc606d8d15d768, type: 2}
   - {fileID: 11400000, guid: a2ec56c9daf6c5243bd35166b7d28da0, type: 2}
-  - {fileID: 11400000, guid: 2ed8f69c321f1834c82a2da27050e9fb, type: 2}
   - {fileID: 11400000, guid: 37a2a36ab824d87498e78107a968b6c8, type: 2}
   upgradeSlots:
   - {fileID: 7856768878582308977}
