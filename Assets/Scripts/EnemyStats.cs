@@ -121,12 +121,13 @@ public class EnemyStats : MonoBehaviour
             {
                 damage *= 2;
             }
-            damage *= (maxHealth * 0.001f) * debuffHandler.bleedStacks + 1;
+            damage *= ((maxHealth * 0.001f) * debuffHandler.bleedStacks) + 1;
             if (Random.Range(0,100) == debuffHandler.rotStacks * 10)
             {
                 damage *= 2;
             }
             CalculateStatusesApplied((int)damage);
+            damage *= 1 + (0.1f * (debuffHandler.stunStacks + debuffHandler.rotStacks + debuffHandler.poisonStacks + debuffHandler.iceStacks + debuffHandler.hemmorageStacks + debuffHandler.darkStacks + debuffHandler.bleedStacks));
             print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
             betterHealthBar.Damage(currentHealth, maxHealth);
@@ -137,10 +138,11 @@ public class EnemyStats : MonoBehaviour
             }
             if (playerStats.soulOnHit)
             {
-                playerStats.currentSoul += 15;
+                playerStats.Heal(15);
             }
             if (currentHealth <= 0)
             {
+                GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;
                 healthBar.gameObject.SetActive(false);
                 GetComponentInChildren<StatusBar>().gameObject.SetActive(false);
                 GetComponent<EnemyManager>().enemyMode = EnemyManager.Mode.dead;

@@ -322,7 +322,7 @@ public class PlayerStats : MonoBehaviour
 
     public void EnemyKilled(int enemyTier)
     {
-        print("enemy killed");
+        //print("enemy killed");
         if (enemyTier < 1000)
             currentXP += enemyTier;
         totalSouls += enemyTier;

@@ -58,9 +58,27 @@ public class RoomSpawns : MonoBehaviour
         EndGeneration();
         NavMeshSurface surface = GetComponent<NavMeshSurface>();
         surface.BuildNavMesh();
-
+        var allObjects = FindObjectsOfType<GameObject>();
+        foreach (var i in allObjects)
+        {
+            i.isStatic = false;
+        }
         //RenderSettings.skybox = Skyboxes[GameManager.globalDarkness];
-        
+        var allBounds = FindObjectsOfType<Bounds>();
+        foreach (Bounds b in allBounds)
+        {
+            b.col.enabled = true;
+            foreach (Bounds newSection in allBounds)
+            {
+                newSection.col.enabled = true;
+                if (b.col.bounds.Intersects(newSection.col.bounds) && !ReferenceEquals(b.GetComponentInParent<TileProperties>().gameObject, newSection.GetComponentInParent<TileProperties>().gameObject) /*&& b.GetComponentInParent<TileProperties>().gameObject.name != newSection.GetComponentInParent<TileProperties>().gameObject.name*/)
+                {
+                    print("Destroyed " + newSection.GetComponentInParent<TileProperties>().gameObject.name + " because " + b.GetComponentInParent<TileProperties>().gameObject.name + " intersected with " + newSection.GetComponentInParent<TileProperties>().gameObject.name);
+                    Destroy(newSection.GetComponentInParent<TileProperties>().gameObject);
+                }
+            }
+            
+        }
         if (GameObject.FindGameObjectWithTag("BossRoom") == null)
         {
             GameManager.spawnedEndRoom = false;
@@ -75,6 +93,8 @@ public class RoomSpawns : MonoBehaviour
         {
             GameManager.spawnedEndRoom = true;
         }
+        //GameManager.spawnedEndRoom = true;
+        
         foreach (var c in LoadedColliders)
             c.enabled = false;
         print("Spawned end room: " + GameManager.spawnedEndRoom);
@@ -121,7 +141,16 @@ public class RoomSpawns : MonoBehaviour
             !LoadedColliders.Except(sectionToIgnore.Colliders).Any(c => c.bounds.Intersects(newSection.Colliders.First().bounds));*/
     public bool IsSectionValid(Bounds newSection, Bounds sectionToIgnore)
     {
-        
+        var allBounds = FindObjectsOfType<Bounds>();
+        foreach (Bounds b in allBounds)
+        {
+            if (b.col.bounds.Intersects(newSection.col.bounds) && !ReferenceEquals(b.GetComponentInParent<TileProperties>().gameObject, newSection.GetComponentInParent<TileProperties>().gameObject)) {
+                print(b.GetComponentInParent<TileProperties>().gameObject.name + " intersected with " + newSection.GetComponentInParent<TileProperties>().gameObject.name);
+                return false;
+            }
+        }
+        return true;
+        /*
         foreach (Collider col in LoadedColliders)
         {
             if (col.bounds.Intersects(newSection.Colliders.First().bounds))
@@ -129,7 +158,7 @@ public class RoomSpawns : MonoBehaviour
                 return false;
             }
         }
-        return true;
+        return true;*/
     }
 
 

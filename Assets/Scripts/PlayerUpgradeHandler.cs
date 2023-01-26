@@ -56,7 +56,10 @@ public class PlayerUpgradeHandler : MonoBehaviour
 
         xpBar.GetComponent<Slider>().maxValue = xpToNextLevel;
         xpBar.GetComponent<Slider>().value = playerStats.currentXP;
-
+        if (playerStats.currentHealth < 0)
+        {
+            Time.timeScale = 1;
+        }
         //print(xpToNextLevel);
         if (playerStats.currentXP >= xpToNextLevel && upgradeMenu.activeSelf == false && playerStats.currentHealth > 0)
         {

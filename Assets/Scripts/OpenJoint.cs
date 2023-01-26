@@ -14,7 +14,7 @@ public class OpenJoint : MonoBehaviour
     }
     public void Build(RoomSpawns roomSpawns)
     {
-        if (roomSpawns.levelSize > 0)
+        if (roomSpawns.levelSize > 0 && isOpen)
         {
             roomSpawns.RegisterNewSection(this);
             OpenJoint newRoom = Instantiate(roomSpawns.NextRoom(this.GetComponentInParent<TileProperties>()), gameObject.transform.position, gameObject.transform.rotation).GetComponentInChildren<OpenJoint>();
