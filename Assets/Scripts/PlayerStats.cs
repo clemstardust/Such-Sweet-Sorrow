@@ -122,7 +122,7 @@ public class PlayerStats : MonoBehaviour
             
             if (degenerateHealth && extraLives > 0)
             {
-                currentHealth -= ((currentHealth / maxHealth) + 1) * 0.015f;
+                currentHealth -= ((currentHealth / maxHealth)) * Time.deltaTime;
                 FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
                 uIManager.UpdateStatsUI(currentHealth, maxHealth);
             }
@@ -323,12 +323,12 @@ public class PlayerStats : MonoBehaviour
     public void EnemyKilled(int enemyTier)
     {
         //print("enemy killed");
-        if (enemyTier < 1000)
+        if (enemyTier < 2000)
             currentXP += enemyTier;
         totalSouls += enemyTier;
         if (extraXP)
         {
-            if (enemyTier < 1000)
+            if (enemyTier < 2000)
                 currentXP += enemyTier;
         }
         //print("total souls: " + totalSouls);

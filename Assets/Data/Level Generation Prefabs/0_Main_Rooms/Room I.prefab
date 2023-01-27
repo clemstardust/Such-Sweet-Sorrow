@@ -20089,16 +20089,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3165204588823286597}
     m_Modifications:
-    - target: {fileID: 4776255330618593571, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: dmgCollider
-      value: 
-      objectReference: {fileID: 4737998208156358066}
-    - target: {fileID: 5139057758883138936, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: bossBar
-      value: 
-      objectReference: {fileID: 1968024150636442106}
     - target: {fileID: 5139057758883138936, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
         type: 3}
       propertyPath: healthBar
@@ -20107,7 +20097,7 @@ PrefabInstance:
     - target: {fileID: 5139057758883138936, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
         type: 3}
       propertyPath: maxHealth
-      value: 5000
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 5139057758883138936, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
         type: 3}
@@ -20119,30 +20109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PHBOSS
       objectReference: {fileID: 0}
-    - target: {fileID: 5139057758883138940, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5139057758883138943, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5139057758883138943, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5139057758883138943, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5139057758883138943, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5139057758883138943, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
         type: 3}
@@ -20194,29 +20164,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5991767825615284082, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799254936421509645, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8799692815249896903, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa3878933b0a77a4aa4b450e5c2ff9c5, type: 3}
---- !u!136 &4737998208156358066 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 5991767825615284082, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1362278771057570496}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6176212582270042040 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5139057758883138936, guid: aa3878933b0a77a4aa4b450e5c2ff9c5,

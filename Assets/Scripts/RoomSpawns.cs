@@ -27,7 +27,7 @@ public class RoomSpawns : MonoBehaviour
     private int newRoomCode = -1;
     private GameObject roomToSpawn = null;
     private GameObject[] spawnJoints;
-    private int maxLevelSize;
+    [HideInInspector] public int maxLevelSize;
 
     [Header("Loaded Level Joints")]
     [SerializeField] protected List<OpenJoint> loadedJoints = new List<OpenJoint>();

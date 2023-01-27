@@ -6,11 +6,12 @@ public class OpenJoint : MonoBehaviour
     public bool isOpen = true;
     public Bounds Bounds;
     private GameObject deadEnd;
-
+    private RoomSpawns rs;
     public void Awake()
     {   
         Bounds = gameObject.GetComponent<Bounds>();
-        deadEnd = FindObjectOfType<RoomSpawns>().deadEnd;
+        rs = FindObjectOfType<RoomSpawns>();
+        deadEnd = rs.deadEnd;
     }
     public void Build(RoomSpawns roomSpawns)
     {

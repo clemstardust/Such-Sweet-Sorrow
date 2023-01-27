@@ -303,9 +303,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayedDebuff: 0
-  numStacks: {fileID: 0}
+  numStacks: {fileID: 3778499581132328664}
   isDisplaying: 0
-  statusImage: {fileID: 0}
+  statusImage: {fileID: 6399634639411579584}
 --- !u!1 &572075463820566062
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,9 +533,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayedDebuff: 0
-  numStacks: {fileID: 0}
+  numStacks: {fileID: 960355790319032160}
   isDisplaying: 0
-  statusImage: {fileID: 0}
+  statusImage: {fileID: 6238274774611690789}
 --- !u!1 &780702493265168865
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,9 +627,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayedDebuff: 0
-  numStacks: {fileID: 0}
+  numStacks: {fileID: 1905307316021164612}
   isDisplaying: 0
-  statusImage: {fileID: 0}
+  statusImage: {fileID: 2443772681415673673}
 --- !u!1 &1385782510032306445
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,9 +857,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayedDebuff: 0
-  numStacks: {fileID: 0}
+  numStacks: {fileID: 3480565447962032281}
   isDisplaying: 0
-  statusImage: {fileID: 0}
+  statusImage: {fileID: 4032566342721104274}
 --- !u!1 &1941598301470868775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cf8f74dac63e3468e42385f6c59d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: {fileID: 0}
 --- !u!1 &5143371263718411010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,9 +1905,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayedDebuff: 0
-  numStacks: {fileID: 0}
+  numStacks: {fileID: 8200026567240841141}
   isDisplaying: 0
-  statusImage: {fileID: 0}
+  statusImage: {fileID: 6850595852499625793}
 --- !u!1 &7560492054187254532
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,6 +2120,7 @@ MonoBehaviour:
   - {fileID: 5639025379679746219, guid: 96029fd2b34a0ba429f0282c7d1c6b40, type: 3}
   - {fileID: 5639025379679746219, guid: aeacbbd06e1abca4b929b8cc281c2927, type: 3}
   - {fileID: 5639025379679746219, guid: 04dfa9050d587f64aaa2de570ff8052b, type: 3}
+  enemyManager: {fileID: 0}
 --- !u!1 &7953662307579439901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,9 +2748,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayedDebuff: 0
-  numStacks: {fileID: 0}
+  numStacks: {fileID: 7538989498153735680}
   isDisplaying: 0
-  statusImage: {fileID: 0}
+  statusImage: {fileID: 3420334617555079081}
 --- !u!1001 &117035159539788685
 PrefabInstance:
   m_ObjectHideFlags: 0

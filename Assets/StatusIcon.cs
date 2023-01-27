@@ -14,8 +14,14 @@ public class StatusIcon : MonoBehaviour
     private void Start()
     {
         debuffHandler = GetComponentInParent<EnemyDebuffHandler>();
-        if (debuffHandler == null) debuffHandler = GameObject.Find("PHBOSS").GetComponent<EnemyDebuffHandler>();
-        if (debuffHandler == null) debuffHandler = GameObject.Find("Swamp Boss").GetComponent<EnemyDebuffHandler>();
+        try
+        {
+            if (debuffHandler == null) debuffHandler = GameObject.Find("PHBOSS").GetComponent<EnemyDebuffHandler>();
+        }
+        catch
+        {
+            if (debuffHandler == null) debuffHandler = GameObject.Find("Swamp Boss").GetComponent<EnemyDebuffHandler>();
+        }
         statusImage = GetComponent<Image>();
         numStacks = GetComponentInChildren<TextMeshProUGUI>();
     }

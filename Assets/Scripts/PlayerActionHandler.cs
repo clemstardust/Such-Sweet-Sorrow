@@ -429,13 +429,17 @@ public class PlayerActionHandler : MonoBehaviour
 	}
 	private void Move()
 	{
+		if (SceneManager.GetActiveScene().name == "SwampLevel" && (input.move.x != 0 || input.move.y != 0))
+		{
+			FindObjectOfType<SetCharacterPosition>().playerIsAtPos = true;
+		}
 		if (input.sprint && playerStats.currentStamina > 0)
         {
 			//playerStats.currentStamina -= 0.025f * (1 + Time.deltaTime);
 			playerStats.RemoveStamina(0.025f * (1 + Time.deltaTime));
 			staminaRegenDelay = true;
-			playerStats.regenTimer = 0;
-        }
+			playerStats.regenTimer = 0;			
+		}
 		else if (playerStats.currentStamina <= 0)
         {
 			input.sprint = false;

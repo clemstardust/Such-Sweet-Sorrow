@@ -86,6 +86,7 @@ public class EnemyStats : MonoBehaviour
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
             var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
             damage += (playerActionHandler.extraDamageFromSoul * playerUpgradeHandler.spellDamageMuliplier);
+            damage += ((maxHealth * 0.05f) * debuffHandler.bleedStacks);
             if (playerActionHandler.extraDamageFromSoul > 0)
                 playerActionHandler.extraDamageFromSoul = 0;
             if (playerStats.staminaToDamage)
@@ -121,8 +122,7 @@ public class EnemyStats : MonoBehaviour
             {
                 damage *= 2;
             }
-            damage *= ((maxHealth * 0.001f) * debuffHandler.bleedStacks) + 1;
-            if (Random.Range(0,100) == debuffHandler.rotStacks * 10)
+            if (Random.Range(0,100) <= debuffHandler.rotStacks * 10)
             {
                 damage *= 2;
             }
