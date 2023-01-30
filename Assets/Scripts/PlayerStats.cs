@@ -279,6 +279,7 @@ public class PlayerStats : MonoBehaviour
         else if (other.CompareTag("Killbox"))
         {
             currentHealth = -1;
+            extraLives = -1;
             FindObjectOfType<HealthBarShrink>().Damage(currentHealth, maxHealth);
             uIManager.UpdateStatsUI(currentStamina, currentHealth, currentSoul, maxHealth, maxStamina, playerEquipment);
         }

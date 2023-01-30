@@ -2383,9 +2383,9 @@ MonoBehaviour:
   - {fileID: 100000, guid: aec54d7a991d7b644b145d550a4b7831, type: 3}
   - {fileID: 100000, guid: 14987c031123b98408a165a8bf1288d4, type: 3}
   - {fileID: 100000, guid: 43dd1ba2a5dde844eb01240da13ab96b, type: 3}
-  bloodParticles: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f,
+  bloodParticles: {fileID: 1000012909287652, guid: f0649ffebe655a4438d5bdaefa18f5cb,
     type: 3}
-  bloodParticles1: {fileID: 1834194341294532, guid: d5f26854a8904624c8073139cd2eb346,
+  bloodParticles1: {fileID: 1000010675638318, guid: 898dbb59bd5c21c4e950aeb1dee8beee,
     type: 3}
   hitSoundEffects:
   - {fileID: 8300000, guid: 29087d7031d2abc4991376b3c22a770a, type: 3}
@@ -2393,6 +2393,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67ec363e05e9dc74d930a48a6f1941e6, type: 3}
   - {fileID: 8300000, guid: dfad3e99ec3bd854db41d7ed5e8d7fb0, type: 3}
   - {fileID: 8300000, guid: 7282ca5a2495791438d14a92c68afd17, type: 3}
+  - {fileID: 8300000, guid: 90115a0fe3e8b4e098b1111cc014a9cc, type: 3}
+  - {fileID: 8300000, guid: 28035043174d44f928d428fc44f59150, type: 3}
+  - {fileID: 8300000, guid: e1c46311240d04071ad00f2e40cc164e, type: 3}
   countDown: 1
 --- !u!114 &5139057758883138939
 MonoBehaviour:

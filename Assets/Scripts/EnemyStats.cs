@@ -78,15 +78,23 @@ public class EnemyStats : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Weapon"))
         {
-            /*
             var playerCam = FindObjectOfType<CameraMotionHandler>();
             playerCam.TurnOffIndicator();
             playerCam.closest = GetComponentInChildren<CameraTarget>();
-            playerCam.lockedOn = true;*/
+            playerCam.lockedOn = true;
             GetComponent<AudioSource>().volume = 0.25f;
             GetComponent<AudioSource>().PlayOneShot(hitSoundEffects[Random.Range(0, hitSoundEffects.Length)]);
             Animator animator = gameObject.GetComponent<Animator>();
             Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+
+            var a = Instantiate(bloodParticles, transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            a.transform.parent = transform;
+            a.transform.localPosition = new Vector3(a.transform.localPosition.x, a.transform.localPosition.y + 0.25f + Random.value, a.transform.localPosition.z);
+
+            var b = Instantiate(bloodParticles1, transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            b.transform.parent = transform;
+            b.transform.localPosition = new Vector3(b.transform.localPosition.x, b.transform.localPosition.y + 0.25f + Random.value, b.transform.localPosition.z);
+
             float damage = playerEquipment.currentWeapon.R1Damage;
             if (other.gameObject.GetComponentInParent<Animator>().GetBool("AttackR2"))
             {

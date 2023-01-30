@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
   - _EMISSION
-  - _NORMALMAP
   - _SPECULAR_SETUP
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
@@ -118,7 +117,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.5588235, g: 0, b: 0, a: 1}
     - _Color: {r: 0.5588235, g: 0, b: 0, a: 1}
-    - _EmissionColor: {r: 0.24264705, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.033333335, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.29411763, g: 0.29411763, b: 0.29411763, a: 1}
     - _TintColor: {r: 0.30882353, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
