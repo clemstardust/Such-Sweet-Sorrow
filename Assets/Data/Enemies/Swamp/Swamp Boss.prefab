@@ -325,6 +325,12 @@ MonoBehaviour:
     type: 3}
   bloodParticles1: {fileID: 1834194341294532, guid: d5f26854a8904624c8073139cd2eb346,
     type: 3}
+  hitSoundEffects:
+  - {fileID: 8300000, guid: 29087d7031d2abc4991376b3c22a770a, type: 3}
+  - {fileID: 8300000, guid: 9496feb530c6bc647a5d5a9208e8eaa3, type: 3}
+  - {fileID: 8300000, guid: 67ec363e05e9dc74d930a48a6f1941e6, type: 3}
+  - {fileID: 8300000, guid: dfad3e99ec3bd854db41d7ed5e8d7fb0, type: 3}
+  - {fileID: 8300000, guid: 7282ca5a2495791438d14a92c68afd17, type: 3}
   countDown: 1
 --- !u!114 &5139057758883138939
 MonoBehaviour:

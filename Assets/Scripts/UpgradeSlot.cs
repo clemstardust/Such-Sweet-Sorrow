@@ -20,9 +20,13 @@ public class UpgradeSlot : MonoBehaviour
 
     private void Update()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0f;
+        if (FindObjectOfType<PlayerStats>().currentHealth > 0)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+        }
+
     }
 
     public void SelectUpgrade()

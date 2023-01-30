@@ -29,7 +29,7 @@ public class CameraMotionHandler : MonoBehaviour
 	public float sens = 0.5f;
 
 	public bool lockedOn = false;
-	private CameraTarget closest = null;
+	public CameraTarget closest = null;
 
 	int layerMask = 1 << 8;
 
@@ -83,28 +83,10 @@ public class CameraMotionHandler : MonoBehaviour
 	}
 
 	private void CameraRotation()
-	{
-		
-		_cinemachineTargetYaw += input.look.x * Time.fixedDeltaTime * sens;
-		_cinemachineTargetPitch += input.look.y * Time.fixedDeltaTime * sens;
-		
-
-		// clamp our rotations so our values are limited 360 degrees
-		_cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-		_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-		Quaternion rot = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
-		// Cinemachine will follow this target
-		
+	{		
 		if (Input.GetKeyDown(KeyCode.R))
         {
 			lockedOn = !lockedOn;
-			CinemachineCameraTarget.transform.rotation = this.transform.rotation;
-			if (closest)
-				closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = false;
-			closest = FindNearestEnemy();
-			if (closest)
-				closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = true;
 		}
 		if (lockedOn && closest)
         {
@@ -115,9 +97,23 @@ public class CameraMotionHandler : MonoBehaviour
         {
 			if (closest)
 				closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = false;
+			_cinemachineTargetYaw += input.look.x * Time.fixedDeltaTime * sens;
+			_cinemachineTargetPitch += input.look.y * Time.fixedDeltaTime * sens;
+
+
+			// clamp our rotations so our values are limited 360 degrees
+			_cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+			_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+
+			Quaternion rot = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
 			CinemachineCameraTarget.transform.rotation = rot;
 		}
+	}
 
+	public void TurnOffIndicator()
+    {
+		if (closest)
+			closest.GetComponentInParent<EnemyAI>().lockIndicator.indicator.enabled = false;
 	}
 
 	private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

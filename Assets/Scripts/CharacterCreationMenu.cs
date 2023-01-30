@@ -29,7 +29,7 @@ public class CharacterCreationMenu : MonoBehaviour
     [Header("Invocations")]
     public RelicItem[] unlockedSpells;
     public RelicItem weaponBuff;
-    public RelicItem immolation;
+    //public RelicItem immolation;
     public RelicItem soulForm;
     public RelicItem soulToDamage;
 
@@ -45,6 +45,7 @@ public class CharacterCreationMenu : MonoBehaviour
     public WeaponItem bigMace;
     public WeaponItem sword;
     public WeaponItem mace;
+    public WeaponItem flameSword;
 
     private int selectedWeapon = 0;
     public Image weaponImage;
@@ -85,7 +86,7 @@ public class CharacterCreationMenu : MonoBehaviour
 
         attackingReducesHealth.unlocked = unlockedItemManager.unlockedAttackingReducesHealth;
         glass.unlocked = unlockedItemManager.unlockedGlass;
-        immolation.unlocked = unlockedItemManager.unlockedImmolation;
+        //immolation.unlocked = unlockedItemManager.unlockedImmolation;
         soulForm.unlocked = unlockedItemManager.unlockedSoulForm;
         soulOnHit.unlocked = unlockedItemManager.unlockedSoulOnHit;
         soulToDamage.unlocked = unlockedItemManager.unlockedSoulToDamage;
@@ -104,14 +105,15 @@ public class CharacterCreationMenu : MonoBehaviour
         UnlockedRelics[10] = startAtLevel3;
 
         unlockedSpells[0] = weaponBuff;
-        unlockedSpells[1] = immolation;
-        unlockedSpells[2] = soulForm;
-        unlockedSpells[3] = soulToDamage;
+        //unlockedSpells[1] = immolation;
+        unlockedSpells[1] = soulForm;
+        unlockedSpells[2] = soulToDamage;
 
         sword.unlocked = unlockedItemManager.unlockedSword;
         mace.unlocked = unlockedItemManager.unlockedMace;
         bigSword.unlocked = unlockedItemManager.unlockedBigSword;
         bigMace.unlocked = unlockedItemManager.unlockedBigMace;
+        flameSword.unlocked = unlockedItemManager.unlockedFlameSword;
 
         var musicPlayer = GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>();
         StartCoroutine(FadeAudioSource.StartFade(GameObject.FindGameObjectWithTag("MusicPlayerBackground").GetComponent<AudioSource>(), 3, 1));
@@ -288,12 +290,12 @@ public class CharacterCreationMenu : MonoBehaviour
                 unlockedSpells[selectedSpell].unlocked = true;
                 print("purchased soulfire spell");
                 break;
-            case "Touch of Darkness":
+            /*case "Touch of Darkness":
                 unlockedItemManager.unlockedImmolation = true;
                 immolation.unlocked = true;
                 unlockedSpells[selectedSpell].unlocked = true;
                 print("Purchased immolation");
-                break;
+                break;*/
             case "Soulform":
                 unlockedItemManager.unlockedSoulForm = true;
                 soulForm.unlocked = true;
@@ -423,6 +425,12 @@ public class CharacterCreationMenu : MonoBehaviour
                 sword.unlocked = true;
                 playerWeapons[selectedWeapon].GetComponent<AttackHitboxObject>().weaponItem.unlocked = true;
                 print("purchased sword");
+                break;
+            case "Flame Greatsword":
+                unlockedItemManager.unlockedFlameSword = true;
+                flameSword.unlocked = true;
+                playerWeapons[selectedWeapon].GetComponent<AttackHitboxObject>().weaponItem.unlocked = true;
+                print("purchased flame sword");
                 break;
         }
         UpdateSelectedWeaponDisplay(selectedWeapon);

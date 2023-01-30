@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
 
     public float currentHealth = 100;
     public int maxHealth = 100;
+    public int basePlayerHealth = 300;
 
     public int maxSoul = 0;
     public float currentSoul = 0;
@@ -75,6 +76,7 @@ public class PlayerStats : MonoBehaviour
         uIManager = gameObject.GetComponent<UIManager>();
         playerUpgradeHandler = gameObject.GetComponent<PlayerUpgradeHandler>();
         playerEquipment.currentWeapon = swordPH;
+        basePlayerHealth = maxHealth;
     }
 
     void FixedUpdate()
@@ -322,6 +324,7 @@ public class PlayerStats : MonoBehaviour
 
     public void EnemyKilled(int enemyTier)
     {
+        if (currentHealth < 0) return;
         //print("enemy killed");
         if (enemyTier < 2000)
             currentXP += enemyTier;
@@ -361,6 +364,7 @@ public class PlayerStats : MonoBehaviour
 
     public void UpgradePlayerHealth(int num)
     {
+        basePlayerHealth += num;
         maxHealth += num;
         FindObjectOfType<HealthBarShrink>().Heal(currentHealth, maxHealth);
     }

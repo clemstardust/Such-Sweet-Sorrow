@@ -30,6 +30,7 @@ public class EnemyStats : MonoBehaviour
     public GameObject[] blood;
     public GameObject bloodParticles;
     public GameObject bloodParticles1;
+    public AudioClip[] hitSoundEffects;
 
     private float regenTimer = 0;
     private PlayerEquipment playerEquipment;
@@ -59,13 +60,17 @@ public class EnemyStats : MonoBehaviour
     {
         RegnerateStamina();
         healthBar.value = currentHealth;
-        if (currentHealth == maxHealth)
+        if (currentHealth == maxHealth && enemySoulLevel < 2000)
         {
-            betterHealthBar.gameObject.transform.parent.gameObject.SetActive(true);
+            betterHealthBar.gameObject.transform.parent.gameObject.SetActive(false);
         }
         else if (manager.enemyMode != EnemyManager.Mode.dead)
         {
             betterHealthBar.gameObject.transform.parent.gameObject.SetActive(true);
+        }
+        else
+        {
+            betterHealthBar.gameObject.transform.parent.gameObject.SetActive(false);
         }
     }
 
@@ -73,8 +78,13 @@ public class EnemyStats : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Weapon"))
         {
-            GetComponent<AudioSource>().pitch = 0.8f;
-            GetComponent<AudioSource>().Play();
+            /*
+            var playerCam = FindObjectOfType<CameraMotionHandler>();
+            playerCam.TurnOffIndicator();
+            playerCam.closest = GetComponentInChildren<CameraTarget>();
+            playerCam.lockedOn = true;*/
+            GetComponent<AudioSource>().volume = 0.25f;
+            GetComponent<AudioSource>().PlayOneShot(hitSoundEffects[Random.Range(0, hitSoundEffects.Length)]);
             Animator animator = gameObject.GetComponent<Animator>();
             Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
             float damage = playerEquipment.currentWeapon.R1Damage;
@@ -86,7 +96,7 @@ public class EnemyStats : MonoBehaviour
             var playerUpgradeHandler = other.gameObject.GetComponentInParent<PlayerUpgradeHandler>();
             var playerActionHandler = other.GetComponentInParent<PlayerActionHandler>();
             damage += (playerActionHandler.extraDamageFromSoul * playerUpgradeHandler.spellDamageMuliplier);
-            damage += ((maxHealth * 0.05f) * debuffHandler.bleedStacks);
+            damage += ((maxHealth * 0.001f) * debuffHandler.bleedStacks);
             if (playerActionHandler.extraDamageFromSoul > 0)
                 playerActionHandler.extraDamageFromSoul = 0;
             if (playerStats.staminaToDamage)
@@ -130,11 +140,11 @@ public class EnemyStats : MonoBehaviour
             damage *= 1 + (0.1f * (debuffHandler.stunStacks + debuffHandler.rotStacks + debuffHandler.poisonStacks + debuffHandler.iceStacks + debuffHandler.hemmorageStacks + debuffHandler.darkStacks + debuffHandler.bleedStacks));
             print("Damage: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
-            betterHealthBar.Damage(currentHealth, maxHealth);
+            betterHealthBar.Damage(currentHealth, maxHealth, (int) damage);
             gameObject.GetComponent<EnemyAI>().rotated = false;
             if (playerStats.extraHealthOnHit)
             {
-                playerStats.UpgradePlayerHealth((int)playerUpgradeHandler.flatExtraHealthOnHit);
+                playerStats.UpgradePlayerHealth((int) (damage * 0.01f * playerUpgradeHandler.flatExtraHealthOnHit));
             }
             if (playerStats.soulOnHit)
             {
@@ -158,7 +168,7 @@ public class EnemyStats : MonoBehaviour
             {
                 poiseDamage = playerEquipment.currentWeapon.R2Damage;
             }
-            currentPoise -= poiseDamage * (1.25f * debuffHandler.stunStacks);
+            currentPoise -= poiseDamage * (1 + (1.25f * debuffHandler.stunStacks));
             if (currentPoise <= 0)
             {
                 animator.SetBool("Hit", true);
@@ -182,32 +192,42 @@ public class EnemyStats : MonoBehaviour
         int newStunStacks = (int)(upgrades.stunChance + Random.Range(0, 0.99f));
         if (newPoisonStacks > 0 && debuffHandler.poisonStacks == 0) { 
             statusBar.AddStatus(StatusEnum.DisplayedDebuff.Poison);
-            Instantiate(statusBar.statusEffectParticles[0], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            var newparticle = Instantiate(statusBar.statusEffectParticles[0], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            newparticle.transform.parent = transform;
         }
         if (newIceStacks > 0 && debuffHandler.iceStacks == 0) { 
             statusBar.AddStatus(StatusEnum.DisplayedDebuff.Ice);
-            Instantiate(statusBar.statusEffectParticles[1], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            var newparticle = Instantiate(statusBar.statusEffectParticles[1], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            newparticle.transform.parent = transform;
         }
         if (newBleedStacks > 0 && debuffHandler.bleedStacks == 0) { 
             statusBar.AddStatus(StatusEnum.DisplayedDebuff.Bleed);
-            Instantiate(statusBar.statusEffectParticles[2], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            var newparticle = Instantiate(statusBar.statusEffectParticles[2], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            newparticle.transform.parent = transform;
         }
         if (newRotStacks > 0 && debuffHandler.rotStacks == 0) { 
-            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Rot); 
-            Instantiate(statusBar.statusEffectParticles[3], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            statusBar.AddStatus(StatusEnum.DisplayedDebuff.Rot);
+            var newparticle = Instantiate(statusBar.statusEffectParticles[3], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            newparticle.transform.parent = transform;
         }
         if (newHemStacks > 0 && debuffHandler.hemmorageStacks == 0) { 
             statusBar.AddStatus(StatusEnum.DisplayedDebuff.Hemmorage);
-            Instantiate(statusBar.statusEffectParticles[4], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            var newparticle = Instantiate(statusBar.statusEffectParticles[4], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            newparticle.transform.parent = transform;
         }
         if (newStunStacks > 0 && debuffHandler.stunStacks == 0) {
             statusBar.AddStatus(StatusEnum.DisplayedDebuff.Stun);
-            Instantiate(statusBar.statusEffectParticles[5], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            var newparticle = Instantiate(statusBar.statusEffectParticles[5], transform.position, new Quaternion(0, Random.rotation.y, 0, 0));
+            newparticle.transform.parent = transform;
         }
 
         for (int i = 0; i < newHemStacks; i++)
         {
             StartCoroutine(HemmorageDebuff.Hemmorage_Debuff(this, damage, debuffHandler, 3));
+        }
+        for (int i = 0; i < newPoisonStacks; i++)
+        {
+            StartCoroutine(PoisonDebuff.Poison_Debuff(this, 2));
         }
         debuffHandler.poisonStacks += newPoisonStacks;
         debuffHandler.iceStacks += newIceStacks;
@@ -233,7 +253,7 @@ public class EnemyStats : MonoBehaviour
             Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
             print("Damage from immolation: " + damage /*+ " | Extra stamina damage: " + ((playerStats.maxStamina - playerStats.currentStamina) * playerStats.staminaToDamageMuliplier) + " | damage mulitplier from upgrades: " + other.gameObject.GetComponentInParent<PlayerUpgradeHandler>().damageMultiplier + " | Attack muliplier from spells: " + other.gameObject.GetComponentInParent<PlayerActionHandler>().attackMultiplier*/ );
             currentHealth -= damage;
-            betterHealthBar.Damage(currentHealth, maxHealth);
+            betterHealthBar.Damage(currentHealth, maxHealth, (int) damage);
             animator.SetBool("Hit", true);
             gameObject.GetComponent<EnemyAI>().rotated = false;
             if (playerStats.extraHealthOnHit)
@@ -258,7 +278,7 @@ public class EnemyStats : MonoBehaviour
         Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
            
         currentHealth -= damage;
-        betterHealthBar.Damage(currentHealth, maxHealth);
+        betterHealthBar.Damage(currentHealth, maxHealth, (int) damage);
         animator.SetBool("Hit", true);
         gameObject.GetComponent<EnemyAI>().rotated = false;
         if (playerStats.extraHealthOnHit)
@@ -276,7 +296,7 @@ public class EnemyStats : MonoBehaviour
     public void LiterallyJustTakeDamage(float damage)
     {
         currentHealth -= damage;
-        betterHealthBar.Damage(currentHealth, maxHealth);
+        betterHealthBar.Damage(currentHealth, maxHealth, (int) damage);
         if (currentHealth <= 0)
         {
             healthBar.gameObject.SetActive(false);
@@ -291,7 +311,7 @@ public class EnemyStats : MonoBehaviour
         Instantiate(blood[(int)Random.Range(0, blood.Length)], transform.position, Quaternion.identity);
 
         currentHealth -= damage;
-        betterHealthBar.Damage(currentHealth, maxHealth);
+        betterHealthBar.Damage(currentHealth, maxHealth, (int) damage);
         //animator.SetBool("Hit", true);
         gameObject.GetComponent<EnemyAI>().rotated = false;
         if (currentHealth <= 0)

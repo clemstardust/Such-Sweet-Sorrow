@@ -13,6 +13,8 @@ public class UnlockedItemManager : MonoBehaviour
     public bool unlockedMace = true;
     public bool unlockedBigSword = false;
     public bool unlockedBigMace = false;
+    public bool unlockedFlameSword = false;
+
     public bool unlockedExtraLivesRing = false;
     public bool unlockedExtraSoulsRing = true;
     public bool unlockedSoulshield = false;

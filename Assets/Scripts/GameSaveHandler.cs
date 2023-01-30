@@ -11,6 +11,8 @@ public class GameSaveHandler : MonoBehaviour
         SaveSystem.SetBool("UnlockedMace", unlockedItemManager.unlockedMace);
         SaveSystem.SetBool("UnlockedBigSword", unlockedItemManager.unlockedBigSword);
         SaveSystem.SetBool("UnlockedBigMace", unlockedItemManager.unlockedBigMace);
+        SaveSystem.SetBool("UnlockedFlameSword", unlockedItemManager.unlockedFlameSword);
+
         SaveSystem.SetBool("unlockedExtraLivesRing", unlockedItemManager.unlockedExtraLivesRing);
         SaveSystem.SetBool("unlockedExtraSoulsRing", unlockedItemManager.unlockedExtraSoulsRing);
         SaveSystem.SetBool("unlockedSoulshield", unlockedItemManager.unlockedSoulshield);
@@ -40,6 +42,8 @@ public class GameSaveHandler : MonoBehaviour
         unlocks.unlockedMace = SaveSystem.GetBool("UnlockedMace");
         unlocks.unlockedBigSword = SaveSystem.GetBool("UnlockedBigSword");
         unlocks.unlockedBigMace = SaveSystem.GetBool("UnlockedBigMace");
+        unlocks.unlockedFlameSword = SaveSystem.GetBool("UnlockedFlameSword");
+
         unlocks.unlockedExtraLivesRing = SaveSystem.GetBool("unlockedExtraLivesRing");
         unlocks.unlockedExtraSoulsRing = SaveSystem.GetBool("unlockedExtraSoulsRing");
         unlocks.unlockedSoulshield = SaveSystem.GetBool("unlockedSoulshield");

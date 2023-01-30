@@ -14,7 +14,7 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public float maxSoulUpLevel = 1;
     public float extraStaminaToDamageMultiplier = 1.5f;
     public float thornsDamageMultiplier = 1;
-    public float flatExtraHealthOnHit = 10;
+    public float flatExtraHealthOnHit = 1;
     public float dodgeDamageMultiplier = 1.5f;
     public float dodgeToHealFlatAmount = 10;
     public int numTougherTimes = 0;
@@ -87,10 +87,10 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         
         print("Damage upgraded!");
-        damageMultiplier += 0.1f;
+        damageMultiplier += 0.5f;
         if (doubleUpgrades)
         {
-            damageMultiplier += 0.3f;
+            damageMultiplier += 0.5f;
         }
 
         ResolveUpgrade();
@@ -99,12 +99,13 @@ public class PlayerUpgradeHandler : MonoBehaviour
     public void UpgradeHealth ()
     {
         print("Health upgraded!");
-        healthMultiplier += 0.5f;
+        var temp = playerStats.maxHealth;
         if (doubleUpgrades)
         {
-            healthMultiplier += 0.5f;
+            playerStats.maxHealth += (int)(playerStats.basePlayerHealth * healthMultiplier);
         }
-        playerStats.maxHealth = (int)(playerStats.maxHealth * healthMultiplier);
+        playerStats.maxHealth += (int)(playerStats.basePlayerHealth * healthMultiplier);
+        playerStats.Heal(playerStats.maxHealth - temp);
         FindObjectOfType<HealthBarShrink>().Heal(playerStats.currentHealth, playerStats.maxHealth);
         ResolveUpgrade();
     }
@@ -222,11 +223,11 @@ public class PlayerUpgradeHandler : MonoBehaviour
     {
         if (doubleUpgrades)
         {
-            flatExtraHealthOnHit += 2f;
+            flatExtraHealthOnHit += 1f;
         }
         if (playerStats.extraHealthOnHit)
         {
-            flatExtraHealthOnHit += 2f;
+            flatExtraHealthOnHit += 1f;
         }
         playerStats.extraHealthOnHit = true;
         print("extra health on hit upgraded!");

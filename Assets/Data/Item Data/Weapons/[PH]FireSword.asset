@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62a681bfc59ee74cb27887f5a0072c7, type: 3}
+  m_Name: '[PH]FireSword'
+  m_EditorClassIdentifier: 
+  itemName: Flame Greatsword
+  itemDesc: A sword forged from molten lava
+  unlocked: 0
+  R1StaminaCost: 15
+  R2StaminaCost: 30
+  R1Damage: 47
+  R2Damage: 75
+  animations: {fileID: 0}
+  unlockCost: 3000
+  R1PoiseDamage: 50
+  R2PoiseDamage: 75

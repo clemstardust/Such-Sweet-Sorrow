@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
     {
         /*if (!audioSource.isPlaying) */
         //AttackSound();
+        audioSource.PlayOneShot(attackSoundEffects[Random.Range(0, attackSoundEffects.Length)]);
         audioSource.PlayOneShot(playerRollSoundEffects[0]);
     }
 

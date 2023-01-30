@@ -306,15 +306,18 @@ public class PlayerActionHandler : MonoBehaviour
 				{
 					playerStats.currentHealth -= (5 * playerUpgradeHandler.spellCostDownPercent) * Time.deltaTime;
 					FindObjectOfType<HealthBarShrink>().Damage(playerStats.currentHealth, playerStats.maxHealth);
+					/*
 					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
-						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;*/
+					gameObject.GetComponentInChildren<AttackHitboxObject>().transform.GetChild(0).gameObject.SetActive(true);
 					attackMultiplier = 2f + playerUpgradeHandler.spellDamageMuliplier;
 				}
 				else
 				{
 					weaponBuffActive = false;
-					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
-						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+					/*if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;*/
+					gameObject.GetComponentInChildren<AttackHitboxObject>().transform.GetChild(0).gameObject.SetActive(false);
 					attackMultiplier = 1f;
 				}
 				break;
@@ -402,13 +405,19 @@ public class PlayerActionHandler : MonoBehaviour
          
 				if (extraDamageFromSoul > 0)
                 {
+					/*
 					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
-						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = buffedMaterial;*/
+					gameObject.GetComponentInChildren<AttackHitboxObject>().transform.GetChild(0).gameObject.SetActive(true);
+
 				}
 				else
 				{
+					/*
 					if (gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>() != null)
-						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+						gameObject.GetComponentInChildren<AttackHitboxObject>().gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;*/
+					gameObject.GetComponentInChildren<AttackHitboxObject>().transform.GetChild(0).gameObject.SetActive(false);
+
 				}
 				break;
 		}
